@@ -110,7 +110,7 @@ export function ChatWidget() {
   }, [isOpen])
 
   return (
-    <div className="fixed bottom-6 right-6 md:right-6 md:bottom-6 max-md:right-4 max-md:bottom-4 z-50">
+    <div className="absolute bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
       <div
         className="absolute bottom-0 right-0 z-30 cursor-pointer"
         style={{
@@ -129,7 +129,7 @@ export function ChatWidget() {
         <AnimatedOrb size={64} />
       </div>
 
-      {/* Suggestion bubble — appears next to the orb prompting the user to click */}
+      {/* Suggestion bubble â€” appears next to the orb prompting the user to click */}
       <AnimatePresence>
         {showSuggestion && !isOpen && (
           <motion.div
@@ -137,16 +137,16 @@ export function ChatWidget() {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 10, scale: 0.85 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute bottom-3 right-20 z-40 flex items-center gap-2 rounded-2xl bg-white px-3.5 py-2.5 shadow-2xl"
+            className="absolute bottom-3 right-20 z-40 flex items-center gap-2 rounded-2xl bg-white px-3.5 py-2.5 shadow-2xl dark:bg-zinc-900"
             style={{ boxShadow: "rgba(17, 12, 46, 0.15) 0px 24px 48px 0px" }}
             onClick={handleOrbClick}
           >
-            <span className="text-[12px] font-semibold text-zinc-900 whitespace-nowrap">
-              👋 Click to chat with Jarvis
+            <span className="text-[12px] font-semibold text-zinc-900 whitespace-nowrap dark:text-zinc-100">
+              ðŸ‘‹ Click to chat with Jarvis
             </span>
             {/* Arrow pointing right toward the orb */}
             <span
-              className="absolute -right-1.5 bottom-4 h-3 w-3 rotate-45 bg-white"
+              className="absolute -right-1.5 bottom-4 h-3 w-3 rotate-45 bg-white dark:bg-zinc-900"
               style={{ boxShadow: "2px -2px 4px rgba(17, 12, 46, 0.05)" }}
             />
             {/* Pulse ring to draw attention */}
@@ -162,7 +162,7 @@ export function ChatWidget() {
 
       <div
         className={cn(
-          "bg-zinc-50 overflow-hidden flex flex-col origin-bottom-right",
+          "bg-zinc-50 overflow-hidden flex flex-col origin-bottom-right dark:bg-zinc-950",
           isExpanded ? "rounded-3xl max-md:rounded-2xl" : "rounded-[100px]",
         )}
         style={{
@@ -187,12 +187,10 @@ export function ChatWidget() {
           <div className="absolute top-0 left-0 right-0 z-20 pointer-events-none h-24">
             <div
               className={cn(
-                "absolute inset-0 overflow-hidden",
+                "absolute inset-0 overflow-hidden bg-gradient-to-b from-white via-white to-transparent dark:from-zinc-950 dark:via-zinc-950",
                 isExpanded ? "rounded-3xl max-md:rounded-2xl" : "rounded-[100px]",
               )}
               style={{
-                background:
-                  "linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%)",
                 transition: isOpen
                   ? "border-radius 1s cubic-bezier(0.22, 1, 0.36, 1)"
                   : "border-radius 0.8s cubic-bezier(0.22, 1, 0.36, 1)",
@@ -204,8 +202,8 @@ export function ChatWidget() {
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center" />
                 <div>
-                  <h3 className="font-semibold text-sm text-zinc-950">Jarvis</h3>
-                  <p className="text-xs text-zinc-600">Your personal assistant</p>
+                  <h3 className="font-semibold text-sm text-zinc-950 dark:text-zinc-100">Jarvis</h3>
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400">Your personal assistant</p>
                 </div>
               </div>
 
@@ -215,15 +213,15 @@ export function ChatWidget() {
                   setShowContent(false)
                   setIsOpen(false)
                 }}
-                className="w-8 h-8 rounded-full hover:bg-zinc-200/50 flex items-center justify-center transition-colors bg-zinc-100"
+                className="w-8 h-8 rounded-full hover:bg-zinc-200/50 flex items-center justify-center transition-colors bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700"
               >
-                <X className="w-5 h-5 text-zinc-700" />
+                <X className="w-5 h-5 text-zinc-700 dark:text-zinc-300" />
               </button>
             </div>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 pt-20 space-y-3 bg-zinc-50 scrollbar-none">
+          <div className="flex-1 overflow-y-auto p-4 pt-20 space-y-3 bg-zinc-50 scrollbar-none dark:bg-zinc-950">
             <AnimatePresence initial={false}>
               {messages.map((message) => (
                 <motion.div
@@ -246,7 +244,7 @@ export function ChatWidget() {
                       className={cn(
                         "inline-block max-w-[80%] p-3 rounded-2xl text-sm break-words",
                         message.isUser
-                          ? "bg-zinc-100 text-zinc-950 rounded-br-sm"
+                          ? "bg-zinc-100 text-zinc-950 rounded-br-sm dark:bg-zinc-800 dark:text-zinc-100"
                           : "bg-card text-card-foreground rounded-bl-sm",
                       )}
                       style={{
@@ -275,10 +273,10 @@ export function ChatWidget() {
                 className="flex-1 bg-muted rounded-full px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/50 text-foreground placeholder:text-muted-foreground"
               />
               <button
-                className="w-9 h-9 rounded-full flex items-center justify-center bg-zinc-100 hover:bg-zinc-200 transition-colors"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-zinc-100 hover:bg-zinc-200 transition-colors dark:bg-zinc-800 dark:hover:bg-zinc-700"
                 onClick={() => console.log("[v0] Plus button clicked")}
               >
-                <Plus className="w-5 h-5 text-zinc-700" />
+                <Plus className="w-5 h-5 text-zinc-700 dark:text-zinc-300" />
               </button>
               <div
                 className="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer hover:bg-zinc-200 transition-colors bg-blue-500"

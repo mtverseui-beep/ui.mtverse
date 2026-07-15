@@ -1,11 +1,10 @@
-"use client";
-import { PageShowcase } from "@/components/navbar-showcase/PageShowcase";
+import { CardPage } from "@/components/library/CardPage";
 import { CtaTestimonialCard } from "@/components/cards/more/CtaTestimonialCard";
 
 export default function Page() {
   return (
-    <PageShowcase slug="cta-testimonial-cta-card">
+    <CardPage slug="cta-testimonial-cta-card">
       <CtaTestimonialCard />
-    </PageShowcase>
+    </CardPage>
   );
 }

@@ -6,12 +6,13 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Send, Square, Copy, Check, RefreshCw, Edit3, Trash2, ThumbsUp, ThumbsDown,
-  ChevronDown, Sparkles, User, Bot, Paperclip, Mic, Globe, Zap, Plus,
+  ChevronDown, Sparkles, Bot, Paperclip, Mic, Globe, Zap, Plus,
   Settings, Share2, Bookmark, Code2, MessageSquare, Sun, Moon, Cpu,
   Search, MoreHorizontal, Pencil, Archive, X, ChevronLeft, PanelLeft,
   Brain, Wand2, FileText, Lightbulb, ArrowUp, ImageIcon, Calculator,
 } from "lucide-react";
-import { AI_MODELS, type AIModel } from "./model-icons";
+import { AI_MODELS } from "./model-icons";
+import { AI_FOCUS_RESET, ProfileAvatar } from "./ai-ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -133,10 +134,10 @@ const MOCK_RESPONSES: Record<string, string> = {
 };
 
 const SUGGESTIONS = [
-  { icon: Code2, label: "Write a function", prompt: "Write a TypeScript function to debounce API calls with cancellation", color: "#8b5cf6" },
-  { icon: Lightbulb, label: "Brainstorm ideas", prompt: "Brainstorm 5 product ideas for AI-powered productivity tools", color: "#ec4899" },
-  { icon: FileText, label: "Explain a concept", prompt: "Explain how transformers work in simple terms", color: "#06b6d4" },
-  { icon: Wand2, label: "Optimize code", prompt: "How do I optimize React component re-renders?", color: "#f59e0b" },
+  { icon: Code2, label: "Write a function", description: "Generate typed, production-ready code", prompt: "Write a TypeScript function to debounce API calls with cancellation", color: "#8b5cf6" },
+  { icon: Lightbulb, label: "Brainstorm ideas", description: "Turn a rough thought into clear directions", prompt: "Brainstorm 5 product ideas for AI-powered productivity tools", color: "#ec4899" },
+  { icon: FileText, label: "Explain a concept", description: "Learn complex topics with simple examples", prompt: "Explain how transformers work in simple terms", color: "#06b6d4" },
+  { icon: Wand2, label: "Optimize code", description: "Find bottlenecks and practical improvements", prompt: "How do I optimize React component re-renders?", color: "#f59e0b" },
 ];
 
 function getMockResponse(prompt: string): string {
@@ -210,6 +211,16 @@ export function AIChatInterface() {
     "Synthesizing response...",
     "Formatting output...",
   ];
+
+  // Match the showcase theme on mount and whenever the global theme changes.
+  useEffect(() => {
+    const root = document.documentElement;
+    const syncTheme = () => setIsDark(root.classList.contains("dark"));
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
 
   // Auto-scroll
   useEffect(() => {
@@ -554,25 +565,49 @@ export function AIChatInterface() {
   const olderConvs = filteredConversations.filter(c => (1752700000000 - c.createdAt) >= 86400000);
 
   return (
-    <div className="flex h-full min-h-full w-full overflow-hidden font-sans" style={{ background: bg, color: textPrimary }}>
+    <div className="relative flex h-full min-h-full w-full overflow-hidden font-sans" style={{ background: bg, color: textPrimary }}>
       {/* ── LEFT SIDEBAR: Conversations ── */}
       <AnimatePresence>
         {sidebarOpen && (
           <motion.aside
             initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 256, opacity: 1 }}
+            animate={{ width: 272, opacity: 1 }}
             exit={{ width: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: EASE }}
-            className="relative shrink-0 overflow-hidden"
-            style={{ background: sidebarBg, borderRight: `1px solid ${border}` }}
+            className="absolute inset-y-0 left-0 z-40 shrink-0 overflow-hidden shadow-2xl lg:relative lg:shadow-none"
+            style={{ background: sidebarBg, borderRight: `1px solid ${border}`, backdropFilter: "blur(24px)" }}
           >
-            <div className="flex h-full w-64 flex-col">
+            <div className="flex h-full w-[272px] flex-col">
+              <div className="flex h-16 shrink-0 items-center gap-3 px-4">
+                <div
+                  className="flex h-9 w-9 items-center justify-center rounded-xl text-white"
+                  style={{ background: accent, boxShadow: `0 8px 24px ${accent}35` }}
+                >
+                  <Sparkles className="h-[18px] w-[18px]" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[13px] font-bold tracking-tight" style={{ color: textPrimary }}>Nexus AI</p>
+                  <p className="truncate text-[10px]" style={{ color: textMuted }}>Intelligence workspace</p>
+                </div>
+                <span className="hidden items-center gap-1 rounded-full border px-2 py-1 text-[9px] font-semibold sm:flex" style={{ borderColor: border, color: textSecondary }}>
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  Live
+                </span>
+                <button
+                  onClick={() => setSidebarOpen(false)}
+                  className="flex h-7 w-7 items-center justify-center rounded-lg border lg:hidden"
+                  style={{ borderColor: border, color: textMuted, background: inputBg }}
+                  aria-label="Close conversation sidebar"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
               {/* New chat */}
-              <div className="p-3">
+              <div className="px-3 pb-3">
                 <button
                   onClick={handleNewChat}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold text-white transition hover:opacity-90"
-                  style={{ background: accent, boxShadow: `0 4px 12px ${accent}30` }}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105"
+                  style={{ background: accent, boxShadow: `0 10px 24px ${accent}25` }}
                 >
                   <Plus className="h-4 w-4" strokeWidth={2.5} />
                   New chat
@@ -587,8 +622,8 @@ export function AIChatInterface() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search chats..."
-                    className="w-full rounded-lg border py-2 pl-8 pr-3 text-[12px] outline-none focus:ring-1"
-                    style={{ background: inputBg, borderColor: border, color: textPrimary }}
+                    className="w-full rounded-xl border py-2.5 pl-8 pr-3 text-[12px] outline-none transition focus:ring-2"
+                    style={{ background: inputBg, borderColor: border, color: textPrimary, boxShadow: isDark ? "none" : "0 4px 16px rgba(15,23,42,0.04)" }}
                   />
                 </div>
               </div>
@@ -662,7 +697,7 @@ export function AIChatInterface() {
 
               {/* Bottom: user + settings */}
               <div className="shrink-0 p-2" style={{ borderTop: `1px solid ${border}` }}>
-                <div className="flex items-center gap-2 rounded-lg p-2 transition hover:bg-black/5 dark:hover:bg-white/5">
+                <div className="flex items-center gap-2 rounded-xl border p-2.5 transition hover:bg-black/5 dark:hover:bg-white/5" style={{ borderColor: border, background: inputBg }}>
                   <img loading="lazy" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" alt="User" className="h-8 w-8 rounded-full object-cover" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[12px] font-semibold" style={{ color: textPrimary }}>Alex Morgan</p>
@@ -684,7 +719,7 @@ export function AIChatInterface() {
       {/* ── MAIN CHAT AREA ── */}
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Header */}
-        <header className="flex h-14 shrink-0 items-center gap-3 px-4" style={{ borderBottom: `1px solid ${border}`, background: chatBg }}>
+        <header className="relative z-30 flex h-16 shrink-0 items-center gap-3 px-4 backdrop-blur-2xl sm:px-5" style={{ borderBottom: `1px solid ${border}`, background: chatBg }}>
           {/* Sidebar toggle */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -698,8 +733,8 @@ export function AIChatInterface() {
           <div className="relative">
             <button
               onClick={() => setModelMenuOpen(!modelMenuOpen)}
-              className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-[13px] font-semibold transition hover:bg-black/5 dark:hover:bg-white/5"
-              style={{ color: textPrimary }}
+              className="flex items-center gap-2 rounded-xl border px-2.5 py-2 text-[13px] font-semibold transition hover:-translate-y-px"
+              style={{ color: textPrimary, borderColor: border, background: inputBg, boxShadow: isDark ? "none" : "0 5px 16px rgba(15,23,42,0.06)" }}
             >
               <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ background: `${selectedModel.color}15` }}>
                 <selectedModel.Icon className="h-4 w-4" style={{ color: selectedModel.color }} />
@@ -714,23 +749,35 @@ export function AIChatInterface() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.95 }}
                   transition={{ duration: 0.15, ease: EASE }}
-                  className="fixed z-[9999] mt-1 w-72 rounded-xl border p-1.5 shadow-2xl" style={{ background: chatBg, borderColor: border }}
+                  className="absolute left-0 top-full z-50 mt-2 w-[min(22rem,calc(100vw-2rem))] rounded-2xl border p-2 shadow-2xl backdrop-blur-2xl"
+                  style={{ background: isDark ? "rgba(14,15,22,0.98)" : "rgba(255,255,255,0.98)", borderColor: border, boxShadow: "0 24px 60px rgba(15,23,42,0.22)" }}
                 >
+                  <div className="mb-1 px-2.5 pb-2 pt-1">
+                    <p className="text-[11px] font-bold" style={{ color: textPrimary }}>Choose your model</p>
+                    <p className="mt-0.5 text-[9.5px]" style={{ color: textMuted }}>Switch anytime without losing the conversation.</p>
+                  </div>
                   {MODELS.map(model => {
                     const ModelIcon = model.Icon;
                     return (
                     <button
                       key={model.id}
                       onClick={() => { setSelectedModel(model); setModelMenuOpen(false); }}
-                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition hover:bg-black/5 dark:hover:bg-white/5"
+                      className="flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition hover:-translate-y-px"
+                      style={{
+                        borderColor: selectedModel.id === model.id ? `${model.color}45` : "transparent",
+                        background: selectedModel.id === model.id ? `${model.color}0d` : "transparent",
+                      }}
                     >
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: `${model.color}15` }}>
-                        <ModelIcon className="h-5 w-5" style={{ color: model.color }} />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl border" style={{ background: `${model.color}14`, borderColor: `${model.color}25` }}>
+                        <ModelIcon className="h-[22px] w-[22px]" style={{ color: model.color }} />
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
                           <span className="text-[13px] font-semibold" style={{ color: textPrimary }}>{model.name}</span>
-                          <span className="rounded px-1.5 py-0.5 text-[8px] font-bold uppercase" style={{ background: `${model.color}20`, color: model.color }}>{model.badge}</span>
+                          {model.vendor === "Anthropic" && (
+                            <span className="rounded-full px-1.5 py-0.5 text-[8px] font-bold uppercase" style={{ background: `${model.color}20`, color: model.color }}>recommended</span>
+                          )}
+                          <span className="rounded-full border px-1.5 py-0.5 text-[8px] font-bold uppercase" style={{ borderColor: border, color: textMuted }}>{model.badge}</span>
                         </div>
                         <p className="text-[10px]" style={{ color: textMuted }}>{model.vendor} · {model.context} context · ${model.price}/M tokens</p>
                       </div>
@@ -748,12 +795,12 @@ export function AIChatInterface() {
           <div className="h-4 w-px" style={{ background: border }} />
 
           {/* Token + cost */}
-          <div className="hidden sm:flex items-center gap-3 text-[11px]" style={{ color: textMuted }}>
-            <span className="flex items-center gap-1.5">
+          <div className="hidden items-center gap-1.5 text-[10px] sm:flex" style={{ color: textMuted }}>
+            <span className="flex items-center gap-1.5 rounded-full border px-2.5 py-1.5" style={{ borderColor: border, background: inputBg }}>
               <Cpu className="h-3.5 w-3.5" />
               {totalTokens.toLocaleString()} tokens
             </span>
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-1.5 rounded-full border px-2.5 py-1.5" style={{ borderColor: border, background: inputBg }}>
               <Zap className="h-3.5 w-3.5" />
               ${totalCost}
             </span>
@@ -768,25 +815,35 @@ export function AIChatInterface() {
           <button className="flex h-8 w-8 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }} title="Bookmark">
             <Bookmark className="h-4 w-4" />
           </button>
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className="flex h-8 w-8 items-center justify-center rounded-lg border transition hover:-translate-y-px"
+            style={{ color: textMuted, borderColor: border, background: inputBg }}
+            title={isDark ? "Use light preview" : "Use dark preview"}
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+          <ProfileAvatar />
         </header>
 
         {/* Messages */}
         <div ref={scrollRef} className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "thin" }}>
-          <div className="mx-auto max-w-3xl px-4 py-6">
+          <div className="mx-auto max-w-4xl px-4 py-8 sm:px-7">
             {messages.length === 0 && !isStreaming && (
-              <div className="flex flex-col items-center justify-center py-16">
+              <div className="flex flex-col items-center justify-center py-12">
                 <motion.div
                   initial={{ scale: 0, rotate: -20 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ duration: 0.5, ease: EASE }}
                   className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl"
-                  style={{ background: `linear-gradient(135deg, ${accent}, ${accent}88)`, boxShadow: `0 8px 24px ${accent}40` }}
+                  style={{ background: accent, boxShadow: `0 8px 24px ${accent}40` }}
                 >
                   <Sparkles className="h-8 w-8 text-white" />
                 </motion.div>
-                <h2 className="text-[20px] font-bold" style={{ color: textPrimary }}>How can I help you today?</h2>
-                <p className="mt-1 text-[13px]" style={{ color: textMuted }}>Ask anything, or try a suggestion below</p>
-                <div className="mt-6 grid grid-cols-2 gap-2">
+                <span className="mb-3 rounded-full border px-3 py-1 text-[10px] font-semibold" style={{ borderColor: border, color: textSecondary, background: inputBg }}>Powered by {selectedModel.name}</span>
+                <h2 className="text-center text-[22px] font-bold tracking-tight sm:text-[26px]" style={{ color: textPrimary }}>What can we build together?</h2>
+                <p className="mt-1 text-center text-[13px]" style={{ color: textMuted }}>Ask a question, analyze a file, or start from a curated prompt.</p>
+                <div className="mt-7 grid w-full max-w-2xl grid-cols-1 gap-2.5 sm:grid-cols-2">
                   {SUGGESTIONS.map((s, i) => {
                     const Icon = s.icon;
                     return (
@@ -796,13 +853,17 @@ export function AIChatInterface() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 + i * 0.05 }}
                         onClick={() => { setInput(s.prompt); setTimeout(() => inputRef.current?.focus(), 50); }}
-                        className="flex items-center gap-2.5 rounded-xl border p-3 text-left transition hover:scale-[1.02]"
-                        style={{ borderColor: border, background: isDark ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.6)" }}
+                        className="group flex items-center gap-3 rounded-2xl border p-3.5 text-left transition hover:-translate-y-0.5"
+                        style={{ borderColor: border, background: inputBg, boxShadow: isDark ? "none" : "0 10px 28px rgba(15,23,42,0.05)" }}
                       >
                         <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: `${s.color}15` }}>
                           <Icon className="h-4 w-4" style={{ color: s.color }} />
                         </div>
-                        <span className="text-[12px] font-medium" style={{ color: textPrimary }}>{s.label}</span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-[12px] font-semibold" style={{ color: textPrimary }}>{s.label}</span>
+                          <span className="mt-0.5 block text-[10px] leading-relaxed" style={{ color: textMuted }}>{s.description}</span>
+                        </span>
+                        <ArrowUp className="h-3.5 w-3.5 rotate-45 opacity-0 transition group-hover:opacity-100" style={{ color: s.color }} />
                       </motion.button>
                     );
                   })}
@@ -922,9 +983,9 @@ export function AIChatInterface() {
         </div>
 
         {/* Input area */}
-        <div className="shrink-0 px-4 pb-4">
-          <div className="mx-auto max-w-3xl">
-            <div className="relative rounded-2xl border transition focus-within:ring-2" style={{ background: inputBg, borderColor: border, boxShadow: "0 4px 16px rgba(0,0,0,0.04)" }}>
+        <div className="shrink-0 border-t px-4 pb-4 pt-3 backdrop-blur-2xl" style={{ borderColor: border, background: chatBg }}>
+          <div className="mx-auto max-w-4xl">
+            <div className="relative rounded-[22px] border transition" style={{ background: inputBg, borderColor: border, boxShadow: isDark ? "0 16px 40px rgba(0,0,0,0.28)" : "0 16px 40px rgba(15,23,42,0.10)" }}>
               <textarea
                 ref={inputRef}
                 value={input}
@@ -932,8 +993,8 @@ export function AIChatInterface() {
                 onKeyDown={handleKeyDown}
                 placeholder="Message AI..."
                 rows={1}
-                className="w-full resize-none rounded-2xl bg-transparent px-4 py-3.5 text-[14px] outline-none"
-                style={{ color: textPrimary, maxHeight: "200px" }}
+                className={AI_FOCUS_RESET + " w-full resize-none rounded-[22px] bg-transparent px-4 pb-3 pt-4 text-[14px] sm:px-5"}
+                style={{ color: textPrimary, maxHeight: "200px", outline: "none", boxShadow: "none" }}
                 disabled={isStreaming}
               />
               {/* Toolbar */}
@@ -947,6 +1008,9 @@ export function AIChatInterface() {
                 <button className="flex h-8 w-8 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }} title="Web search">
                   <Globe className="h-4 w-4" />
                 </button>
+                <span className="ml-1 hidden rounded-full border px-2 py-1 text-[9px] font-medium sm:inline-flex" style={{ borderColor: border, color: textMuted }}>
+                  {selectedModel.context} context
+                </span>
                 <div className="flex-1" />
                 {isStreaming ? (
                   <button
@@ -961,16 +1025,16 @@ export function AIChatInterface() {
                   <button
                     onClick={handleSend}
                     disabled={!input.trim()}
-                    className="flex h-8 w-8 items-center justify-center rounded-lg text-white transition disabled:opacity-30"
-                    style={{ background: accent }}
+                    className="flex h-9 w-9 items-center justify-center rounded-xl text-white transition hover:-translate-y-0.5 disabled:opacity-30"
+                    style={{ background: accent, boxShadow: input.trim() ? `0 8px 18px ${accent}35` : "none" }}
                   >
                     <ArrowUp className="h-4 w-4" strokeWidth={2.5} />
                   </button>
                 )}
               </div>
             </div>
-            <p className="mt-2 text-center text-[10px]" style={{ color: textMuted }}>
-              AI can make mistakes. Verify important info. Press Enter to send, Shift+Enter for new line.
+            <p className="mt-2 text-center text-[9.5px]" style={{ color: textMuted }}>
+              AI can make mistakes. Verify important info. Enter to send · Shift+Enter for a new line.
             </p>
           </div>
         </div>
@@ -1015,9 +1079,10 @@ function ConversationItem({
           onClick={onSelect}
           className="group flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-[12.5px] transition"
           style={{
-            background: isActive ? (isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)") : "transparent",
+            background: isActive ? `${accent}12` : "transparent",
             color: isActive ? textPrimary : textSecondary,
-            borderLeft: isActive ? `2px solid ${accent}` : "2px solid transparent",
+            border: isActive ? `1px solid ${accent}24` : "1px solid transparent",
+            boxShadow: isActive && !isDark ? "0 6px 18px rgba(15,23,42,0.04)" : "none",
           }}
         >
           <MessageSquare className="h-3.5 w-3.5 shrink-0" style={{ color: isActive ? accent : textMuted }} />
@@ -1102,27 +1167,26 @@ function MessageBubble({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: EASE }}
-      className={`mb-6 flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}
+      className={`mb-7 flex gap-3 sm:gap-4 ${isUser ? "flex-row-reverse" : ""}`}
     >
-      {/* Avatar */}
-      <div
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-        style={{
-          background: isUser ? userBubbleBg : `${model?.color || accent}15`,
-          border: isUser ? `1px solid ${border}` : "none",
-        }}
-      >
-        {isUser ? (
-          <User className="h-4 w-4" style={{ color: textSecondary }} />
-        ) : model?.Icon ? (
-          <model.Icon className="h-4 w-4" style={{ color: model.color }} />
-        ) : (
-          <Bot className="h-4 w-4 text-white" />
-        )}
-      </div>
+      {/* Profile / model avatar */}
+      {isUser ? (
+        <ProfileAvatar />
+      ) : (
+        <div
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
+          style={{ background: (model?.color || accent) + "15" }}
+        >
+          {model?.Icon ? (
+            <model.Icon className="h-4 w-4" style={{ color: model.color }} />
+          ) : (
+            <Bot className="h-4 w-4" style={{ color: accent }} />
+          )}
+        </div>
+      )}
 
       {/* Content */}
-      <div className={`min-w-0 flex-1 ${isUser ? "max-w-[85%]" : ""}`}>
+      <div className={`min-w-0 flex-1 ${isUser ? "max-w-[82%]" : ""}`}>
         {/* Header */}
         <div className={`mb-1 flex items-center gap-2 ${isUser ? "justify-end" : ""}`}>
           <span className="text-[12px] font-semibold" style={{ color: textPrimary }}>
@@ -1157,11 +1221,12 @@ function MessageBubble({
           </div>
         ) : (
           <div
-            className="rounded-2xl px-4 py-3 text-[14px] leading-relaxed"
+            className="rounded-2xl px-4 py-3.5 text-[14px] leading-relaxed sm:px-5"
             style={{
-              background: isUser ? userBubbleBg : "transparent",
+              background: isUser ? userBubbleBg : isDark ? "#14141c" : "#ffffff",
               color: textPrimary,
-              border: isUser ? "none" : `1px solid ${border}`,
+              border: `1px solid ${border}`,
+              boxShadow: isUser || isDark ? "none" : "0 10px 30px rgba(15,23,42,0.05)",
             }}
           >
             <div className="whitespace-pre-wrap">{msg.content}</div>

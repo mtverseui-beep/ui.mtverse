@@ -172,7 +172,7 @@ export function YearWrappedDashboardCard() {
   }
 
   return (
-    <div className={`yw-wrapper ${plusJakarta.variable} ${spaceGrotesk.variable} font-[family-name:var(--font-plus-jakarta)]`}>
+    <div className={`yw-wrapper relative min-h-full w-full ${plusJakarta.variable} ${spaceGrotesk.variable} font-[family-name:var(--font-plus-jakarta)]`}>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       {/* This isolated showcase intentionally loads its font within the card. */}
@@ -191,7 +191,13 @@ export function YearWrappedDashboardCard() {
         .yw-wrapper [class*='font-[family-name:var(--font-plus-jakarta)'] { font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important; }
       `}</style>
       <div
-        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-nowrap gap-1 md:gap-2 ${template === "retro" ? "text-black" : "text-white"}`}
+        className={`sticky top-3 z-50 mx-auto mb-4 flex w-max max-w-[calc(100%-1.5rem)] flex-nowrap gap-1 overflow-x-auto rounded-full border p-1 shadow-xl backdrop-blur-xl scrollbar-none md:gap-2 ${
+          template === "retro"
+            ? "border-black/15 bg-white/90 text-black"
+            : template === "90s"
+              ? "border-black bg-[#ffff00]/90 text-black"
+              : "border-white/10 bg-black/50 text-white"
+        }`}
       >
         <button
           onClick={() => setTemplate("modern")}

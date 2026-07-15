@@ -8,7 +8,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function AIChatbotCard() {
   return (
     <motion.div
-      className="relative min-h-screen w-full overflow-hidden"
+      className="relative h-full min-h-[640px] w-full overflow-hidden"
       initial={{ opacity: 0, y: 20, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, ease: EASE }}
@@ -24,7 +24,7 @@ export function AIChatbotCard() {
       />
 
       {/* Chat widget — bottom-right floating orb that expands */}
-      <div className="relative z-10 min-h-screen p-8">
+      <div className="relative z-10 h-full min-h-[640px] p-4 sm:p-8">
         <ChatWidget />
       </div>
     </motion.div>

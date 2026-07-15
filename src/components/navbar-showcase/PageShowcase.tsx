@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ResponsivePreviewToolbar } from "./ResponsivePreviewToolbar";
 import { CodePanelLoader } from "@/components/library/CodePanelLoader";
 import { DocsPanel } from "@/components/library/DocsPanel";
 import { cardRoutes } from "@/components/cards-data/cards";
+import type { PublicCodeEntry } from "@/components/library/code-types";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -18,7 +19,35 @@ interface PageShowcaseProps {
 
 export function PageShowcase({ slug, children }: PageShowcaseProps) {
   const [tab, setTab] = useState<TabId>("preview");
+  const [docsMetadata, setDocsMetadata] = useState<PublicCodeEntry | null>(null);
 
+  useEffect(() => {
+    if (tab !== "docs" || docsMetadata) return;
+
+    const controller = new AbortController();
+    let active = true;
+
+    fetch(`/api/components/${encodeURIComponent(slug)}/code`, {
+      method: "GET",
+      cache: "no-store",
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Unable to load component metadata.");
+        return response.json() as Promise<{ entry: PublicCodeEntry }>;
+      })
+      .then(({ entry }) => {
+        if (active) setDocsMetadata(entry);
+      })
+      .catch(() => {
+        // The base documentation remains usable when metadata loading fails.
+      });
+
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [docsMetadata, slug, tab]);
 
   const handleTabChange = useCallback(
     (next: TabId) => {
@@ -37,9 +66,9 @@ export function PageShowcase({ slug, children }: PageShowcaseProps) {
       title={cardMeta.title}
       animation={cardMeta.animation}
       accent={cardMeta.accent}
-      componentName={slug.replace(/-card$/, "")}
-      npmPackages={[]}
-      dependencies={[]}
+      componentName={docsMetadata?.componentName || slug.replace(/-card$/, "")}
+      npmPackages={docsMetadata?.npmPackages || []}
+      dependencies={docsMetadata?.dependencies || []}
       category={cardMeta.category}
     />
   ) : null;

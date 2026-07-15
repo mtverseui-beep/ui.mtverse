@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -8,8 +9,9 @@ import { useSyncExternalStore } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import {
   Layers,
-  PanelLeftClose,
+
   PanelLeft,
+  PanelLeftClose,
   PanelBottom,
   Sparkle,
   Bot,
@@ -55,7 +57,7 @@ import {
 } from "@/components/cards-data/cards";
 import type { CardCategory, CardMeta } from "@/components/cards-data/cards";
 
-// ── Motion tokens ──
+// â”€â”€ Motion tokens â”€â”€
 const EASE = [0.16, 1, 0.3, 1] as const;
 const DUR_BASE = 0.24;
 
@@ -113,7 +115,7 @@ const NAV_GROUPS: NavGroup[] = [
       { id: "overlays", label: "Modals", icon: SquareStack, accent: "#8b5cf6", routes: overlaysRoutes },
       { id: "sidebar", label: "Sidebar", icon: PanelLeft, accent: "#7c3aed", routes: sidebarRoutes },
       { id: "backgrounds", label: "Backgrounds", icon: Image, accent: "#ec4899", routes: backgroundRoutes },
-      { id: "tables", label: "Tables", icon: Layers, accent: "6366f1", routes: tableRoutes },
+      { id: "tables", label: "Tables", icon: Layers, accent: "#6366f1", routes: tableRoutes },
       { id: "buttons", label: "Buttons", icon: MousePointerClick, accent: "#6366f1", routes: buttonRoutes },
       { id: "forms", label: "Forms", icon: FormIcon, accent: "#10b981", routes: formRoutes },
       { id: "navbar", label: "Navbar", icon: Menu, accent: "#0ea5e9", routes: navbarRoutes },
@@ -154,7 +156,7 @@ const SECTION_LABELS: Record<SectionId, string> = {
   tables: "Tables",
 };
 
-// Map a route category → the section that owns it.
+// Map a route category â†’ the section that owns it.
 function sectionForCategory(cat: CardCategory | undefined): SectionId {
   switch (cat) {
     case "Agents": return "premium";
@@ -181,7 +183,7 @@ function sectionForCategory(cat: CardCategory | undefined): SectionId {
 
 const HOME_HREF = cardRoutesOnly[0]?.href ?? "/components/cards/cinematic-folder-card";
 
-// Client-only mounted flag — avoids hydration mismatch with next-themes.
+// Client-only mounted flag â€” avoids hydration mismatch with next-themes.
 const emptySubscribe = () => () => {};
 function useMounted() {
   return useSyncExternalStore(emptySubscribe, () => true, () => false);
@@ -192,13 +194,53 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const mounted = useMounted();
-  const isDark = theme === "dark";
+  const isDark = mounted && theme === "dark";
 
   const [mainCollapsed, setMainCollapsed] = React.useState(false);
   const [activeSection, setActiveSection] = React.useState<SectionId>("cards");
   const [mobileCardsOpen, setMobileCardsOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const [favorites, setFavorites] = React.useState<Set<string>>(new Set());
+  const mainNavRef = React.useRef<HTMLElement>(null);
+  const [mainNavThumb, setMainNavThumb] = React.useState({
+    visible: false,
+    top: 8,
+    height: 28,
+  });
+
+  React.useEffect(() => {
+    const nav = mainNavRef.current;
+    if (!nav) return;
+
+    const syncThumb = () => {
+      const { clientHeight, scrollHeight, scrollTop } = nav;
+      if (scrollHeight <= clientHeight + 1) {
+        setMainNavThumb({ visible: false, top: 8, height: 28 });
+        return;
+      }
+
+      const trackHeight = Math.max(clientHeight - 16, 1);
+      const height = Math.max(28, (clientHeight / scrollHeight) * trackHeight);
+      const maxTop = Math.max(trackHeight - height, 0);
+      const scrollRange = Math.max(scrollHeight - clientHeight, 1);
+      const top = 8 + (scrollTop / scrollRange) * maxTop;
+
+      setMainNavThumb({ visible: true, top, height });
+    };
+
+    const frame = window.requestAnimationFrame(syncThumb);
+    nav.addEventListener("scroll", syncThumb, { passive: true });
+
+    const resizeObserver = new ResizeObserver(syncThumb);
+    resizeObserver.observe(nav);
+    Array.from(nav.children).forEach((child) => resizeObserver.observe(child));
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      nav.removeEventListener("scroll", syncThumb);
+      resizeObserver.disconnect();
+    };
+  }, [mainCollapsed]);
 
   const activeCard = cardRoutes.find((c) => c.href === pathname) || null;
 
@@ -227,7 +269,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       const raw = localStorage.getItem("mtverse:favorites");
       if (raw) setFavorites(new Set(JSON.parse(raw)));
     } catch {
-      /* ignore — malformed or unavailable */
+      /* ignore â€” malformed or unavailable */
     }
   }, []);
   React.useEffect(() => {
@@ -253,7 +295,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener("keydown", onKey);
   }, [mobileCardsOpen]);
 
-  // ⌘K / Ctrl+K focuses the sidebar search.
+  // âŒ˜K / Ctrl+K focuses the sidebar search.
   const focusSearch = React.useCallback(() => {
     if (typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches) {
       setMobileCardsOpen(true);
@@ -292,7 +334,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   }, [filtered, sectionCategories]);
 
   // Stabilize isActive so the memoized CardsSidebar doesn't re-render on
-  // every pathname change — only the active highlight updates.
+  // every pathname change â€” only the active highlight updates.
   const isActive = React.useCallback((href: string) => pathname === href, [pathname]);
 
   const toggleFavorite = (slug: string) => {
@@ -304,7 +346,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     });
   };
 
-  // Breadcrumb segments — hierarchical: Components > <Group> > <Name>
+  // Breadcrumb segments â€” hierarchical: Components > <Group> > <Name>
   const breadcrumb = React.useMemo(() => {
     const segs = pathname.split("/").filter(Boolean);
     const titleCase = (s: string) =>
@@ -320,11 +362,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         label = "Components";
         href = HOME_HREF;
       } else if (card) {
-        // leaf → the component's title
+        // leaf â†’ the component's title
         label = card.title;
         href = card.href;
       } else {
-        // intermediate group segment → link to its first card
+        // intermediate group segment â†’ link to its first card
         label = titleCase(seg);
         href = cardRoutes.find((c) => c.href.startsWith(path + "/"))?.href ?? path;
       }
@@ -351,11 +393,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       <div className="pointer-events-none absolute right-10 top-1/3 h-80 w-80 rounded-full blur-3xl" style={{ background: isDark ? "rgba(34,211,238,0.08)" : "rgba(34,211,238,0.10)" }} />
       <div className="pointer-events-none absolute bottom-0 left-1/3 h-72 w-72 rounded-full blur-3xl" style={{ background: isDark ? "rgba(236,72,153,0.08)" : "rgba(236,72,153,0.10)" }} />
 
-      {/* ══════════ MAIN SIDEBAR (1st) — Glass Float style ══════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â• MAIN SIDEBAR (1st) â€” Glass Float style â•â•â•â•â•â•â•â•â•â• */}
       <motion.aside
-        animate={{ width: mainCollapsed ? 64 : 208 }}
+        animate={{ width: mainCollapsed ? 56 : 184 }}
         transition={{ duration: DUR_BASE, ease: EASE }}
-        className="relative z-30 hidden m-2 shrink-0 flex-col rounded-2xl overflow-hidden md:flex"
+        className="relative z-30 hidden m-2 shrink-0 flex-col rounded-[28px] overflow-hidden md:flex"
         style={{
           background: isDark ? "rgba(20,20,28,0.60)" : "rgba(255,255,255,0.55)",
           backdropFilter: "blur(24px)",
@@ -364,12 +406,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           boxShadow: isDark ? "0 8px 32px rgba(0,0,0,0.40)" : "0 8px 32px rgba(31,38,135,0.10)",
         }}
       >
-        {/* Brand — modernized: real logo + wordmark */}
+        {/* Brand â€” modernized: real logo + wordmark */}
         <div className="flex h-14 shrink-0 items-center gap-2.5 border-b cs-border px-3">
           <Link
             href={HOME_HREF}
             className="flex shrink-0 items-center gap-2.5 overflow-hidden"
-            aria-label="mtverse — home"
+            aria-label="mtverse â€” home"
           >
             { }
             <img
@@ -388,9 +430,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
 
-        {/* Nav — grouped, data-driven, animated active pill */}
+        {/* Nav â€” grouped, data-driven, animated active pill */}
         <LayoutGroup id="sidebar-nav">
-          <nav className="scrollbar-modern flex flex-1 flex-col gap-3 overflow-y-auto overflow-x-hidden p-2">
+          <div className="relative flex min-h-0 flex-1">
+            <nav
+              ref={mainNavRef}
+              className="sidebar-scrollbar flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overflow-x-hidden py-2 pl-2 pr-3"
+            >
             {NAV_GROUPS.map((group) => (
               <div key={group.label} className="flex flex-col gap-0.5">
                 {!mainCollapsed && (
@@ -414,8 +460,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       aria-label={item.label}
                       aria-pressed={active}
                       onClick={() => onSectionClick(item)}
-                      className={`group relative flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-[12.5px] font-medium outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/40 ${
-                        active ? "cs-text" : "cs-muted hover:cs-text"
+                      className={`group relative flex items-center gap-2 rounded-xl border border-transparent px-2 py-1.5 text-[12px] font-medium outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-cyan-400/40 ${
+                        active
+                          ? "cs-text font-semibold"
+                          : "cs-muted hover:bg-[var(--card-hover)] hover:cs-text"
                       } ${mainCollapsed ? "justify-center" : ""}`}
                     >
                       {active && (
@@ -423,8 +471,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                           layoutId="sidebar-active-pill"
                           className="absolute inset-0 rounded-xl"
                           style={{
-                            background: `${item.accent}1f`,
-                            boxShadow: `inset 0 0 0 1px ${item.accent}33`,
+                            background: `linear-gradient(90deg, ${item.accent}20 0%, ${item.accent}0d 72%, transparent 100%)`,
+                            border: `1px solid ${item.accent}30`,
+                            boxShadow: isDark
+                              ? `0 5px 16px ${item.accent}0b, inset 0 1px 0 rgba(255,255,255,0.03)`
+                              : `0 4px 14px ${item.accent}0a, inset 0 1px 0 rgba(255,255,255,0.65)`,
                           }}
                           transition={{ type: "spring", stiffness: 400, damping: 32 }}
                         />
@@ -432,18 +483,24 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       {active && !mainCollapsed && (
                         <motion.span
                           layoutId="sidebar-active-bar"
-                          className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full"
+                          className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-full"
                           style={{ background: item.accent }}
                           transition={{ type: "spring", stiffness: 400, damping: 32 }}
                         />
                       )}
                       <span
-                        className="relative z-10 flex h-4 w-4 shrink-0 items-center justify-center transition-colors"
-                        style={{ color: active ? item.accent : undefined }}
+                        className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg transition-colors"
+                        style={{
+                          color: active ? item.accent : undefined,
+                          background: active ? `${item.accent}16` : "transparent",
+                          boxShadow: active ? `inset 0 0 0 1px ${item.accent}20` : "none",
+                        }}
                       >
-                        <Icon className="h-4 w-4" strokeWidth={2} />
+                        <Icon className="h-3.5 w-3.5" strokeWidth={active ? 2.2 : 2} />
                       </span>
-                      {!mainCollapsed && <span className="relative z-10 truncate">{item.label}</span>}
+                      {!mainCollapsed && (
+                        <span className="relative z-10 truncate tracking-[-0.01em]">{item.label}</span>
+                      )}
                       {!mainCollapsed && (
                         <span className="relative z-10 ml-auto flex items-center gap-1">
                           {item.pro && (
@@ -469,26 +526,46 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 })}
               </div>
             ))}
-          </nav>
+            </nav>
+            {mainNavThumb.visible && (
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute right-1 top-0 h-full w-[3px]"
+              >
+                <span
+                  className="absolute left-0 w-full rounded-full bg-slate-500/20 dark:bg-white/10"
+                  style={{
+                    top: mainNavThumb.top,
+                    height: mainNavThumb.height,
+                  }}
+                />
+              </span>
+            )}
+          </div>
         </LayoutGroup>
 
-        {/* Collapse toggle */}
+        {/* Bottom collapse toggle */}
         <div className="shrink-0 border-t cs-border p-2">
           <button
             type="button"
             aria-label={mainCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            onClick={() => setMainCollapsed((v) => !v)}
-            className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-[12px] font-medium cs-muted outline-none transition hover:bg-[var(--card-hover)] hover:cs-text focus-visible:ring-2 focus-visible:ring-cyan-400/40 ${
+            aria-expanded={!mainCollapsed}
+            onClick={() => setMainCollapsed((value) => !value)}
+            className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-[12px] font-medium cs-muted outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40 ${
               mainCollapsed ? "justify-center" : ""
             }`}
           >
-            {mainCollapsed ? <PanelLeft className="h-4 w-4" strokeWidth={2} /> : <PanelLeftClose className="h-4 w-4" strokeWidth={2} />}
+            {mainCollapsed ? (
+              <PanelLeft className="h-4 w-4" strokeWidth={2} />
+            ) : (
+              <PanelLeftClose className="h-4 w-4" strokeWidth={2} />
+            )}
             {!mainCollapsed && <span>Collapse</span>}
           </button>
         </div>
       </motion.aside>
 
-      {/* ══════════ SECOND SIDEBAR (2nd) — card / component list ══════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â• SECOND SIDEBAR (2nd) â€” card / component list â•â•â•â•â•â•â•â•â•â• */}
       <aside
         className="relative z-20 hidden m-2 w-60 shrink-0 rounded-2xl overflow-hidden lg:flex"
         style={{
@@ -511,7 +588,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         />
       </aside>
 
-      {/* ══════════ MOBILE DRAWER — combined section nav + card list ══════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â• MOBILE DRAWER â€” combined section nav + card list â•â•â•â•â•â•â•â•â•â• */}
       <AnimatePresence>
         {mobileCardsOpen && (
           <>
@@ -533,7 +610,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               aria-label="Navigation"
               className="fixed inset-y-0 left-0 z-60 flex w-[300px] max-w-[88vw] flex-col border-r cs-border bg-[var(--card-surface)] lg:hidden"
             >
-              {/* Mobile drawer header — branded */}
+              {/* Mobile drawer header â€” branded */}
               <div className="flex h-12 shrink-0 items-center gap-2 border-b cs-border px-3">
                 { }
                 <img src="/mtverse-logo.png" alt="mtverse" width={20} height={20} className="h-5 w-5 rounded object-contain" />
@@ -549,7 +626,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 </button>
               </div>
 
-              {/* Section navigation — horizontal scroll chips (1st sidebar content) */}
+              {/* Section navigation â€” horizontal scroll chips (1st sidebar content) */}
               <div className="shrink-0 border-b cs-border p-2">
                 <div className="flex flex-wrap gap-1">
                   {NAV_GROUPS.flatMap((g) => g.items).map((item) => {
@@ -598,9 +675,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         )}
       </AnimatePresence>
 
-      {/* ══════════ MAIN AREA ══════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â• MAIN AREA â•â•â•â•â•â•â•â•â•â• */}
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* Top nav — modern, compact, subtle blur backdrop */}
+        {/* Top nav â€” modern, compact, subtle blur backdrop */}
         <header className="z-40 flex h-14 shrink-0 items-center gap-2.5 m-2 rounded-2xl px-4 backdrop-blur-xl sm:px-4"
           style={{
             background: isDark ? "rgba(20,20,28,0.60)" : "rgba(255,255,255,0.55)",
@@ -630,7 +707,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <span className="text-[13px] font-bold cs-text tracking-tight">mtverse</span>
           </div>
 
-          {/* Breadcrumb — desktop */}
+          {/* Breadcrumb â€” desktop */}
           <nav aria-label="Breadcrumb" className="hidden items-center gap-1 md:flex">
             <Link
               href={HOME_HREF}
@@ -660,7 +737,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
           <div className="flex-1" />
 
-          {/* Command search pill — modernized */}
+          {/* Command search pill â€” modernized */}
           <button
             type="button"
             aria-label="Search components"
@@ -668,9 +745,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             className="hidden h-8 items-center gap-2 rounded-lg border cs-border cs-input px-2.5 text-[12px] cs-subtle transition hover:cs-text sm:flex"
           >
             <Search className="h-3.5 w-3.5" strokeWidth={2} />
-            <span className="hidden lg:inline">Search components…</span>
+            <span className="hidden lg:inline">Search componentsâ€¦</span>
             <kbd className="ml-1 hidden items-center gap-0.5 rounded-md border cs-border bg-[var(--card-surface)] px-1.5 py-0.5 text-[10px] font-semibold cs-subtle lg:inline-flex">
-              ⌘K
+              âŒ˜K
             </kbd>
           </button>
 
@@ -722,7 +799,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </button>
         </header>
 
-        {/* Breadcrumb — mobile */}
+        {/* Breadcrumb â€” mobile */}
         <div className="flex h-9 shrink-0 items-center gap-1.5 m-2 rounded-xl px-3 md:hidden"
           style={{ background: isDark ? "rgba(20,20,28,0.60)" : "rgba(255,255,255,0.55)", border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(255,255,255,0.6)" }}>
           <Link href={HOME_HREF} className="text-[11px] font-medium cs-subtle">
@@ -760,9 +837,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ──────────────────────────────────────────────────────────────────────────
-// FormIcon — lucide TextCursorInput-style icon for the Forms nav item
-// ──────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// FormIcon â€” lucide TextCursorInput-style icon for the Forms nav item
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function FormIcon({ className = "h-4 w-4", strokeWidth = 2 }: { className?: string; strokeWidth?: number }) {
   return (
     <svg className={`${className} shrink-0`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
@@ -782,25 +859,73 @@ function FormIcon({ className = "h-4 w-4", strokeWidth = 2 }: { className?: stri
   );
 }
 
-// ──────────────────────────────────────────────────────────────────────────
-// Tooltip — shown in collapsed sidebar mode
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Tooltip â€” shown in collapsed sidebar mode
 // Positioned absolutely OUTSIDE the parent's scroll width by using `fixed`-
 // like positioning via `left-full` + `pointer-events-none`. Critically, we
 // wrap the tooltip in a container with `overflow: hidden` so it doesn't
 // expand the parent's scrollWidth when invisible.
-// ──────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function Tooltip({ label }: { label: string }) {
+  const anchorRef = React.useRef<HTMLSpanElement>(null);
+  const [visible, setVisible] = React.useState(false);
+  const [position, setPosition] = React.useState({ top: 0, left: 0 });
+
+  const updatePosition = React.useCallback(() => {
+    const button = anchorRef.current?.closest("button");
+    if (!button) return;
+
+    const rect = button.getBoundingClientRect();
+    setPosition({
+      top: rect.top + rect.height / 2,
+      left: rect.right + 10,
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (!visible) return;
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [updatePosition, visible]);
+
   return (
-    <span className="pointer-events-none absolute left-1/2 top-full z-80 mt-1 -translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 px-2 py-1 text-[11px] font-medium text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 dark:bg-slate-700">
-      {label}
-    </span>
+    <>
+      <span
+        ref={anchorRef}
+        aria-hidden="true"
+        className="absolute inset-0 z-20"
+        onPointerEnter={() => {
+          updatePosition();
+          setVisible(true);
+        }}
+        onPointerLeave={() => setVisible(false)}
+      />
+      {visible &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <span
+            role="tooltip"
+            className="pointer-events-none fixed z-[100] -translate-y-1/2 whitespace-nowrap rounded-lg border border-white/10 bg-slate-950/95 px-2.5 py-1.5 text-[11px] font-medium text-white shadow-xl shadow-black/20 backdrop-blur-md"
+            style={{ top: position.top, left: position.left }}
+          >
+            {label}
+          </span>,
+          document.body,
+        )}
+    </>
   );
 }
-
-// ──────────────────────────────────────────────────────────────────────────
-// Cards sidebar — 2nd sidebar with grouped card list + search
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Cards sidebar â€” 2nd sidebar with grouped card list + search
 // Memoized so it doesn't re-render on every pathname change.
-// ──────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const CardsSidebar = React.memo(function CardsSidebar({
   byCategory,
   search,
@@ -824,8 +949,48 @@ const CardsSidebar = React.memo(function CardsSidebar({
 }) {
   const totalCount = Array.from(byCategory.values()).reduce((sum, items) => sum + items.length, 0);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const listRef = React.useRef<HTMLElement>(null);
+  const [listThumb, setListThumb] = React.useState({
+    visible: false,
+    top: 8,
+    height: 28,
+  });
 
-  // Listen for the global ⌘K focus event dispatched from the header.
+  React.useEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+
+    const syncThumb = () => {
+      const { clientHeight, scrollHeight, scrollTop } = list;
+      if (scrollHeight <= clientHeight + 1) {
+        setListThumb({ visible: false, top: 8, height: 28 });
+        return;
+      }
+
+      const trackHeight = Math.max(clientHeight - 16, 1);
+      const height = Math.max(28, (clientHeight / scrollHeight) * trackHeight);
+      const maxTop = Math.max(trackHeight - height, 0);
+      const scrollRange = Math.max(scrollHeight - clientHeight, 1);
+      const top = 8 + (scrollTop / scrollRange) * maxTop;
+
+      setListThumb({ visible: true, top, height });
+    };
+
+    const frame = window.requestAnimationFrame(syncThumb);
+    list.addEventListener("scroll", syncThumb, { passive: true });
+
+    const resizeObserver = new ResizeObserver(syncThumb);
+    resizeObserver.observe(list);
+    Array.from(list.children).forEach((child) => resizeObserver.observe(child));
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      list.removeEventListener("scroll", syncThumb);
+      resizeObserver.disconnect();
+    };
+  }, [byCategory, search]);
+
+  // Listen for the global âŒ˜K focus event dispatched from the header.
   React.useEffect(() => {
     const handler = () => inputRef.current?.focus();
     window.addEventListener("mtverse:focus-search", handler);
@@ -834,9 +999,9 @@ const CardsSidebar = React.memo(function CardsSidebar({
 
   return (
     <div className="flex h-full w-full flex-col">
-      {/* Header — modernized: slimmer, accent dot, refined typography */}
+      {/* Header â€” modernized: slimmer, accent dot, refined typography */}
       {!hideHeader && (
-        <div className="flex h-12 shrink-0 items-center gap-2 border-b cs-border px-3">
+        <div className="flex h-14 shrink-0 items-center gap-2 border-b cs-border px-3">
           <span
             className="h-1.5 w-1.5 shrink-0 rounded-full"
             style={{ background: "linear-gradient(135deg, #2563eb, #06b6d4)" }}
@@ -872,7 +1037,7 @@ const CardsSidebar = React.memo(function CardsSidebar({
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search…"
+            placeholder="Searchâ€¦"
             aria-label="Search components"
             className="w-full rounded-xl border cs-border cs-input py-2 pl-8 pr-3 text-[12.5px] cs-text placeholder:cs-subtle outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/40"
           />
@@ -880,7 +1045,11 @@ const CardsSidebar = React.memo(function CardsSidebar({
       </div>
 
       {/* Grouped card list */}
-      <nav className="scrollbar-modern flex-1 overflow-y-auto overflow-x-hidden px-1.5 pb-3">
+      <div className="relative flex min-h-0 flex-1">
+        <nav
+          ref={listRef}
+          className="sidebar-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto overflow-x-hidden pb-3 pl-1.5 pr-3"
+        >
         {Array.from(byCategory.entries()).map(([category, items]) => (
           <div key={category} className="mb-2">
             <h3 className="px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.14em] cs-subtle">
@@ -895,22 +1064,38 @@ const CardsSidebar = React.memo(function CardsSidebar({
                     <Link
                       href={card.href}
                       aria-current={active ? "page" : undefined}
-                      className={`group flex items-center gap-2 rounded-lg px-2.5 py-1.5 transition outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40 ${
+                      className={`group relative flex items-center gap-2 rounded-xl border px-2.5 py-2 outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-cyan-400/40 ${
                         active
-                          ? "bg-[var(--card-hover)] ring-1 ring-cyan-500/20"
-                          : "hover:bg-[var(--card-hover)]"
+                          ? "cs-text"
+                          : "border-transparent hover:bg-[var(--card-hover)]"
                       }`}
+                      style={
+                        active
+                          ? {
+                              background: `linear-gradient(90deg, ${card.accent}18 0%, ${card.accent}08 72%, transparent 100%)`,
+                              borderColor: `${card.accent}2b`,
+                              boxShadow: `0 4px 14px ${card.accent}0a`,
+                            }
+                          : undefined
+                      }
                     >
-                      {/* Active indicator dot (replaces the icon box) */}
+                      {active && (
+                        <span
+                          aria-hidden="true"
+                          className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-full"
+                          style={{ background: card.accent }}
+                        />
+                      )}
                       <span
-                        className="h-1.5 w-1.5 shrink-0 rounded-full transition-colors"
+                        className="h-2 w-2 shrink-0 rounded-full transition-colors"
                         style={{
                           background: active ? card.accent : "var(--cs-border)",
+                          boxShadow: active ? `0 0 0 3px ${card.accent}16` : "none",
                         }}
                         aria-hidden
                       />
                       <span className="min-w-0 flex-1">
-                        <span className={`block truncate text-[12px] font-medium ${active ? "cs-text" : "cs-muted"}`}>
+                        <span className={`block truncate text-[12px] tracking-[-0.01em] ${active ? "font-semibold cs-text" : "font-medium cs-muted"}`}>
                           {card.title}
                         </span>
                       </span>
@@ -943,7 +1128,14 @@ const CardsSidebar = React.memo(function CardsSidebar({
                           <Heart className="h-3 w-3" strokeWidth={2} />
                         </button>
                       )}
-                      {active && <ChevronRight className="h-3 w-3 shrink-0 text-cyan-500" strokeWidth={2.4} />}
+                      {active && (
+                        <span
+                          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md"
+                          style={{ background: `${card.accent}14`, color: card.accent }}
+                        >
+                          <ChevronRight className="h-3 w-3" strokeWidth={2.4} />
+                        </span>
+                      )}
                     </Link>
                   </li>
                 );
@@ -956,7 +1148,22 @@ const CardsSidebar = React.memo(function CardsSidebar({
             No components match &ldquo;{search}&rdquo;
           </p>
         )}
-      </nav>
+        </nav>
+        {listThumb.visible && (
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute right-1 top-0 h-full w-[3px]"
+          >
+            <span
+              className="absolute left-0 w-full rounded-full bg-slate-500/20 dark:bg-white/10"
+              style={{
+                top: listThumb.top,
+                height: listThumb.height,
+              }}
+            />
+          </span>
+        )}
+      </div>
     </div>
   );
 });

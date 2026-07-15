@@ -15,7 +15,7 @@ interface DocsPanelProps {
   accent: string;
   componentName: string;
   npmPackages: string[];
-  dependencies: Array<{ path: string; label: string; content?: string } | string>;
+  dependencies: Array<{ path?: string; label: string; content?: string } | string>;
   category: string;
 }
 

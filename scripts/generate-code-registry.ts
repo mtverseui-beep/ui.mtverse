@@ -27,6 +27,10 @@ interface CardEntry {
   filePath: string;
 }
 
+const FILE_OVERRIDES: Record<string, string> = {
+  "cta-integration-cta-card": "CtaIntegrationCard",
+  "cta-testimonial-cta-card": "CtaTestimonialCard",
+};
 // Read cards.ts to extract the slug → component name mapping.
 function parseCardsTs(): CardEntry[] {
   const cardsTs = readFileSync(CARDS_DATA, "utf-8");
@@ -132,11 +136,14 @@ function parseCardsTs(): CardEntry[] {
     // and the file is "CinematicFolderCard.tsx". We normalize both to a
     // comparable form: strip "card" suffix from slug, lowercase, remove hyphens.
     const slugNorm = slug.replace(/-card$/, "").replace(/-/g, "");
-    const match = allFiles.find((f) => {
-      // "CinematicFolderCard" → "cinematicfolder" (strip "Card", lowercase)
-      const fileNorm = f.name.replace(/Card$/, "").toLowerCase();
-      return fileNorm === slugNorm || f.name.toLowerCase().replace(/-/g, "").includes(slugNorm);
-    });
+    const overrideName = FILE_OVERRIDES[slug];
+    const match = overrideName
+      ? allFiles.find((f) => f.name === overrideName)
+      : allFiles.find((f) => {
+          // "CinematicFolderCard" -> "cinematicfolder" (strip "Card", lowercase)
+          const fileNorm = f.name.replace(/Card$/, "").toLowerCase();
+          return fileNorm === slugNorm || f.name.toLowerCase().replace(/-/g, "").includes(slugNorm);
+        });
 
     if (match) {
       entries.push({ slug, componentName: match.name, source, filePath: match.path });

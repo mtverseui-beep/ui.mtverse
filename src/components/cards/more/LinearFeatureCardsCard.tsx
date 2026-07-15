@@ -86,10 +86,10 @@ export function LinearFeatureCardsCard() {
   const [selectedFeature, setSelectedFeature] = useState<number | null>(null);
 
   return (
-    <div className="min-h-full bg-[#0d0d0d] text-white">
+    <div className="h-full min-h-[600px] w-full overflow-y-auto bg-[#0d0d0d] text-white">
       {/* Header Section */}
-      <div className="container mx-auto py-16 px-0">
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20"></div>
+      <div className="container mx-auto min-h-full px-0 py-12 sm:py-16">
+
 
         {/* Feature Cards */}
         <div className="grid md:grid-cols-3 gap-y-8 gap-x-0">
