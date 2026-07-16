@@ -78,7 +78,10 @@ export function CardShowcase({ codeMetadata, slug, children }: CardShowcaseProps
               transition={{ duration: 0.2, ease: EASE }}
             >
               <MotionConfig reducedMotion="user">
-                <CardPreviewCanvas fullCanvas={fullCanvas}>
+                <CardPreviewCanvas
+                  fullCanvas={fullCanvas}
+                  category={cardMeta?.category}
+                >
                   {children}
                 </CardPreviewCanvas>
               </MotionConfig>
@@ -127,10 +130,15 @@ export function CardShowcase({ codeMetadata, slug, children }: CardShowcaseProps
 function CardPreviewCanvas({
   children,
   fullCanvas,
+  category,
 }: {
   children: React.ReactNode;
   fullCanvas: boolean;
+  category?: string;
 }) {
+  const previewPadding =
+    category === "Forms" ? "p-5 sm:p-8 lg:p-10" : "p-3 sm:p-6";
+
   return (
     <div className="flex min-h-0 flex-1 items-stretch overflow-hidden p-3 sm:p-4">
       <div
@@ -141,7 +149,7 @@ function CardPreviewCanvas({
           {fullCanvas ? (
             <div className="relative h-full min-h-[440px] w-full">{children}</div>
           ) : (
-            <div className="relative flex min-h-full w-full p-3 sm:p-6">
+            <div className={`relative flex min-h-full w-full ${previewPadding}`}>
               <div className="my-auto flex w-full min-w-0 shrink-0 justify-center [&>*]:max-w-full">
                 {children}
               </div>

@@ -53,3 +53,37 @@ export const backgroundPresets = {
 } as const satisfies Record<string, BackgroundPreset>;
 
 export type BackgroundPresetId = keyof typeof backgroundPresets;
+
+export type BackgroundLayout = "hero-left" | "hero-center" | "split-glass" | "editorial-bottom" | "framed" | "minimal-top" | "wide-center";
+
+/** Distinct composition per slug prevents shared textures from producing duplicate previews. */
+export const backgroundLayouts: Record<BackgroundPresetId, BackgroundLayout> = {
+  "aurora-mesh": "hero-left",
+  "particle-constellation": "hero-center",
+  "liquid-metal": "framed",
+  "geometric-grid": "hero-left",
+  "neon-wave": "hero-center",
+  "floating-orbs": "hero-center",
+  "matrix-rain": "hero-left",
+  "gradient-mesh": "editorial-bottom",
+  "dot-matrix": "hero-left",
+  "starfield": "wide-center",
+  "bokeh-lights": "framed",
+  "topographic": "minimal-top",
+  "holographic": "hero-center",
+  "vortex-spiral": "wide-center",
+  "crystal-shards": "hero-left",
+  "lava-lamp": "split-glass",
+  "cyber-grid": "editorial-bottom",
+  "origami-folds": "editorial-bottom",
+  "mesh-gradient": "wide-center",
+  "aurora-borealis": "minimal-top",
+  "noise-texture": "minimal-top",
+  "animated-grid-glow": "split-glass",
+  "floating-code": "split-glass",
+  "network-graph": "split-glass",
+  "color-audio-bars": "hero-center",
+  "glassmorphism-blur": "framed",
+  "particle-vortex": "hero-left",
+  "gradient-waves": "split-glass",
+};

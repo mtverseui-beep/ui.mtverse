@@ -1,224 +1,32 @@
 "use client";
-import { useState } from "react";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import {
-  User, Settings, Mail, BarChart3, CreditCard, Bell, Lock, Palette,
-  CheckCircle2, MessageSquare, TrendingUp, Lock as LockIcon,
-} from "lucide-react";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { useId, useState } from "react";
+import * as Tabs from "@radix-ui/react-tabs";
+import { BarChart3, Mail, Settings, User, type LucideIcon } from "lucide-react";
 
-// ── Mock data: rich content per tab ──
-type Profile = {
-  id: string; label: string; icon: typeof User;
-  title: string; subtitle: string;
-  metrics: { label: string; value: string; trend?: string }[];
-  description: string;
-  accent: string;
-};
-
-const TABS: Profile[] = [
-  {
-    id: "profile", label: "Profile", icon: User, accent: "#6366f1",
-    title: "Alex Morgan", subtitle: "Product Designer · San Francisco",
-    metrics: [
-      { label: "Projects", value: "24", trend: "+3" },
-      { label: "Followers", value: "1.8K", trend: "+124" },
-      { label: "Rating", value: "4.9" },
-    ],
-    description: "Senior product designer with 8 years of experience. Currently leading design systems at mtverse.",
-  },
-  {
-    id: "settings", label: "Settings", icon: Settings, accent: "#0ea5e9",
-    title: "Account Preferences", subtitle: "Manage your account configuration",
-    metrics: [
-      { label: "2FA", value: "On" },
-      { label: "Sessions", value: "3" },
-      { label: "Storage", value: "12 GB" },
-    ],
-    description: "Configure notifications, privacy controls, and security settings. Changes save automatically.",
-  },
-  {
-    id: "messages", label: "Messages", icon: Mail, accent: "#ec4899",
-    title: "Inbox", subtitle: "3 unread · 12 total",
-    metrics: [
-      { label: "Unread", value: "3" },
-      { label: "Starred", value: "8" },
-      { label: "Drafts", value: "2" },
-    ],
-    description: "Your latest conversations. Tap any message to reply or archive.",
-  },
-  {
-    id: "analytics", label: "Analytics", icon: BarChart3, accent: "#10b981",
-    title: "Performance Overview", subtitle: "Last 30 days",
-    metrics: [
-      { label: "Views", value: "12.4K", trend: "+24%" },
-      { label: "Clicks", value: "892", trend: "+12%" },
-      { label: "CTR", value: "7.2%" },
-    ],
-    description: "Your content is performing 24% better than last month. Keep shipping!",
-  },
+type TabData = { id: string; label: string; icon: LucideIcon; accent: string; title: string; subtitle: string; description: string; metrics: { label: string; value: string; trend?: string }[] };
+const TAB_DATA: TabData[] = [
+  { id: "profile", label: "Profile", icon: User, accent: "#6366f1", title: "Alex Morgan", subtitle: "Product Designer · San Francisco", description: "Senior product designer leading accessible design systems and product craft.", metrics: [{ label: "Projects", value: "24", trend: "+3" }, { label: "Followers", value: "1.8K", trend: "+124" }, { label: "Rating", value: "4.9" }] },
+  { id: "settings", label: "Settings", icon: Settings, accent: "#0ea5e9", title: "Account Preferences", subtitle: "Security and notifications", description: "Configure notifications, privacy controls, and active sessions in one place.", metrics: [{ label: "2FA", value: "On" }, { label: "Sessions", value: "3" }, { label: "Storage", value: "12 GB" }] },
+  { id: "messages", label: "Messages", icon: Mail, accent: "#ec4899", title: "Inbox", subtitle: "3 unread · 12 total", description: "Review recent conversations, drafts, and starred messages.", metrics: [{ label: "Unread", value: "3" }, { label: "Starred", value: "8" }, { label: "Drafts", value: "2" }] },
+  { id: "analytics", label: "Analytics", icon: BarChart3, accent: "#10b981", title: "Performance Overview", subtitle: "Last 30 days", description: "Content performance is up from last month across key engagement metrics.", metrics: [{ label: "Views", value: "12.4K", trend: "+24%" }, { label: "Clicks", value: "892", trend: "+12%" }, { label: "CTR", value: "7.2%" }] },
 ];
+const focus = "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--card-text-muted)]";
 
 export function TabsCard() {
-  return (
-    <motion.div
-      className="w-[clamp(340px,95vw,640px)] select-none space-y-10"
-      initial={{ opacity: 0, y: 20, scale: 0.97 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.7, ease: EASE }}
-    >
-      <UnderlineTabs />
-      <PillTabs />
-      <VerticalTabs />
-    </motion.div>
-  );
+  return <div className="w-[min(100%,640px)] space-y-10"><TabsDemo variant="underline" defaultValue="profile" title="Underline" detail="automatic activation" /><TabsDemo variant="pill" defaultValue="settings" title="Pill" detail="responsive navigation" /><TabsDemo variant="vertical" defaultValue="analytics" title="Vertical" detail="manual activation" /></div>;
 }
 
-// ── 1. Underline — animated line slides beneath active tab ──
-function UnderlineTabs() {
-  const [active, setActive] = useState("profile");
-  return (
-    <section>
-      <header className="mb-3 flex items-center gap-2">
-        <span className="flex h-6 items-center rounded-md bg-indigo-500/10 px-2 text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">01</span>
-        <h3 className="text-[12px] font-bold cs-text">Underline Slide</h3>
-        <span className="text-[10.5px] cs-subtle">— animated indicator</span>
-      </header>
-      <LayoutGroup id="tabs-underline">
-        <div className="flex gap-0 border-b cs-border">
-          {TABS.map(tab => {
-            const Icon = tab.icon; const sel = active === tab.id;
-            return (
-              <button key={tab.id} type="button" onClick={() => setActive(tab.id)}
-                className="relative flex items-center gap-1.5 px-3.5 py-2.5 text-[12px] font-semibold transition focus-visible:outline-none"
-                style={{ color: sel ? tab.accent : "var(--card-text-muted)" }}>
-                <Icon className="h-3.5 w-3.5" strokeWidth={2} />{tab.label}
-                {sel && <motion.div layoutId="ul-line" className="absolute -bottom-px left-0 right-0 h-0.5 rounded-full"
-                  style={{ background: tab.accent }} transition={{ type: "spring", stiffness: 400, damping: 30 }} />}
-              </button>
-            );
-          })}
-        </div>
-      </LayoutGroup>
-      <TabContent active={active} />
-    </section>
-  );
+type Variant = "underline" | "pill" | "vertical";
+function TabsDemo({ variant, defaultValue, title, detail }: { variant: Variant; defaultValue: string; title: string; detail: string }) {
+  const id = useId();
+  const [value, setValue] = useState(defaultValue);
+  const vertical = variant === "vertical";
+  return <section aria-labelledby={`${id}-heading`}><header className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1"><span className="flex h-6 items-center rounded-md bg-indigo-500/10 px-2 text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">{variant === "underline" ? "01" : variant === "pill" ? "02" : "03"}</span><h3 id={`${id}-heading`} className="text-[12px] font-bold cs-text">{title}</h3><span className="text-[10.5px] cs-subtle">— {detail}</span></header><Tabs.Root value={value} onValueChange={setValue} orientation={vertical ? "vertical" : "horizontal"} activationMode={vertical ? "manual" : "automatic"} className={vertical ? "grid grid-cols-[minmax(88px,auto)_minmax(0,1fr)] gap-2 sm:gap-3" : ""}>
+      <Tabs.List aria-label={`${title} account sections`} className={vertical ? "flex min-w-0 flex-col gap-1 rounded-xl border cs-border cs-input p-1" : variant === "pill" ? "flex max-w-full gap-1 overflow-x-auto rounded-xl border cs-border cs-input p-1" : "flex max-w-full overflow-x-auto border-b cs-border"}>{TAB_DATA.map((tab) => { const Icon = tab.icon; return <Tabs.Trigger key={tab.id} value={tab.id} className={`${variant === "underline" ? "relative flex min-w-fit flex-1 items-center justify-center gap-1.5 px-2 py-2.5 text-[11px] font-semibold cs-muted transition after:absolute after:inset-x-1 after:-bottom-px after:h-0.5 after:scale-x-0 after:rounded-full after:bg-[var(--card-text-muted)] after:transition-transform data-[state=active]:cs-text data-[state=active]:after:scale-x-100" : "flex min-w-fit flex-1 items-center gap-1.5 rounded-lg px-2 py-2.5 text-[11px] font-semibold cs-muted transition data-[state=active]:bg-[var(--card-surface)] data-[state=active]:cs-text data-[state=active]:shadow-sm"} ${focus} motion-reduce:transition-none`}><Icon aria-hidden className="h-3.5 w-3.5 shrink-0" /><span className={vertical ? "truncate" : ""}>{tab.label}</span></Tabs.Trigger>; })}</Tabs.List><div className="min-w-0">{TAB_DATA.map((tab) => <TabPanel key={tab.id} tab={tab} vertical={vertical} />)}</div></Tabs.Root></section>;
 }
 
-// ── 2. Pill — sliding pill background ──
-function PillTabs() {
-  const [active, setActive] = useState("settings");
-  const activeTab = TABS.find(t => t.id === active)!;
-  return (
-    <section>
-      <header className="mb-3 flex items-center gap-2">
-        <span className="flex h-6 items-center rounded-md bg-sky-500/10 px-2 text-[10px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">02</span>
-        <h3 className="text-[12px] font-bold cs-text">Pill Slide</h3>
-        <span className="text-[10.5px] cs-subtle">— spring background</span>
-      </header>
-      <LayoutGroup id="tabs-pill">
-        <div className="relative flex gap-1 rounded-xl p-1" style={{ background: "var(--card-input-bg)", border: "1px solid var(--card-border)" }}>
-          {TABS.map(tab => {
-            const Icon = tab.icon; const sel = active === tab.id;
-            return (
-              <button key={tab.id} type="button" onClick={() => setActive(tab.id)}
-                className="relative flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2.5 text-[11px] font-semibold transition focus-visible:outline-none"
-                style={{ color: sel ? activeTab.accent : "var(--card-text-muted)" }}>
-                {sel && <motion.div layoutId="pill-bg" className="absolute inset-0 rounded-lg"
-                  style={{ background: "var(--card-surface)", boxShadow: "0 2px 6px rgba(0,0,0,0.06)", border: "1px solid var(--card-border)" }}
-                  transition={{ type: "spring", stiffness: 350, damping: 25 }} />}
-                <Icon className="relative z-10 h-3.5 w-3.5" strokeWidth={2} />
-                <span className="relative z-10">{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </LayoutGroup>
-      <TabContent active={active} />
-    </section>
-  );
-}
-
-// ── 3. Vertical — side tabs with sliding indicator ──
-function VerticalTabs() {
-  const [active, setActive] = useState("analytics");
-  const activeTab = TABS.find(t => t.id === active)!;
-  return (
-    <section>
-      <header className="mb-3 flex items-center gap-2">
-        <span className="flex h-6 items-center rounded-md bg-emerald-500/10 px-2 text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">03</span>
-        <h3 className="text-[12px] font-bold cs-text">Vertical Tabs</h3>
-        <span className="text-[10.5px] cs-subtle">— side navigation</span>
-      </header>
-      <div className="flex gap-3">
-        <LayoutGroup id="tabs-vertical">
-          <div className="flex flex-col gap-1 rounded-xl p-1" style={{ background: "var(--card-input-bg)", border: "1px solid var(--card-border)", minWidth: "110px" }}>
-            {TABS.map(tab => {
-              const Icon = tab.icon; const sel = active === tab.id;
-              return (
-                <button key={tab.id} type="button" onClick={() => setActive(tab.id)}
-                  className="relative flex items-center gap-2 rounded-lg px-2.5 py-2.5 text-[11px] font-semibold transition focus-visible:outline-none"
-                  style={{ color: sel ? activeTab.accent : "var(--card-text-muted)" }}>
-                  {sel && <motion.div layoutId="v-tab-bg" className="absolute inset-0 rounded-lg"
-                    style={{ background: "var(--card-surface)", boxShadow: "0 2px 6px rgba(0,0,0,0.06)", border: "1px solid var(--card-border)" }}
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }} />}
-                  <Icon className="relative z-10 h-3.5 w-3.5" strokeWidth={2} />
-                  <span className="relative z-10">{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </LayoutGroup>
-        <div className="flex-1 min-w-0">
-          <TabContent active={active} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ── Shared content panel with rich mock data ──
-function TabContent({ active }: { active: string }) {
-  const tab = TABS.find(t => t.id === active);
-  if (!tab) return null;
+function TabPanel({ tab, vertical }: { tab: TabData; vertical: boolean }) {
   const Icon = tab.icon;
-  return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={active}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.22, ease: EASE }}
-        className="mt-3 rounded-xl p-4"
-        style={{ background: "var(--card-input-bg)", border: "1px solid var(--card-border-subtle)" }}
-      >
-        <div className="flex items-start gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
-            style={{ background: `${tab.accent}15` }}>
-            <Icon className="h-4 w-4" style={{ color: tab.accent }} strokeWidth={2.2} />
-          </div>
-          <div className="min-w-0 flex-1">
-            <h4 className="text-[13px] font-bold cs-text">{tab.title}</h4>
-            <p className="text-[11px] cs-muted">{tab.subtitle}</p>
-          </div>
-        </div>
-        <p className="mt-3 text-[11.5px] leading-relaxed cs-muted">{tab.description}</p>
-        <div className="mt-3 grid grid-cols-3 gap-2">
-          {tab.metrics.map(m => (
-            <div key={m.label} className="rounded-lg p-2" style={{ background: "var(--card-surface)", border: "1px solid var(--card-border-subtle)" }}>
-              <div className="text-[9.5px] uppercase tracking-wider cs-subtle">{m.label}</div>
-              <div className="mt-0.5 flex items-baseline gap-1">
-                <span className="text-[14px] font-bold cs-text tabular-nums">{m.value}</span>
-                {m.trend && (
-                  <span className="text-[9.5px] font-semibold text-emerald-600 dark:text-emerald-400">{m.trend}</span>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-    </AnimatePresence>
-  );
+  return <Tabs.Content value={tab.id} tabIndex={0} className={`${vertical ? "mt-0" : "mt-3"} rounded-xl border border-[var(--card-border-subtle)] cs-input p-3 outline-none data-[state=active]:animate-in data-[state=active]:fade-in-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--card-text-muted)] motion-reduce:animate-none sm:p-4`}><div className="flex min-w-0 items-start gap-3"><span aria-hidden className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style={{ background: `${tab.accent}18` }}><Icon className="h-4 w-4" style={{ color: tab.accent }} /></span><div className="min-w-0"><h4 className="truncate text-[13px] font-bold cs-text">{tab.title}</h4><p className="text-[11px] cs-muted">{tab.subtitle}</p></div></div><p className="mt-3 text-[11.5px] leading-relaxed cs-muted">{tab.description}</p><dl className="mt-3 grid grid-cols-1 gap-2 min-[380px]:grid-cols-3">{tab.metrics.map((metric) => <div key={metric.label} className="min-w-0 rounded-lg border border-[var(--card-border-subtle)] cs-surface p-2"><dt className="truncate text-[9px] uppercase tracking-wider cs-subtle">{metric.label}</dt><dd className="whitespace-nowrap text-[14px] font-bold tabular-nums cs-text">{metric.value}{metric.trend && <span className="ml-1 text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">{metric.trend}</span>}</dd></div>)}</dl></Tabs.Content>;
 }

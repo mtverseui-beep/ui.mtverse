@@ -1,157 +1,171 @@
 "use client";
-import { useState, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { UploadCloud, FileText, FileImage, FileVideo, FileArchive, X, Check, Loader2, FolderUp } from "lucide-react";
+
+import { useCallback, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Check, FileArchive, FileImage, FileText, FolderUp, Loader2, UploadCloud, X } from "lucide-react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+const MAX_SIZE = 10 * 1024 * 1024;
+const MAX_FILES = 8;
+const ACCEPT = ".png,.jpg,.jpeg,.gif,.webp,.pdf,.txt,.md,.csv,.zip";
+const FOCUS = "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--card-text-muted)]";
 
-// FileDropzoneCard — 3 unique upload variants:
-// 1. Drag zone — large dashed dropzone with drag-over animation
-// 2. Upload button — compact button that opens file picker + file list below
-// 3. Mini uploader — inline chip-style files with progress dots
+type FileStatus = "reading" | "ready" | "cancelled" | "error";
+interface UploadedFile { id: string; name: string; bytes: number; type: "image" | "archive" | "document"; progress: number; status: FileStatus; message?: string; }
+const TYPE_ICON = { image: FileImage, archive: FileArchive, document: FileText };
+const TYPE_COLOR = { image: "#8b5cf6", archive: "#10b981", document: "#64748b" };
 
-interface UploadedFile { id: string; name: string; size: string; type: string; progress: number; status: "uploading" | "done"; }
-const TYPE_ICON: Record<string, typeof FileText> = { image: FileImage, video: FileVideo, document: FileText, archive: FileArchive };
-const TYPE_COLOR: Record<string, string> = { image: "#8b5cf6", video: "#ec4899", document: "#3b82f6", archive: "#10b981" };
-
-function getType(name: string) { const ext = name.split(".").pop()?.toLowerCase() || ""; if (["jpg","png","gif","webp","svg"].includes(ext)) return "image"; if (["mp4","mov","avi"].includes(ext)) return "video"; if (["zip","rar","7z"].includes(ext)) return "archive"; return "document"; }
-function formatSize(b: number) { return b < 1024 ? `${b} B` : b < 1048576 ? `${(b/1024).toFixed(1)} KB` : `${(b/1048576).toFixed(1)} MB`; }
-
-export function FileDropzoneCard() {
-  return (
-    <motion.div className="w-[clamp(300px,92vw,420px)] select-none" initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.7, ease: EASE }}>
-      <div aria-hidden className="pointer-events-none absolute -inset-8 -z-10 rounded-[40px] blur-3xl" style={{ background: "radial-gradient(circle at 30% 20%, rgba(99,102,241,0.08), transparent 55%)" }} />
-      <div className="cs-surface overflow-visible rounded-[22px] border cs-border shadow-[0_30px_70px_-35px_rgba(0,0,0,0.25)]">
-        <div className="border-b cs-border px-5 py-4">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-500/10 ring-1 ring-indigo-500/20"><UploadCloud className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" strokeWidth={2.2} /></div>
-            <div><h2 className="text-[14px] font-bold tracking-tight cs-text">File Dropzone</h2><p className="text-[10.5px] cs-muted">Drag zone · upload button · mini uploader — 3 variants</p></div>
-          </div>
-        </div>
-        <div className="space-y-7 p-5">
-          <DragZoneVariant />
-          <UploadButtonVariant />
-          <MiniUploaderVariant />
-        </div>
-        <div className="border-t cs-border px-5 py-2.5 text-center"><p className="text-[9.5px] cs-subtle">3 completely different upload patterns</p></div>
-      </div>
-    </motion.div>
-  );
+function formatSize(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 ** 2) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1024 ** 2).toFixed(1)} MB`;
 }
 
-// ── 1. Drag zone — large dashed dropzone ──
-function DragZoneVariant() {
-  const [files, setFiles] = useState<UploadedFile[]>([]);
-  const [dragging, setDragging] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+function classify(file: File): UploadedFile["type"] {
+  if (file.type.startsWith("image/")) return "image";
+  if (file.type === "application/zip" || file.name.toLowerCase().endsWith(".zip")) return "archive";
+  return "document";
+}
 
-  const addFiles = useCallback((list: File[]) => {
-    const newFiles: UploadedFile[] = list.map(f => ({ id: `${Date.now()}-${f.name}`, name: f.name, size: formatSize(f.size), type: getType(f.name), progress: 0, status: "uploading" as const }));
-    setFiles(prev => [...prev, ...newFiles]);
-    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
-    intervalRef.current = setInterval(() => {
-      setFiles(prev => { let done = true; return prev.map(f => { if (f.status === "uploading") { const p = Math.min(100, f.progress + 25); if (p >= 100) return { ...f, progress: 100, status: "done" as const }; done = false; return { ...f, progress: p }; } return f; }); if (done && intervalRef.current) { clearInterval(intervalRef.current as ReturnType<typeof setInterval>); intervalRef.current = null; } return prev; });
-    }, 300);
+function validate(file: File) {
+  const extension = file.name.split(".").pop()?.toLowerCase();
+  const allowed = ["png", "jpg", "jpeg", "gif", "webp", "pdf", "txt", "md", "csv", "zip"];
+  if (!extension || !allowed.includes(extension)) return "Unsupported file type";
+  if (file.size === 0) return "The file is empty";
+  if (file.size > MAX_SIZE) return "File exceeds 10 MB";
+  return null;
+}
+
+function makeId() {
+  return globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+function useFileQueue() {
+  const [files, setFiles] = useState<UploadedFile[]>([]);
+  const [errors, setErrors] = useState<string[]>([]);
+  const readers = useRef(new Map<string, FileReader>());
+  useEffect(() => () => { readers.current.forEach(reader => reader.abort()); readers.current.clear(); }, []);
+
+  const addFiles = useCallback((incoming: File[]) => {
+    setErrors([]);
+    setFiles(current => {
+      const available = Math.max(0, MAX_FILES - current.length);
+      const accepted = incoming.slice(0, available);
+      const nextErrors = incoming.length > available ? [`Only ${MAX_FILES} files can be queued`] : [];
+      const additions: UploadedFile[] = [];
+      accepted.forEach(file => {
+        const problem = validate(file);
+        if (problem) { nextErrors.push(`${file.name}: ${problem}`); return; }
+        const id = makeId();
+        additions.push({ id, name: file.name, bytes: file.size, type: classify(file), progress: 0, status: "reading" });
+        const reader = new FileReader();
+        readers.current.set(id, reader);
+        reader.onprogress = event => {
+          if (!event.lengthComputable) return;
+          setFiles(items => items.map(item => item.id === id ? { ...item, progress: Math.round((event.loaded / event.total) * 100) } : item));
+        };
+        reader.onload = () => { readers.current.delete(id); setFiles(items => items.map(item => item.id === id ? { ...item, progress: 100, status: "ready" } : item)); };
+        reader.onerror = () => { readers.current.delete(id); setFiles(items => items.map(item => item.id === id ? { ...item, status: "error", message: "Could not read file" } : item)); };
+        reader.onabort = () => { readers.current.delete(id); setFiles(items => items.map(item => item.id === id ? { ...item, status: "cancelled", message: "Cancelled" } : item)); };
+        reader.readAsArrayBuffer(file);
+      });
+      setErrors(nextErrors);
+      return [...current, ...additions];
+    });
   }, []);
 
-  return (
-    <div>
-      <div className="mb-3"><span className="text-[10px] font-bold uppercase tracking-wider cs-subtle">1 · Drag Zone</span></div>
-      <motion.div onClick={() => inputRef.current?.click()} onDragOver={e => { e.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={e => { e.preventDefault(); setDragging(false); addFiles(Array.from(e.dataTransfer.files)); }} animate={{ scale: dragging ? 1.02 : 1, borderColor: dragging ? "#6366f1" : "var(--card-border)" }} className="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-2 border-dashed py-6 transition" style={{ background: dragging ? "rgba(99,102,241,0.05)" : "var(--card-input-bg)" }}>
-        <motion.div animate={{ y: dragging ? -6 : 0, scale: dragging ? 1.15 : 1, rotate: dragging ? [0, -5, 5, 0] : 0 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}><UploadCloud className={`h-7 w-7 ${dragging ? "text-indigo-500" : "cs-subtle"}`} strokeWidth={1.5} /></motion.div>
-        <p className="text-[11px] font-semibold cs-text">{dragging ? "Drop here" : "Drag files or click"}</p>
-        <input ref={inputRef} type="file" multiple className="hidden" onChange={e => { if (e.target.files) addFiles(Array.from(e.target.files)); e.target.value = ""; }} />
-      </motion.div>
-      <FileList files={files} onRemove={id => setFiles(f => f.filter(x => x.id !== id))} />
-    </div>
-  );
+  const cancel = useCallback((id: string) => readers.current.get(id)?.abort(), []);
+  const remove = useCallback((id: string) => { readers.current.get(id)?.abort(); readers.current.delete(id); setFiles(items => items.filter(item => item.id !== id)); }, []);
+  return { files, errors, addFiles, cancel, remove };
 }
 
-// ── 2. Upload button — compact button + file list ──
-function UploadButtonVariant() {
-  const [files, setFiles] = useState<UploadedFile[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const addFiles = (list: File[]) => {
-    const newFiles: UploadedFile[] = list.map(f => ({ id: `${Date.now()}-${f.name}`, name: f.name, size: formatSize(f.size), type: getType(f.name), progress: 0, status: "uploading" as const }));
-    setFiles(prev => [...prev, ...newFiles]);
-    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
-    intervalRef.current = setInterval(() => { setFiles(prev => { let done = true; return prev.map(f => { if (f.status === "uploading") { const p = Math.min(100, f.progress + 22); if (p >= 100) return { ...f, progress: 100, status: "done" as const }; done = false; return { ...f, progress: p }; } return f; }); if (done && intervalRef.current) { clearInterval(intervalRef.current as ReturnType<typeof setInterval>); intervalRef.current = null; } return prev; }); }, 300);
-  };
-
+export function FileDropzoneCard() {
+  const reduceMotion = useReducedMotion();
   return (
-    <div>
-      <div className="mb-3"><span className="text-[10px] font-bold uppercase tracking-wider cs-subtle">2 · Upload Button</span></div>
-      <motion.button type="button" onClick={() => inputRef.current?.click()} whileTap={{ scale: 0.97 }} className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 py-2.5 text-[12.5px] font-semibold text-white transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40">
-        <FolderUp className="h-4 w-4" strokeWidth={2.2} /> Browse Files
-        <input ref={inputRef} type="file" multiple className="hidden" onChange={e => { if (e.target.files) addFiles(Array.from(e.target.files)); e.target.value = ""; }} />
-      </motion.button>
-      <FileList files={files} onRemove={id => setFiles(f => f.filter(x => x.id !== id))} />
-    </div>
-  );
-}
-
-// ── 3. Mini uploader — inline chip-style ──
-function MiniUploaderVariant() {
-  const [files, setFiles] = useState<UploadedFile[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const addFiles = (list: File[]) => {
-    const newFiles: UploadedFile[] = list.map(f => ({ id: `${Date.now()}-${f.name}`, name: f.name, size: formatSize(f.size), type: getType(f.name), progress: 100, status: "done" as const }));
-    setFiles(prev => [...prev, ...newFiles]);
-  };
-
-  return (
-    <div>
-      <div className="mb-3"><span className="text-[10px] font-bold uppercase tracking-wider cs-subtle">3 · Mini Chip Uploader</span></div>
-      <div className="flex flex-wrap gap-1.5">
-        <AnimatePresence>
-          {files.map(f => {
-            const Icon = TYPE_ICON[f.type] || FileText;
-            const color = TYPE_COLOR[f.type] || "#3b82f6";
-            return (
-              <motion.div key={f.id} layout initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} className="flex items-center gap-1.5 rounded-full py-1 pl-2 pr-1" style={{ background: `${color}12`, border: `1px solid ${color}30` }}>
-                <Icon className="h-3 w-3" style={{ color }} strokeWidth={2} />
-                <span className="max-w-[80px] truncate text-[10px] font-medium cs-text">{f.name}</span>
-                <button type="button" onClick={() => setFiles(prev => prev.filter(x => x.id !== f.id))} className="flex h-3.5 w-3.5 items-center justify-center rounded-full cs-muted hover:text-rose-500"><X className="h-2.5 w-2.5" strokeWidth={2.4} /></button>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
-        <motion.button type="button" onClick={() => inputRef.current?.click()} whileTap={{ scale: 0.92 }} className="flex items-center gap-1 rounded-full border cs-border cs-input px-2.5 py-1 text-[10px] font-semibold cs-muted transition cs-hover">
-          <UploadCloud className="h-3 w-3" strokeWidth={2.2} /> Add
-          <input ref={inputRef} type="file" multiple className="hidden" onChange={e => { if (e.target.files) addFiles(Array.from(e.target.files)); e.target.value = ""; }} />
-        </motion.button>
+    <motion.section aria-labelledby="dropzone-title" className="relative w-[min(100%,26.25rem)] select-none" initial={reduceMotion ? false : { opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: reduceMotion ? 0 : 0.45, ease: EASE }}>
+      <div aria-hidden className="pointer-events-none absolute -inset-8 -z-10 rounded-[40px] bg-indigo-500/[0.06] blur-3xl" />
+      <div className="cs-surface overflow-hidden rounded-[22px] border cs-border shadow-[0_30px_70px_-35px_rgba(0,0,0,0.25)]">
+        <header className="border-b cs-border px-4 py-4 sm:px-5"><div className="flex items-center gap-2.5"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-500/10 ring-1 ring-indigo-500/20"><UploadCloud aria-hidden className="h-4 w-4 text-indigo-600 dark:text-indigo-400" /></div><div><h2 id="dropzone-title" className="text-sm font-bold cs-text">File Dropzone</h2><p className="text-[10.5px] cs-muted">Validated local file queue · up to 10 MB</p></div></div></header>
+        <div className="space-y-7 p-4 sm:p-5"><DragZoneVariant /><UploadButtonVariant /><MiniUploaderVariant /></div>
       </div>
-    </div>
+    </motion.section>
   );
 }
 
-// ── Shared file list component ──
-function FileList({ files, onRemove }: { files: UploadedFile[]; onRemove: (id: string) => void }) {
+function HiddenInput({ id, inputRef, onFiles }: { id: string; inputRef: React.RefObject<HTMLInputElement | null>; onFiles: (files: File[]) => void }) {
+  return <input id={id} ref={inputRef} type="file" multiple accept={ACCEPT} className="sr-only" onChange={event => { onFiles(Array.from(event.target.files ?? [])); event.target.value = ""; }} />;
+}
+
+function ErrorList({ errors }: { errors: string[] }) {
+  if (!errors.length) return null;
+  return <ul role="alert" className="mt-2 space-y-0.5 text-[9px] text-rose-600 dark:text-rose-400">{errors.map(error => <li key={error}>{error}</li>)}</ul>;
+}
+
+function DragZoneVariant() {
+  const queue = useFileQueue();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [dragging, setDragging] = useState(false);
   return (
-    <AnimatePresence>
-      {files.length > 0 && (
-        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="mt-3 space-y-1.5">
-          {files.map(f => {
-            const Icon = TYPE_ICON[f.type] || FileText;
-            const color = TYPE_COLOR[f.type] || "#3b82f6";
-            return (
-              <motion.div key={f.id} layout initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 8, transition: { duration: 0.15 } }} className="flex items-center gap-2.5 rounded-lg border cs-border cs-input p-2">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg" style={{ background: `${color}15` }}><Icon className="h-3.5 w-3.5" style={{ color }} strokeWidth={2} /></div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-1"><p className="truncate text-[10.5px] font-medium cs-text">{f.name}</p><span className="shrink-0 text-[8.5px] cs-subtle">{f.size}</span></div>
-                  <div className="mt-0.5 h-1 overflow-hidden rounded-full" style={{ background: "var(--card-border)" }}><motion.div className="h-full rounded-full" animate={{ width: `${f.progress}%`, background: f.status === "done" ? "#10b981" : color }} transition={{ duration: 0.3 }} /></div>
-                </div>
-                <div className="shrink-0">{f.status === "uploading" ? <Loader2 className="h-3 w-3 animate-spin cs-subtle" strokeWidth={2.2} /> : <Check className="h-3 w-3 text-emerald-500" strokeWidth={2.4} />}</div>
-                <button type="button" onClick={() => onRemove(f.id)} className="shrink-0 flex h-4 w-4 items-center justify-center rounded cs-muted hover:text-rose-500"><X className="h-2.5 w-2.5" strokeWidth={2.4} /></button>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <section aria-labelledby="drag-zone-label">
+      <h3 id="drag-zone-label" className="mb-2 text-[10px] font-bold uppercase tracking-wider cs-subtle">1 · Drag Zone</h3>
+      <HiddenInput id="drag-zone-input" inputRef={inputRef} onFiles={queue.addFiles} />
+      <button type="button" onClick={() => inputRef.current?.click()} onDragEnter={event => { event.preventDefault(); setDragging(true); }} onDragOver={event => event.preventDefault()} onDragLeave={event => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragging(false); }} onDrop={event => { event.preventDefault(); setDragging(false); queue.addFiles(Array.from(event.dataTransfer.files)); }} className={`flex w-full flex-col items-center gap-2 rounded-xl border-2 border-dashed py-5 cs-input transition-colors motion-reduce:transition-none ${FOCUS}`} style={{ borderColor: dragging ? "var(--card-text-muted)" : "var(--card-border)" }} aria-describedby="drag-zone-help">
+        <UploadCloud aria-hidden className="h-7 w-7 cs-muted" /><span className="text-[11px] font-semibold cs-text">{dragging ? "Drop files here" : "Choose files or drag them here"}</span><span id="drag-zone-help" className="text-[9px] cs-subtle">PNG, JPG, GIF, WebP, PDF, text, CSV or ZIP</span>
+      </button>
+      <ErrorList errors={queue.errors} /><FileList {...queue} />
+    </section>
+  );
+}
+
+function UploadButtonVariant() {
+  const queue = useFileQueue();
+  const inputRef = useRef<HTMLInputElement>(null);
+  return (
+    <section aria-labelledby="upload-button-label">
+      <h3 id="upload-button-label" className="mb-2 text-[10px] font-bold uppercase tracking-wider cs-subtle">2 · Browse Button</h3>
+      <HiddenInput id="browse-files-input" inputRef={inputRef} onFiles={queue.addFiles} />
+      <button type="button" onClick={() => inputRef.current?.click()} className={`flex w-full items-center justify-center gap-2 rounded-xl border cs-border cs-input py-2.5 text-xs font-semibold cs-text cs-hover ${FOCUS}`}><FolderUp aria-hidden className="h-4 w-4" />Browse files</button>
+      <ErrorList errors={queue.errors} /><FileList {...queue} />
+    </section>
+  );
+}
+
+function MiniUploaderVariant() {
+  const queue = useFileQueue();
+  const inputRef = useRef<HTMLInputElement>(null);
+  return (
+    <section aria-labelledby="mini-upload-label">
+      <h3 id="mini-upload-label" className="mb-2 text-[10px] font-bold uppercase tracking-wider cs-subtle">3 · Compact Queue</h3>
+      <HiddenInput id="mini-files-input" inputRef={inputRef} onFiles={queue.addFiles} />
+      <div className="flex flex-wrap gap-1.5" aria-live="polite">
+        <AnimatePresence initial={false}>{queue.files.map(file => { const Icon = TYPE_ICON[file.type]; return <motion.div key={file.id} layout className="flex max-w-full items-center gap-1.5 rounded-full border cs-border cs-input py-1 pl-2 pr-1"><Icon aria-hidden className="h-3 w-3 cs-muted" /><span className="max-w-28 truncate text-[10px] cs-text">{file.name}</span>{file.status === "reading" && <Loader2 aria-label="Reading" className="h-3 w-3 animate-spin cs-muted motion-reduce:animate-none" />}<button type="button" onClick={() => queue.remove(file.id)} aria-label={`Remove ${file.name}`} className={`flex h-5 w-5 items-center justify-center rounded-full cs-muted cs-hover ${FOCUS}`}><X aria-hidden className="h-3 w-3" /></button></motion.div>; })}</AnimatePresence>
+        <button type="button" onClick={() => inputRef.current?.click()} className={`flex items-center gap-1 rounded-full border cs-border cs-input px-2.5 py-1 text-[10px] font-semibold cs-muted cs-hover ${FOCUS}`}><UploadCloud aria-hidden className="h-3 w-3" />Add</button>
+      </div>
+      <ErrorList errors={queue.errors} />
+    </section>
+  );
+}
+
+function FileList({ files, cancel, remove }: { files: UploadedFile[]; cancel: (id: string) => void; remove: (id: string) => void }) {
+  if (!files.length) return null;
+  return (
+    <ul aria-label="File queue" aria-live="polite" className="mt-3 space-y-1.5">
+      <AnimatePresence initial={false}>{files.map(file => {
+        const Icon = TYPE_ICON[file.type];
+        const color = TYPE_COLOR[file.type];
+        const statusText = file.status === "reading" ? `Reading ${file.progress}%` : file.status === "ready" ? "Ready" : file.message ?? file.status;
+        return (
+          <motion.li key={file.id} layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex min-w-0 items-center gap-2 rounded-lg border cs-border cs-input p-2">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg" style={{ background: `${color}16` }}><Icon aria-hidden className="h-4 w-4" style={{ color }} /></div>
+            <div className="min-w-0 flex-1"><div className="flex items-center justify-between gap-2"><span className="truncate text-[10.5px] font-medium cs-text">{file.name}</span><span className="shrink-0 text-[8.5px] cs-subtle">{formatSize(file.bytes)}</span></div>
+              <div className="mt-1 flex items-center gap-2"><div role="progressbar" aria-label={`Read progress for ${file.name}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={file.progress} className="h-1 flex-1 overflow-hidden rounded-full bg-black/10 dark:bg-white/10"><div className="h-full rounded-full transition-[width] motion-reduce:transition-none" style={{ width: `${file.progress}%`, background: file.status === "ready" ? "#10b981" : color }} /></div><span className="text-[8px] cs-subtle">{statusText}</span></div>
+            </div>
+            {file.status === "ready" && <Check aria-label="Ready" className="h-3.5 w-3.5 shrink-0 text-emerald-500" />}
+            {file.status === "reading" && <button type="button" onClick={() => cancel(file.id)} aria-label={`Cancel reading ${file.name}`} className={`rounded px-1.5 py-1 text-[9px] cs-muted cs-hover ${FOCUS}`}>Cancel</button>}
+            <button type="button" onClick={() => remove(file.id)} aria-label={`Remove ${file.name}`} className={`flex h-6 w-6 shrink-0 items-center justify-center rounded cs-muted cs-hover ${FOCUS}`}><X aria-hidden className="h-3 w-3" /></button>
+          </motion.li>
+        );
+      })}</AnimatePresence>
+    </ul>
   );
 }

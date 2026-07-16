@@ -771,6 +771,20 @@
   border-radius: 4px;
 }
 
+/* Form fields use their own border/caret state. Prevent the global blue focus
+   box and utility focus rings from changing inputs across component previews. */
+:where(input, textarea, select, [contenteditable="true"]):focus,
+:where(input, textarea, select, [contenteditable="true"]):focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+  border-color: var(--card-text-muted) !important;
+  box-shadow: none !important;
+  caret-color: var(--card-text);
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+}
+
 /* Remove default outline only when focus-visible is supported */
 *:focus:not(:focus-visible) {
   outline: none;

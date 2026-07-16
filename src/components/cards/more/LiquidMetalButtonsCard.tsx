@@ -2,8 +2,8 @@
 
 import type React from "react";
 import type { LucideIcon } from "lucide-react";
-import { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   Home,
@@ -38,13 +38,17 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 // and a metallic gradient surface. Theme-aware: in light mode the metal reads
 // as polished silver/chrome; in dark mode it reads as graphite/black chrome.
 
-type AnimationType =
+export type LiquidMetalActionId =
   | "slide-right" | "bounce" | "zoom" | "spin" | "wave" | "shake"
   | "heartbeat" | "spread" | "drop" | "pulse" | "rotate-in" | "flip"
   | "flash" | "bounce-beat" | "record" | "slide-down" | "lock-shake"
   | "signal" | "phase" | "spark" | "rotate" | "float" | "pulse-ring" | "fly";
 
-const ICONS: { icon: LucideIcon; label: string; animation: AnimationType }[] = [
+export interface LiquidMetalButtonsCardProps {
+  onAction?: (label: string, id: LiquidMetalActionId) => void;
+}
+
+const ICONS: { icon: LucideIcon; label: string; animation: LiquidMetalActionId }[] = [
   { icon: ArrowRight, label: "Next", animation: "slide-right" },
   { icon: Home, label: "Home", animation: "bounce" },
   { icon: Search, label: "Search", animation: "zoom" },
@@ -71,7 +75,7 @@ const ICONS: { icon: LucideIcon; label: string; animation: AnimationType }[] = [
   { icon: Send, label: "Send", animation: "fly" },
 ];
 
-const CLICK_ANIMATIONS: Record<AnimationType, { transform: string; color: string }> = {
+const CLICK_ANIMATIONS: Record<LiquidMetalActionId, { transform: string; color: string }> = {
   "slide-right": { transform: "translateX(8px) scale(1.2)", color: "var(--btn-accent)" },
   bounce: { transform: "translateY(-10px) scale(1.2)", color: "var(--btn-accent)" },
   zoom: { transform: "scale(1.5)", color: "var(--btn-accent)" },
@@ -98,7 +102,7 @@ const CLICK_ANIMATIONS: Record<AnimationType, { transform: string; color: string
   fly: { transform: "translate(10px, -10px) scale(1.2)", color: "var(--btn-accent)" },
 };
 
-const GLOW_COLORS: Partial<Record<AnimationType, string>> = {
+const GLOW_COLORS: Partial<Record<LiquidMetalActionId, string>> = {
   heartbeat: "rgba(255, 107, 107, 0.9)",
   flash: "rgba(250, 204, 21, 0.9)",
   record: "rgba(255, 68, 68, 0.9)",
@@ -109,13 +113,35 @@ const GLOW_COLORS: Partial<Record<AnimationType, string>> = {
   "pulse-ring": "rgba(239, 68, 68, 0.9)",
 };
 
-export function LiquidMetalButtonsCard() {
+const TOGGLE_ACTIONS = new Set<LiquidMetalActionId>(["shake", "heartbeat", "bounce-beat", "record", "slide-down", "lock-shake", "signal", "phase", "pulse-ring"]);
+
+export function LiquidMetalButtonsCard({ onAction }: LiquidMetalButtonsCardProps = {}) {
+  const prefersReducedMotion = useReducedMotion();
+  const [activeActions, setActiveActions] = useState<Set<LiquidMetalActionId>>(() => new Set());
+  const [status, setStatus] = useState("Choose an icon action.");
+
+  const handleAction = (label: string, id: LiquidMetalActionId) => {
+    const enabled = TOGGLE_ACTIONS.has(id) ? !activeActions.has(id) : null;
+    if (enabled !== null) {
+      setActiveActions((current) => {
+        const next = new Set(current);
+        if (enabled) next.add(id);
+        else next.delete(id);
+        return next;
+      });
+    }
+    onAction?.(label, id);
+    setStatus(enabled === null
+      ? (onAction ? `${label} action dispatched.` : `${label} selected in local preview mode.`)
+      : `${label} ${enabled ? "enabled" : "disabled"}${onAction ? " and dispatched" : " locally"}.`);
+  };
+
   return (
     <motion.div
       className="w-[clamp(320px,95vw,520px)] select-none"
-      initial={{ opacity: 0, y: 20, scale: 0.97 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 20, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.7, ease: EASE }}
+      transition={{ duration: prefersReducedMotion ? 0 : 0.7, ease: EASE }}
     >
       {/* CSS custom properties for theme-aware metallic surfaces.
           Dark mode: full metallic depth with layered shadows.
@@ -203,11 +229,19 @@ export function LiquidMetalButtonsCard() {
             <motion.div
               key={animation}
               className="flex flex-col items-center gap-1.5"
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: i * 0.02, ease: EASE }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.3, delay: prefersReducedMotion ? 0 : i * 0.02, ease: EASE }}
             >
-              <LiquidMetalButton icon={icon} animationType={animation} />
+              <LiquidMetalButton
+                icon={icon}
+                label={label}
+                animationType={animation}
+                active={activeActions.has(animation)}
+                toggle={TOGGLE_ACTIONS.has(animation)}
+                onAction={handleAction}
+                reduceMotion={Boolean(prefersReducedMotion)}
+              />
               <span className="text-[9.5px] font-medium" style={{ color: "var(--label-color)", opacity: 0.7 }}>{label}</span>
             </motion.div>
           ))}
@@ -215,7 +249,7 @@ export function LiquidMetalButtonsCard() {
 
         {/* Footer */}
         <div className="border-t px-6 py-2.5 text-center" style={{ borderColor: "var(--card-header-border)" }}>
-          <p className="text-[10px]" style={{ color: "var(--label-color)", opacity: 0.5 }}>Each icon has a unique animation — click to trigger</p>
+          <p role="status" aria-live="polite" aria-atomic="true" className="text-[10px]" style={{ color: "var(--label-color)", opacity: 0.75 }}>{status}</p>
         </div>
       </div>
     </motion.div>
@@ -224,10 +258,20 @@ export function LiquidMetalButtonsCard() {
 
 function LiquidMetalButton({
   icon: Icon,
+  label,
   animationType = "slide-right",
+  active,
+  toggle,
+  onAction,
+  reduceMotion,
 }: {
   icon: LucideIcon;
-  animationType?: AnimationType;
+  label: string;
+  animationType?: LiquidMetalActionId;
+  active: boolean;
+  toggle: boolean;
+  onAction: (label: string, id: LiquidMetalActionId) => void;
+  reduceMotion: boolean;
 }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
@@ -235,33 +279,51 @@ function LiquidMetalButton({
   const [isClicked, setIsClicked] = useState(false);
   const [shakePhase, setShakePhase] = useState(0);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const shakeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => () => {
+    if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+    if (shakeIntervalRef.current) clearInterval(shakeIntervalRef.current);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!buttonRef.current) return;
+    if (reduceMotion || !buttonRef.current) return;
     const rect = buttonRef.current.getBoundingClientRect();
     setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
   const handleClick = () => {
+    onAction?.(label, animationType);
+    if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+    if (shakeIntervalRef.current) clearInterval(shakeIntervalRef.current);
     setIsClicked(true);
-    if (animationType === "shake" || animationType === "lock-shake") {
+
+    if (!reduceMotion && (animationType === "shake" || animationType === "lock-shake")) {
       let count = 0;
-      const shakeInterval = setInterval(() => {
+      shakeIntervalRef.current = setInterval(() => {
         setShakePhase((prev) => (prev === 1 ? -1 : 1));
         count++;
-        if (count >= 6) {
-          clearInterval(shakeInterval);
+        if (count >= 6 && shakeIntervalRef.current) {
+          clearInterval(shakeIntervalRef.current);
+          shakeIntervalRef.current = null;
           setShakePhase(0);
         }
       }, 50);
     }
-    setTimeout(() => setIsClicked(false), 500);
+
+    resetTimerRef.current = setTimeout(() => {
+      setIsClicked(false);
+      setShakePhase(0);
+      resetTimerRef.current = null;
+    }, reduceMotion ? 150 : 500);
   };
 
   const clickAnim = CLICK_ANIMATIONS[animationType];
   const glowColor = GLOW_COLORS[animationType] || "rgba(255, 255, 255, 0.9)";
 
   const getIconTransform = () => {
+    if (reduceMotion) return "scale(1)";
     if (isClicked) {
       if ((animationType === "shake" || animationType === "lock-shake") && shakePhase !== 0) {
         return `translateX(${shakePhase * 4}px) scale(1.2)`;
@@ -275,6 +337,7 @@ function LiquidMetalButton({
 
   const getIconColor = () => {
     if (isClicked) return clickAnim.color;
+    if (active) return "var(--btn-accent)";
     if (isPressed) return "var(--label-color)";
     if (isHovering) return "var(--btn-accent)";
     return "var(--label-color)";
@@ -283,6 +346,7 @@ function LiquidMetalButton({
   return (
     <button
       ref={buttonRef}
+      type="button"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {
@@ -292,11 +356,12 @@ function LiquidMetalButton({
       onMouseDown={() => setIsPressed(true)}
       onMouseUp={() => setIsPressed(false)}
       onClick={handleClick}
-      aria-label={animationType}
-      className="group relative inline-flex touch-manipulation items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+      aria-label={label}
+      aria-pressed={toggle ? active : undefined}
+      className="group relative inline-flex touch-manipulation items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950"
       style={{
-        transform: isPressed ? "translateY(4px)" : "translateY(0)",
-        transition: "transform 0.1s ease-out",
+        transform: reduceMotion ? "none" : isPressed ? "translateY(4px)" : "translateY(0)",
+        transition: reduceMotion ? "none" : "transform 0.1s ease-out",
       }}
     >
       {/* Ambient glow */}

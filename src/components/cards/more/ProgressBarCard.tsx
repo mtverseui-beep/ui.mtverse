@@ -1,126 +1,39 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Download, Upload, Loader2, Check, Zap } from "lucide-react";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { useId, useState } from "react";
+import * as Progress from "@radix-ui/react-progress";
+import { Check, Download, Minus, Plus, RotateCcw, Upload, Zap } from "lucide-react";
+
+const clamp = (value: number) => Math.min(100, Math.max(0, value));
+const button = "flex min-h-9 items-center justify-center gap-1.5 rounded-lg border cs-border cs-input px-2 text-[10px] font-semibold cs-text transition cs-hover disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--card-text-muted)] motion-reduce:transition-none";
 
 export function ProgressBarCard() {
-  return (
-    <motion.div className="w-[clamp(320px,95vw,520px)] select-none" initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.7, ease: EASE }}>
-      <div aria-hidden className="pointer-events-none absolute -inset-8 -z-10 rounded-[40px] blur-3xl" style={{ background: "radial-gradient(circle at 30% 20%, rgba(16,185,129,0.08), transparent 55%)" }} />
-      <div className="cs-surface overflow-visible rounded-[22px] border cs-border shadow-[0_30px_70px_-35px_rgba(0,0,0,0.25)]">
-        <div className="border-b cs-border px-5 py-4">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/10 ring-1 ring-emerald-500/20"><Zap className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" strokeWidth={2.2} /></div>
-            <div><h2 className="text-[14px] font-bold tracking-tight cs-text">Progress Bar</h2><p className="text-[10.5px] cs-muted">Linear · circular · segmented — 3 variants</p></div>
-          </div>
-        </div>
-        <div className="space-y-7 p-5">
-          <LinearProgress />
-          <CircularProgress />
-          <SegmentedProgress />
-        </div>
-        <div className="border-t cs-border px-5 py-2 text-center"><p className="text-[9px] cs-subtle">3 completely different progress patterns</p></div>
-      </div>
-    </motion.div>
-  );
+  return <div className="relative w-[min(100%,520px)]"><div aria-hidden className="pointer-events-none absolute -inset-6 -z-10 rounded-[40px] blur-3xl" style={{ background: "radial-gradient(circle at 30% 20%, rgba(16,185,129,.1), transparent 55%)" }} /><div className="cs-surface overflow-hidden rounded-[22px] border cs-border shadow-[0_30px_70px_-35px_rgba(0,0,0,.35)]"><header className="border-b cs-border px-4 py-4 sm:px-5"><div className="flex items-center gap-2.5"><span aria-hidden className="flex h-8 w-8 items-center justify-center rounded-lg border cs-border cs-input"><Zap className="h-4 w-4 cs-muted" /></span><div><h2 className="text-[14px] font-bold cs-text">Progress</h2><p className="text-[10.5px] cs-muted">User-controlled, accessible progress patterns</p></div></div></header><div className="space-y-7 p-4 sm:p-5"><LinearProgress /><CircularProgress /><SegmentedProgress /></div></div></div>;
 }
 
-// ── 1. Linear — animated fill with shimmer + label ──
+function SectionLabel({ id, children, value }: { id: string; children: React.ReactNode; value: number }) {
+  return <div className="mb-2 flex items-center justify-between gap-2"><span id={id} className="text-[10px] font-bold uppercase tracking-wider cs-subtle">{children}</span><span className="text-[10px] font-semibold tabular-nums cs-text">{Math.round(value)}%</span></div>;
+}
+
 function LinearProgress() {
-  const [progress, setProgress] = useState(0);
-  const [state, setState] = useState<"idle" | "loading" | "done">("idle");
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const start = () => {
-    if (state !== "idle") return;
-    setState("loading"); setProgress(0);
-    intervalRef.current = setInterval(() => {
-      setProgress(p => {
-        if (p >= 100) { if (intervalRef.current) clearInterval(intervalRef.current); setState("done"); setTimeout(() => { setState("idle"); setProgress(0); }, 2000); return 100; }
-        return p + 5;
-      });
-    }, 100);
-  };
-
-  useEffect(() => () => { if (intervalRef.current) clearInterval(intervalRef.current); }, []);
-
-  return (
-    <div>
-      <div className="mb-2 flex items-center justify-between"><span className="text-[10px] font-bold uppercase tracking-wider cs-subtle">1 · Linear Shimmer</span><span className="text-[10px] font-semibold cs-text">{progress}%</span></div>
-      <div className="relative h-3 overflow-hidden rounded-full" style={{ background: "var(--card-border)" }}>
-        {/* Fill */}
-        <motion.div className="absolute inset-y-0 left-0 rounded-full" animate={{ width: `${progress}%`, background: state === "done" ? "#10b981" : "linear-gradient(90deg, #3b82f6, #6366f1)" }} transition={{ duration: 0.1 }}>
-          {/* Shimmer sweep */}
-          {state === "loading" && <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent" style={{ animation: "progress-shimmer 1.2s linear infinite" }} />}
-        </motion.div>
-      </div>
-      <style>{`@keyframes progress-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }`}</style>
-      <motion.button type="button" onClick={start} whileTap={{ scale: 0.97 }} disabled={state !== "idle"} className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg border cs-border cs-input py-1.5 text-[10px] font-semibold cs-text transition cs-hover disabled:opacity-50">
-        {state === "idle" && <><Download className="h-3 w-3" strokeWidth={2.2} /> Start Download</>}
-        {state === "loading" && <><Loader2 className="h-3 w-3 animate-spin" strokeWidth={2.2} /> Downloading...</>}
-        {state === "done" && <><Check className="h-3 w-3 text-emerald-500" strokeWidth={2.6} /> Complete!</>}
-      </motion.button>
-    </div>
-  );
+  const id = useId();
+  const [value, setValue] = useState(45);
+  const update = (amount: number) => setValue((current) => clamp(current + amount));
+  return <section aria-labelledby={`${id}-label`}><SectionLabel id={`${id}-label`} value={value}>1 · Download</SectionLabel><Progress.Root value={value} max={100} aria-labelledby={`${id}-label`} aria-valuetext={`${value} percent downloaded`} className="relative h-3 overflow-hidden rounded-full bg-[var(--card-border)]"><Progress.Indicator className="h-full rounded-full bg-gradient-to-r from-slate-500 to-slate-700 transition-transform duration-300 motion-reduce:transition-none" style={{ transform: `translateX(-${100 - value}%)` }} /></Progress.Root><div className="mt-2 grid grid-cols-3 gap-2"><button type="button" onClick={() => update(-10)} disabled={value === 0} className={button}><Minus aria-hidden className="h-3 w-3" />10%</button><button type="button" onClick={() => update(10)} disabled={value === 100} className={button}><Plus aria-hidden className="h-3 w-3" />10%</button><button type="button" onClick={() => setValue(0)} disabled={value === 0} className={button}><RotateCcw aria-hidden className="h-3 w-3" />Reset</button></div><p aria-live="polite" className="sr-only">Download progress is {value} percent.</p></section>;
 }
 
-// ── 2. Circular — SVG ring with count-up ──
 function CircularProgress() {
-  const [progress, setProgress] = useState(65);
-  const R = 28, C = 2 * Math.PI * R;
-
-  return (
-    <div>
-      <div className="mb-2 flex items-center justify-between"><span className="text-[10px] font-bold uppercase tracking-wider cs-subtle">2 · Circular Ring</span><span className="text-[10px] font-semibold cs-text">{progress}%</span></div>
-      <div className="flex items-center justify-center gap-4 py-2">
-        {/* SVG ring */}
-        <div className="relative flex h-20 w-20 items-center justify-center">
-          <svg className="absolute inset-0 -rotate-90" viewBox="0 0 72 72">
-            <circle cx="36" cy="36" r={R} fill="none" stroke="var(--card-border)" strokeWidth="5" />
-            <motion.circle cx="36" cy="36" r={R} fill="none" stroke="#8b5cf6" strokeWidth="5" strokeLinecap="round" strokeDasharray={C} animate={{ strokeDashoffset: C - (progress / 100) * C }} transition={{ type: "spring", stiffness: 100, damping: 20 }} />
-          </svg>
-          <span className="text-[16px] font-bold tabular-nums cs-text">{progress}%</span>
-        </div>
-        {/* Controls */}
-        <div className="flex flex-col gap-1.5">
-          {[25, 50, 75, 100].map(v => (
-            <button key={v} type="button" onClick={() => setProgress(v)} className="rounded-md border cs-border cs-input px-2.5 py-1 text-[9px] font-bold cs-muted transition cs-hover" style={{ background: progress === v ? "rgba(139,92,246,0.1)" : "var(--card-input-bg)", color: progress === v ? "#8b5cf6" : "var(--card-text-muted)" }}>{v}%</button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  const id = useId();
+  const [value, setValue] = useState(65);
+  const radius = 28;
+  const circumference = 2 * Math.PI * radius;
+  return <section aria-labelledby={`${id}-label`}><SectionLabel id={`${id}-label`} value={value}>2 · Upload ring</SectionLabel><div className="flex flex-wrap items-center justify-center gap-4 py-1"><Progress.Root value={value} max={100} aria-labelledby={`${id}-label`} aria-valuetext={`${value} percent uploaded`} className="relative flex h-20 w-20 items-center justify-center"><svg aria-hidden className="absolute inset-0 -rotate-90" viewBox="0 0 72 72"><circle cx="36" cy="36" r={radius} fill="none" stroke="var(--card-border)" strokeWidth="5" /><circle cx="36" cy="36" r={radius} fill="none" stroke="var(--card-text-muted)" strokeWidth="5" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={circumference - (value / 100) * circumference} className="transition-[stroke-dashoffset] duration-300 motion-reduce:transition-none" /></svg><span aria-hidden className="text-[16px] font-bold tabular-nums cs-text">{value}%</span></Progress.Root><div className="grid grid-cols-2 gap-1.5" aria-label="Set upload progress">{[25, 50, 75, 100].map((option) => <button key={option} type="button" onClick={() => setValue(option)} aria-pressed={value === option} className={`${button} aria-pressed:border-[var(--card-text-muted)]`}>{option}%</button>)}</div></div><p aria-live="polite" className="sr-only">Upload progress is {value} percent.</p></section>;
 }
 
-// ── 3. Segmented — discrete steps with active fill ──
 function SegmentedProgress() {
-  const [step, setStep] = useState(3);
-  const STEPS = ["Cart", "Address", "Payment", "Review", "Done"];
-  return (
-    <div>
-      <div className="mb-2 flex items-center justify-between"><span className="text-[10px] font-bold uppercase tracking-wider cs-subtle">3 · Segmented Steps</span><span className="text-[10px] font-semibold cs-text">{step + 1}/{STEPS.length}</span></div>
-      <div className="flex items-center gap-1">
-        {STEPS.map((label, i) => {
-          const done = i < step; const active = i === step;
-          return (
-            <div key={label} className="flex flex-1 flex-col items-center gap-1">
-              <div className="flex w-full items-center gap-0.5">
-                {/* Connector line before (except first) */}
-                {i > 0 && <div className="h-1 flex-1 rounded-full transition-colors duration-300" style={{ background: i <= step ? "#10b981" : "var(--card-border)" }} />}
-                {/* Step circle */}
-                <motion.button type="button" onClick={() => setStep(i)} whileTap={{ scale: 0.85 }} className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 text-[9px] font-bold transition-all duration-300" style={{ borderColor: i <= step ? "#10b981" : "var(--card-border)", background: i <= step ? "#10b981" : "transparent", color: i <= step ? "#fff" : "var(--card-text-muted)" }}>
-                  {done ? <Check className="h-3 w-3" strokeWidth={3} /> : i + 1}
-                </motion.button>
-                {/* Connector line after (except last) */}
-                {i < STEPS.length - 1 && <div className="h-1 flex-1 rounded-full transition-colors duration-300" style={{ background: i < step ? "#10b981" : "var(--card-border)" }} />}
-              </div>
-              <span className="text-[7.5px] font-semibold transition-colors" style={{ color: i <= step ? "#10b981" : "var(--card-text-muted)" }}>{label}</span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
+  const id = useId();
+  const steps = ["Cart", "Address", "Payment", "Review", "Done"];
+  const [step, setStep] = useState(2);
+  const value = (step / (steps.length - 1)) * 100;
+  return <section aria-labelledby={`${id}-label`}><SectionLabel id={`${id}-label`} value={value}>3 · Checkout</SectionLabel><Progress.Root value={value} max={100} aria-labelledby={`${id}-label`} aria-valuetext={`Step ${step + 1} of ${steps.length}: ${steps[step]}`} className="sr-only"><Progress.Indicator /></Progress.Root><ol className="flex items-start" aria-label="Checkout steps">{steps.map((label, index) => { const complete = index < step; const current = index === step; return <li key={label} className="relative flex min-w-0 flex-1 flex-col items-center gap-1">{index > 0 && <span aria-hidden className="absolute right-1/2 top-3 h-1 w-full -translate-y-1/2" style={{ background: index <= step ? "#10b981" : "var(--card-border)" }} />}<button type="button" onClick={() => setStep(index)} aria-current={current ? "step" : undefined} aria-label={`${label}, step ${index + 1} of ${steps.length}${complete ? ", completed" : current ? ", current" : ""}`} className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full border-2 text-[9px] font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--card-text-muted)] motion-reduce:transition-none" style={{ borderColor: index <= step ? "#10b981" : "var(--card-border)", background: index <= step ? "#10b981" : "var(--card-surface)", color: index <= step ? "white" : "var(--card-text-muted)" }}>{complete ? <Check aria-hidden className="h-3 w-3" /> : index + 1}</button><span className="relative z-10 max-w-full truncate text-[7.5px] font-semibold cs-muted">{label}</span></li>; })}</ol><div className="mt-3 grid grid-cols-2 gap-2"><button type="button" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0} className={button}>Previous</button><button type="button" onClick={() => setStep((current) => Math.min(steps.length - 1, current + 1))} disabled={step === steps.length - 1} className={button}>{step === steps.length - 1 ? <><Check aria-hidden className="h-3 w-3" />Complete</> : <>Next<Upload aria-hidden className="h-3 w-3" /></>}</button></div><p aria-live="polite" className="sr-only">Current checkout step: {steps[step]}</p></section>;
 }

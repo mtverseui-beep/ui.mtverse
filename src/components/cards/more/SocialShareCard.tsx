@@ -1,131 +1,256 @@
 "use client";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Check, Link2 } from "lucide-react";
+
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Check, Link2, Send, Share2, TriangleAlert } from "lucide-react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+const DEFAULT_URL = "https://card-showcase.pro";
 
-// SocialShareCard — 4 social share buttons, each with a COMPLETELY DIFFERENT
-// modern animation on hover. Uses CSS group-hover for reliable cross-mode
-// behavior + framer-motion for tap feedback.
-// 1. Twitter/X — 3D flip (icon rotates out, brand icon rotates in)
-// 2. LinkedIn — radial expand (circle scales to fill)
-// 3. Facebook — slide-up swap (icon slides up, white icon slides in)
-// 4. Reddit — elastic bounce + glow
+export type SocialSharePlatform = "x" | "linkedin" | "facebook" | "reddit";
 
-export function SocialShareCard() {
-  const [copied, setCopied] = useState(false);
+export interface SocialShareCardProps {
+  url?: string;
+  title?: string;
+  onShare?: (platform: SocialSharePlatform, url: string) => void;
+  onCopy?: (success: boolean, error?: Error) => void;
+}
 
-  const handleCopy = () => {
-    navigator.clipboard?.writeText("https://card-showcase.pro").then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }).catch(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
+type Feedback = { kind: "idle" | "success" | "error" | "info"; message: string };
+
+function toError(cause: unknown, fallback: string) {
+  return cause instanceof Error ? cause : new Error(fallback);
+}
+
+function copyWithExecCommand(value: string) {
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.setAttribute("readonly", "");
+  textarea.setAttribute("aria-hidden", "true");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  textarea.style.top = "0";
+  document.body.appendChild(textarea);
+
+  try {
+    textarea.focus();
+    textarea.select();
+    textarea.setSelectionRange(0, value.length);
+    if (!document.execCommand("copy")) throw new Error("The browser rejected the copy command.");
+  } finally {
+    textarea.remove();
+  }
+}
+
+export function SocialShareCard({
+  url = DEFAULT_URL,
+  title = "Take a look at this",
+  onShare,
+  onCopy,
+}: SocialShareCardProps = {}) {
+  const [feedback, setFeedback] = useState<Feedback>({ kind: "idle", message: "Choose a destination or copy the link." });
+  const [copying, setCopying] = useState(false);
+  const [nativeSharing, setNativeSharing] = useState(false);
+  const [nativeShareAvailable, setNativeShareAvailable] = useState(false);
+  const mountedRef = useRef(true);
+  const copyLock = useRef(false);
+  const shareLock = useRef(false);
+  const reduceMotion = Boolean(useReducedMotion());
+
+  useEffect(() => {
+    mountedRef.current = true;
+    setNativeShareAvailable(typeof navigator !== "undefined" && typeof navigator.share === "function");
+    return () => {
+      mountedRef.current = false;
+      copyLock.current = false;
+      shareLock.current = false;
+    };
+  }, []);
+
+  const handleCopy = async () => {
+    if (copyLock.current) return;
+    copyLock.current = true;
+    setCopying(true);
+
+    try {
+      let clipboardError: unknown;
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(url);
+        } catch (cause) {
+          clipboardError = cause;
+          copyWithExecCommand(url);
+        }
+      } else {
+        copyWithExecCommand(url);
+      }
+
+      if (mountedRef.current) {
+        setFeedback({ kind: "success", message: clipboardError ? "Link copied using the browser fallback." : "Link copied to the clipboard." });
+      }
+      onCopy?.(true);
+    } catch (cause) {
+      const error = toError(cause, "The link could not be copied.");
+      if (mountedRef.current) {
+        setFeedback({ kind: "error", message: "Copy failed. Select the URL and copy it manually." });
+      }
+      onCopy?.(false, error);
+    } finally {
+      copyLock.current = false;
+      if (mountedRef.current) setCopying(false);
+    }
   };
 
+  const handlePlatformShare = (platform: SocialSharePlatform) => {
+    const encodedUrl = encodeURIComponent(url);
+    const encodedTitle = encodeURIComponent(title);
+    const destinations: Record<SocialSharePlatform, string> = {
+      x: `https://x.com/intent/post?url=${encodedUrl}&text=${encodedTitle}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+      reddit: `https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`,
+    };
+
+    let popup: Window | null;
+    try {
+      popup = window.open(
+        destinations[platform],
+        `share-${platform}`,
+        "popup=yes,width=720,height=640,scrollbars=yes,resizable=yes",
+      );
+    } catch (cause) {
+      const error = toError(cause, "The share window could not be opened.");
+      setFeedback({ kind: "error", message: `${error.message} Allow popups and try again.` });
+      return;
+    }
+
+    if (!popup) {
+      setFeedback({ kind: "error", message: "The share popup was blocked. Allow popups and try again." });
+      return;
+    }
+
+    try {
+      popup.opener = null;
+      popup.focus();
+    } catch {
+      // The popup is already open; browser privacy controls may block access to its WindowProxy.
+    }
+    setFeedback({ kind: "success", message: `${platform === "x" ? "X" : platform[0].toUpperCase() + platform.slice(1)} share window opened.` });
+    onShare?.(platform, url);
+  };
+
+  const handleNativeShare = async () => {
+    if (shareLock.current || !navigator.share) return;
+    shareLock.current = true;
+    setNativeSharing(true);
+
+    try {
+      await navigator.share({ title, url });
+      if (mountedRef.current) setFeedback({ kind: "success", message: "Shared successfully with your device." });
+    } catch (cause) {
+      if (mountedRef.current) {
+        const cancelled = cause instanceof DOMException && cause.name === "AbortError";
+        setFeedback({
+          kind: cancelled ? "info" : "error",
+          message: cancelled ? "Native sharing was cancelled." : "Native sharing failed. Try a platform or copy the link.",
+        });
+      }
+    } finally {
+      shareLock.current = false;
+      if (mountedRef.current) setNativeSharing(false);
+    }
+  };
+
+  const copyLabel = copying ? "Copying…" : feedback.kind === "success" && feedback.message.startsWith("Link copied") ? "Link Copied" : "Copy Link";
+
   return (
-    <motion.div className="w-[clamp(280px,88vw,380px)] select-none" initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.7, ease: EASE }}>
-      <div aria-hidden className="pointer-events-none absolute -inset-8 -z-10 rounded-[40px] blur-3xl" style={{ background: "radial-gradient(circle at 30% 20%, rgba(37,99,235,0.08), transparent 55%)" }} />
-      <div className="cs-surface overflow-hidden rounded-[22px] border cs-border shadow-[0_30px_70px_-35px_rgba(0,0,0,0.25)]">
-        <div className="border-b cs-border px-5 py-4">
+    <motion.div className="relative w-[min(92vw,380px)] select-none" initial={reduceMotion ? false : { opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: reduceMotion ? 0 : 0.55, ease: EASE }}>
+      <div aria-hidden className="pointer-events-none absolute -inset-8 -z-10 rounded-[40px] bg-blue-500/10 blur-3xl dark:bg-blue-400/5" />
+      <div className="cs-surface overflow-hidden rounded-[22px] border cs-border shadow-[0_30px_70px_-35px_rgba(0,0,0,0.35)]">
+        <div className="border-b cs-border px-4 py-4 sm:px-5">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-500/10 ring-1 ring-blue-500/20"><ShareIcon /></div>
-            <div><h2 className="text-[14px] font-bold tracking-tight cs-text">Social Share</h2><p className="text-[10.5px] cs-muted">4 unique hover animations · copy link</p></div>
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 ring-1 ring-blue-500/20"><ShareIcon /></div>
+            <div className="min-w-0"><h2 className="text-[14px] font-bold tracking-tight cs-text">Social Share</h2><p className="truncate text-[10.5px] cs-muted">Share securely or copy the direct link</p></div>
           </div>
         </div>
-        <div className="space-y-7 p-5">
-          <div className="grid grid-cols-4 gap-2.5">
-            <TwitterButton />
-            <LinkedInButton />
-            <FacebookButton />
-            <RedditButton />
+
+        <div className="space-y-4 p-4 sm:p-5">
+          {nativeShareAvailable && (
+            <motion.button type="button" onClick={() => void handleNativeShare()} disabled={nativeSharing} whileTap={reduceMotion ? undefined : { scale: 0.98 }} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-wait disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 motion-reduce:transition-none dark:bg-blue-500 dark:hover:bg-blue-400 dark:focus-visible:ring-offset-slate-950">
+              <Send className="h-4 w-4" strokeWidth={2.2} />{nativeSharing ? "Opening Share…" : "Share with Your Device"}
+            </motion.button>
+          )}
+
+          <div>
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] cs-muted">Share to a platform</p>
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+              <TwitterButton onShare={() => handlePlatformShare("x")} reduceMotion={reduceMotion} />
+              <LinkedInButton onShare={() => handlePlatformShare("linkedin")} reduceMotion={reduceMotion} />
+              <FacebookButton onShare={() => handlePlatformShare("facebook")} reduceMotion={reduceMotion} />
+              <RedditButton onShare={() => handlePlatformShare("reddit")} reduceMotion={reduceMotion} />
+            </div>
           </div>
 
-          {/* Copy link */}
-          <motion.button type="button" onClick={handleCopy} whileTap={{ scale: 0.97 }} className="flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl py-2.5 text-[12.5px] font-semibold text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40" style={{ background: copied ? "#059669" : "#2563eb" }}>
-            <AnimatePresence mode="wait">
-              {copied ? (
-                <motion.span key="copied" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="flex items-center gap-2"><Check className="h-4 w-4" strokeWidth={2.6} /> Link Copied!</motion.span>
-              ) : (
-                <motion.span key="copy" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="flex items-center gap-2"><Link2 className="h-4 w-4" strokeWidth={2.2} /> Copy Link</motion.span>
-              )}
-            </AnimatePresence>
-          </motion.button>
+          <div className="flex min-w-0 items-center gap-2 rounded-xl border cs-border p-2 cs-surface">
+            <input aria-label="Share URL" value={url} readOnly onFocus={(event) => event.currentTarget.select()} className="min-w-0 flex-1 bg-transparent px-1 text-[11px] cs-text outline-none" />
+            <motion.button type="button" onClick={() => void handleCopy()} disabled={copying} whileTap={reduceMotion ? undefined : { scale: 0.96 }} className="flex shrink-0 items-center gap-1.5 rounded-lg bg-slate-900 px-3 py-2 text-[11px] font-semibold text-white transition-colors hover:bg-slate-700 disabled:cursor-wait disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 motion-reduce:transition-none dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-white">
+              {copyLabel === "Link Copied" ? <Check className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />}{copyLabel}
+            </motion.button>
+          </div>
+
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div key={`${feedback.kind}-${feedback.message}`} role="status" aria-live={feedback.kind === "error" ? "assertive" : "polite"} aria-atomic="true" initial={reduceMotion ? false : { opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={reduceMotion ? undefined : { opacity: 0 }} className={`flex items-start gap-2 rounded-xl border px-3 py-2.5 text-[11px] font-medium ${feedback.kind === "error" ? "border-red-500/25 bg-red-500/10 text-red-700 dark:text-red-300" : feedback.kind === "success" ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300" : "cs-border cs-surface cs-muted"}`}>
+              {feedback.kind === "error" ? <TriangleAlert className="mt-0.5 h-3.5 w-3.5 shrink-0" /> : feedback.kind === "success" ? <Check className="mt-0.5 h-3.5 w-3.5 shrink-0" /> : <Share2 className="mt-0.5 h-3.5 w-3.5 shrink-0" />}
+              <span>{feedback.message}</span>
+            </motion.div>
+          </AnimatePresence>
         </div>
-        <div className="border-t cs-border px-5 py-2.5 text-center"><p className="text-[9.5px] cs-subtle">Hover each button — 4 different animations</p></div>
+
+        <div className="border-t cs-border px-4 py-2.5 text-center sm:px-5"><p className="text-[9.5px] cs-subtle">Platform actions open their official share dialogs</p></div>
       </div>
     </motion.div>
   );
 }
 
-// ── 1. Twitter/X — 3D flip using CSS group-hover ──
-function TwitterButton() {
+type ShareButtonProps = { onShare: () => void; reduceMotion: boolean };
+const focusClass = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950";
+
+function TwitterButton({ onShare, reduceMotion }: ShareButtonProps) {
   return (
-    <motion.button type="button" aria-label="Share on Twitter" whileTap={{ scale: 0.92 }} className="group relative flex h-12 items-center justify-center overflow-hidden rounded-xl border cs-border cs-surface [perspective:400px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/40">
-      {/* Brand bg — rotates in on hover via CSS */}
-      <div className="absolute inset-0 rounded-xl bg-black opacity-0 transition-all duration-300 [transform:rotateY(90deg)] group-hover:rotate-y-0 group-hover:opacity-100" style={{ transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)", transform: undefined }} />
-      {/* Default icon — visible at rest */}
-      <div className="absolute flex items-center justify-center transition-all duration-200 group-hover:[transform:rotateY(-90deg)] group-hover:opacity-0" style={{ transition: "all 0.2s cubic-bezier(0.16,1,0.3,1)" }}>
-        <TwitterSvg className="h-4 w-4 text-slate-500 dark:text-slate-400" />
-      </div>
-      {/* White icon — visible on hover */}
-      <div className="absolute flex items-center justify-center opacity-0 transition-all delay-50 duration-300 group-hover:opacity-100" style={{ transitionDelay: "50ms", transition: "opacity 0.3s ease" }}>
-        <TwitterSvg className="h-4 w-4 text-white" />
-      </div>
+    <motion.button type="button" aria-label="Share on X (opens in a popup)" onClick={onShare} whileTap={reduceMotion ? undefined : { scale: 0.92 }} className={`group relative flex h-12 items-center justify-center overflow-hidden rounded-xl border cs-border cs-surface [perspective:400px] ${focusClass}`}>
+      <div className="absolute inset-0 rounded-xl bg-black opacity-0 transition-all duration-300 [transform:rotateY(90deg)] motion-reduce:transition-none group-hover:[transform:rotateY(0deg)] group-hover:opacity-100 group-focus-visible:[transform:rotateY(0deg)] group-focus-visible:opacity-100" />
+      <TwitterSvg className="relative z-10 h-4 w-4 text-slate-500 transition-colors motion-reduce:transition-none group-hover:text-white group-focus-visible:text-white dark:text-slate-400" />
     </motion.button>
   );
 }
 
-// ── 2. LinkedIn — radial expand via CSS ──
-function LinkedInButton() {
+function LinkedInButton({ onShare, reduceMotion }: ShareButtonProps) {
   return (
-    <motion.button type="button" aria-label="Share on LinkedIn" whileTap={{ scale: 0.92 }} className="group relative flex h-12 items-center justify-center overflow-hidden rounded-xl border cs-border cs-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/40">
-      {/* Expanding circle → fills button */}
-      <div className="absolute inset-0 scale-0 rounded-full bg-[#0a66c2] transition-all duration-300 ease-out group-hover:scale-100 group-hover:rounded-xl" />
-      {/* Icon */}
-      <div className="relative z-10 transition-colors duration-200 group-hover:text-white">
-        <LinkedInSvg className="h-4 w-4 text-slate-500 transition-colors duration-200 group-hover:text-white dark:text-slate-400 dark:group-hover:text-white" />
-      </div>
+    <motion.button type="button" aria-label="Share on LinkedIn (opens in a popup)" onClick={onShare} whileTap={reduceMotion ? undefined : { scale: 0.92 }} className={`group relative flex h-12 items-center justify-center overflow-hidden rounded-xl border cs-border cs-surface ${focusClass}`}>
+      <div className="absolute inset-0 scale-0 rounded-full bg-[#0a66c2] transition-all duration-300 ease-out motion-reduce:transition-none group-hover:scale-100 group-hover:rounded-xl group-focus-visible:scale-100 group-focus-visible:rounded-xl" />
+      <LinkedInSvg className="relative z-10 h-4 w-4 text-slate-500 transition-colors motion-reduce:transition-none group-hover:text-white group-focus-visible:text-white dark:text-slate-400" />
     </motion.button>
   );
 }
 
-// ── 3. Facebook — slide-up swap via CSS ──
-function FacebookButton() {
+function FacebookButton({ onShare, reduceMotion }: ShareButtonProps) {
   return (
-    <motion.button type="button" aria-label="Share on Facebook" whileTap={{ scale: 0.92 }} className="group relative flex h-12 items-center justify-center overflow-hidden rounded-xl border cs-border cs-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/40">
-      {/* Background slides up */}
-      <div className="absolute inset-0 translate-y-full bg-[#1877f2] transition-transform duration-300 ease-out group-hover:translate-y-0" />
-      {/* Icon container — clips overflow */}
-      <div className="relative flex h-4 w-4 flex-col items-center" style={{ overflow: "hidden" }}>
-        {/* Default icon — slides up on hover */}
-        <div className="absolute flex h-4 w-4 items-center justify-center transition-transform duration-300 ease-out group-hover:-translate-y-4">
-          <FacebookSvg className="h-4 w-4 text-slate-500 dark:text-slate-400" />
-        </div>
-        {/* White icon — slides in from below */}
-        <div className="absolute flex h-4 w-4 translate-y-4 items-center justify-center transition-transform duration-300 ease-out group-hover:translate-y-0">
-          <FacebookSvg className="h-4 w-4 text-white" />
-        </div>
-      </div>
+    <motion.button type="button" aria-label="Share on Facebook (opens in a popup)" onClick={onShare} whileTap={reduceMotion ? undefined : { scale: 0.92 }} className={`group relative flex h-12 items-center justify-center overflow-hidden rounded-xl border cs-border cs-surface ${focusClass}`}>
+      <div className="absolute inset-0 translate-y-full bg-[#1877f2] transition-transform duration-300 ease-out motion-reduce:transition-none group-hover:translate-y-0 group-focus-visible:translate-y-0" />
+      <FacebookSvg className="relative z-10 h-4 w-4 text-slate-500 transition-colors motion-reduce:transition-none group-hover:text-white group-focus-visible:text-white dark:text-slate-400" />
     </motion.button>
   );
 }
 
-// ── 4. Reddit — glow fill + icon scale via CSS ──
-function RedditButton() {
+function RedditButton({ onShare, reduceMotion }: ShareButtonProps) {
   return (
-    <motion.button type="button" aria-label="Share on Reddit" whileTap={{ scale: 0.92 }} className="group relative flex h-12 items-center justify-center overflow-hidden rounded-xl border cs-border cs-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400/40">
-      {/* Glow fill */}
-      <div className="absolute inset-0 scale-0 bg-[#ff4500] transition-transform duration-300 ease-out group-hover:scale-100" />
-      {/* Icon with bounce */}
-      <div className="relative z-10 transition-all duration-300 group-hover:scale-125 group-hover:-rotate-8" style={{ transitionTimingFunction: "cubic-bezier(0.34,1.56,0.64,1)" }}>
-        <RedditSvg className="h-4 w-4 text-slate-500 transition-colors duration-200 group-hover:text-white dark:text-slate-400 dark:group-hover:text-white" />
-      </div>
+    <motion.button type="button" aria-label="Share on Reddit (opens in a popup)" onClick={onShare} whileTap={reduceMotion ? undefined : { scale: 0.92 }} className={`group relative flex h-12 items-center justify-center overflow-hidden rounded-xl border cs-border cs-surface ${focusClass}`}>
+      <div className="absolute inset-0 scale-0 bg-[#ff4500] transition-transform duration-300 ease-out motion-reduce:transition-none group-hover:scale-100 group-focus-visible:scale-100" />
+      <div className="relative z-10 transition-transform duration-300 motion-reduce:transition-none group-hover:-rotate-6 group-hover:scale-125 group-focus-visible:-rotate-6 group-focus-visible:scale-125"><RedditSvg className="h-4 w-4 text-slate-500 transition-colors motion-reduce:transition-none group-hover:text-white group-focus-visible:text-white dark:text-slate-400" /></div>
     </motion.button>
   );
 }
 
-// ── SVG Icons ──
 function ShareIcon() {
   return <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" strokeWidth={2.2}><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>;
 }
