@@ -127,6 +127,9 @@ export function ConfirmationDialog() {
                 <div className="relative">
                   <p className="text-xs font-medium text-slate-500 mb-1.5">Assignee</p>
                   <button
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded={assigneeOpen}
                     onClick={(e) => { e.stopPropagation(); setAssigneeOpen((o) => !o); }}
                     className="w-full flex items-center justify-between border border-slate-200 rounded-xl px-3 py-2 text-sm hover:border-slate-300 transition-colors"
                   >
@@ -141,17 +144,23 @@ export function ConfirmationDialog() {
                   </button>
                   {assigneeOpen && (
                     <div
+                      role="listbox"
+                      aria-label="Assignees"
                       onClick={(e) => e.stopPropagation()}
-                      className="absolute z-10 mt-1.5 w-full bg-white border border-slate-100 rounded-xl shadow-lg overflow-hidden"
+                      className="relative z-10 mt-1.5 max-h-36 w-full overflow-y-auto rounded-xl border border-slate-100 bg-white p-1 shadow-lg scrollbar-modern"
                       style={{ animation: "dropIn .15s ease" }}
                     >
                       {PEOPLE.map((p) => (
                         <button
+                          type="button"
+                          role="option"
+                          aria-selected={assignee?.name === p.name}
                           key={p.name}
                           onClick={() => { setAssignee(p); setAssigneeOpen(false); }}
-                          className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                          className="w-full flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
                         >
                           <Avatar person={p} size="w-6 h-6" ring={false} /> {p.name}
+                          {assignee?.name === p.name && <Check className="ml-auto h-3.5 w-3.5 text-indigo-500" />}
                         </button>
                       ))}
                     </div>
@@ -243,7 +252,7 @@ export function DeleteAlert() {
                   <DemoButton
                     onClick={() => { if (canDelete) setOpen(false); }}
                     color="#ef4444"
-                    className="flex-1"
+                    className={`flex-1 ${canDelete ? "" : "pointer-events-none opacity-40"}`}
                   >
                     <Trash2 className="h-3.5 w-3.5" /> Delete Forever
                   </DemoButton>
@@ -403,11 +412,11 @@ export function QuickViewModal() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 20 }}
               transition={SPRING}
-              className="rounded-2xl bg-white shadow-2xl"
-              style={{ border: "1px solid #e2e8f0" }}
+              className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-2xl sm:flex-row"
+              style={{ border: "1px solid var(--overlay-border)" }}
             >
               {/* Product image */}
-              <div className="relative w-48 shrink-0 overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+              <div className="relative h-40 w-full shrink-0 overflow-hidden bg-zinc-100 dark:bg-zinc-900 sm:h-auto sm:w-48">
                 <motion.img
                   key={color}
                   src={colors[color].img}
@@ -499,19 +508,19 @@ export function ProductPreview() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-md"
+            className="absolute inset-x-0 top-0 z-50 flex min-h-full items-start justify-center bg-black/60 p-3 backdrop-blur-md sm:p-6"
           >
             <motion.div
               initial={{ scale: 0.94, y: 10 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.94, y: 10 }}
               transition={SPRING}
-              className="relative flex h-full w-full max-w-[600px] gap-3 rounded-2xl bg-[#ffffff] p-4 shadow-2xl"
+              className="relative flex w-full max-w-[680px] flex-col gap-3 rounded-2xl bg-[#ffffff] p-3 shadow-2xl sm:flex-row sm:p-4"
               style={{ border: "1px solid #e2e8f0" }}
             >
               <CloseButton onClick={() => setOpen(false)} />
               {/* Thumbnails */}
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-row gap-2 overflow-x-auto sm:flex-col sm:overflow-visible">
                 {images.map((img, i) => (
                   <button
                     key={i}
@@ -525,7 +534,7 @@ export function ProductPreview() {
                 ))}
               </div>
               {/* Main image */}
-              <div className="relative flex-1 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-900">
+              <div className="relative min-h-64 flex-1 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-900">
                 <motion.img
                   key={activeImg}
                   src={images[activeImg].src}
@@ -576,7 +585,10 @@ export function CheckoutDrawer() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 360, damping: 36 }}
-              className="absolute right-0 top-0 z-50 flex h-full w-[340px] flex-col bg-[#ffffff] shadow-2xl"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Checkout"
+              className="absolute right-0 top-0 z-50 flex h-full w-full max-w-[340px] flex-col bg-[#ffffff] shadow-2xl"
               style={{ border: "1px solid #e2e8f0" }}>
               <div className="flex items-center justify-between border-b bg-white/10 p-4">
                 <div>
@@ -655,7 +667,10 @@ export function CartDrawer() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 360, damping: 36 }}
-              className="absolute right-0 top-0 z-50 flex h-full w-[320px] flex-col bg-[#ffffff] shadow-2xl"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Shopping cart"
+              className="absolute right-0 top-0 z-50 flex h-full w-full max-w-[320px] flex-col bg-[#ffffff] shadow-2xl"
               style={{ border: "1px solid #e2e8f0" }}>
               <div className="flex items-center justify-between border-b bg-white/10 p-4">
                 <h3 className="flex items-center gap-2 text-[15px] font-bold text-[#1e293b]">
@@ -737,7 +752,10 @@ export function FilterDrawer() {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 360, damping: 36 }}
-              className="absolute left-0 top-0 z-50 flex h-full w-[300px] flex-col bg-[#ffffff] shadow-2xl"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Product filters"
+              className="absolute left-0 top-0 z-50 flex h-full w-full max-w-[300px] flex-col bg-[#ffffff] shadow-2xl"
               style={{ border: "1px solid #e2e8f0" }}>
               <div className="flex items-center justify-between border-b bg-white/10 p-4">
                 <h3 className="flex items-center gap-2 text-[15px] font-bold text-[#1e293b]">

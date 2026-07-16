@@ -7,8 +7,7 @@ import {
   Copy, Check, Link2, Twitter, Facebook, Linkedin, MessageCircle,
   Download, RotateCw, X, ChevronRight, Send, Lock, Globe,
 } from "lucide-react";
-import { DemoButton, Backdrop, CloseButton, OverlayStage, TriggerCenter, EASE, SPRING } from "./primitives";
-import { ModalOverlay } from "./primitives";
+import { DemoButton, Backdrop, CloseButton, OverlayStage, TriggerCenter, ModalOverlay, PremiumSelect, EASE, SPRING } from "./primitives";
 
 // ════════════════════════════════════════════════════════════════════════════
 // BATCH 2 — Components 9-16
@@ -35,12 +34,12 @@ export function SettingsModal() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 20 }}
               transition={SPRING}
-              className="rounded-2xl bg-white shadow-2xl"
-              style={{ border: "1px solid #e2e8f0" }}
+              className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-2xl sm:flex-row"
+              style={{ border: "1px solid var(--overlay-border)" }}
             >
               {/* Sidebar tabs */}
-              <div className="w-32 shrink-0 border-r bg-white/10 bg-[#f8fafc] p-2">
-                <p className="px-2 py-1.5 text-[9px] font-bold uppercase tracking-wider text-[#94a3b8]">Settings</p>
+              <div className="grid w-full shrink-0 grid-cols-3 gap-1 border-b bg-white/10 bg-[#f8fafc] p-2 sm:block sm:w-32 sm:border-b-0 sm:border-r">
+                <p className="hidden px-2 py-1.5 text-[9px] font-bold uppercase tracking-wider text-[#94a3b8] sm:block">Settings</p>
                 {([
                   { id: "general", label: "General" },
                   { id: "notifications", label: "Notifications" },
@@ -50,7 +49,7 @@ export function SettingsModal() {
                     key={t.id}
                     onClick={() => setTab(t.id)}
                     className="relative flex w-full items-center rounded-lg px-2.5 py-2 text-[11.5px] font-medium transition"
-                    style={{ background: tab === t.id ? "#ffffff" : "transparent", color: tab === t.id ? "#1e293b" : "#64748b" }}
+                    style={{ background: tab === t.id ? "var(--overlay-surface)" : "transparent", color: tab === t.id ? "var(--overlay-text)" : "var(--overlay-muted)" }}
                   >
                     {t.label}
                   </button>
@@ -102,7 +101,7 @@ export function SettingsModal() {
                             <button
                               onClick={() => setNotif(s => ({ ...s, [n.key]: !s[n.key] }))}
                               className="relative h-5 w-9 rounded-full transition"
-                              style={{ background: notif[n.key] ? "#10b981" : "#e2e8f0" }}
+                              style={{ background: notif[n.key] ? "#10b981" : "var(--overlay-border)" }}
                             >
                               <motion.span layout transition={SPRING} className="absolute top-0.5 h-4 w-4 rounded-full bg-white shadow" style={{ left: notif[n.key] ? 18 : 2 }} />
                             </button>
@@ -123,7 +122,7 @@ export function SettingsModal() {
                               key={t.id}
                               onClick={() => setTheme(t.id)}
                               className="overflow-hidden rounded-xl border-2 transition"
-                              style={{ borderColor: theme === t.id ? "#8b5cf6" : "#e2e8f0" }}
+                              style={{ borderColor: theme === t.id ? "#8b5cf6" : "var(--overlay-border)" }}
                             >
                               <div className="h-12 w-full" style={{ background: t.bg }} />
                               <p className="py-1 text-center text-[10.5px] font-semibold text-[#1e293b]">{t.label}</p>
@@ -195,7 +194,7 @@ export function InviteTeamDialog() {
               </div>
               <div className="space-y-3 p-4">
                 {/* Email input + role + invite */}
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-start">
                   <input
                     type="email"
                     value={email}
@@ -204,15 +203,12 @@ export function InviteTeamDialog() {
                     placeholder="email@company.com"
                     className="flex-1 rounded-lg border bg-slate-50 border border-slate-200 px-3 py-2 text-[12px] text-[#1e293b] outline-none"
                   />
-                  <select
+                  <PremiumSelect
                     value={role}
-                    onChange={e => setRole(e.target.value)}
-                    className="rounded-lg border bg-slate-50 border border-slate-200 px-2 py-2 text-[11.5px] text-[#1e293b] outline-none"
-                  >
-                    <option>Viewer</option>
-                    <option>Editor</option>
-                    <option>Admin</option>
-                  </select>
+                    options={["Viewer", "Editor", "Admin"]}
+                    onChange={setRole}
+                    label="Workspace role"
+                  />
                   <DemoButton onClick={invite} color="#3b82f6"><Send className="h-3.5 w-3.5" /></DemoButton>
                 </div>
                 {/* Invited list */}
@@ -335,9 +331,9 @@ export function ShareDialog() {
                           key={a.id}
                           onClick={() => setAccess(a.id)}
                           className="flex w-full items-center gap-2.5 rounded-lg p-2 transition hover:bg-[#f1f5f9]"
-                          style={{ background: access === a.id ? "#f8fafc" : "transparent" }}
+                          style={{ background: access === a.id ? "var(--overlay-surface-2)" : "transparent" }}
                         >
-                          <Icon className="h-4 w-4" style={{ color: access === a.id ? "#8b5cf6" : "#64748b" }} />
+                          <Icon className="h-4 w-4" style={{ color: access === a.id ? "#8b5cf6" : "var(--overlay-muted)" }} />
                           <span className="flex-1 text-left text-[11.5px] font-medium text-[#1e293b]">{a.label}</span>
                           {access === a.id && <Check className="h-3.5 w-3.5 text-violet-500" />}
                         </button>
@@ -353,7 +349,7 @@ export function ShareDialog() {
                     className="flex-1 bg-transparent text-[11px] font-mono text-[#1e293b] outline-none"
                   />
                   <button
-                    onClick={() => { setCopied(true); setTimeout(() => setCopied(false), 1500); }}
+                    onClick={() => { navigator.clipboard?.writeText("https://mtverse.dev/p/apollo"); setCopied(true); setTimeout(() => setCopied(false), 1500); }}
                     className="flex items-center gap-1 rounded-md bg-violet-500 px-2.5 py-1.5 text-[10.5px] font-semibold text-white"
                   >
                     {copied ? <><Check className="h-3 w-3" /> Copied</> : <><Copy className="h-3 w-3" /> Copy</>}
@@ -386,8 +382,8 @@ export function FilePreviewModal() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.92 }}
               transition={SPRING}
-              className="rounded-2xl bg-white shadow-2xl"
-              style={{ border: "1px solid #e2e8f0" }}
+              className="flex min-h-[420px] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+              style={{ border: "1px solid var(--overlay-border)" }}
             >
               {/* Header */}
               <div className="flex items-center justify-between border-b bg-white/10 px-4 py-2.5">
@@ -566,7 +562,10 @@ export function NotificationPanel() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 360, damping: 36 }}
-              className="absolute right-0 top-0 z-50 flex h-full w-[300px] flex-col bg-[#ffffff] shadow-2xl"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Notifications"
+              className="absolute right-0 top-0 z-50 flex h-full w-full max-w-[320px] flex-col bg-[#ffffff] shadow-2xl"
               style={{ border: "1px solid #e2e8f0" }}>
               <div className="flex items-center justify-between border-b bg-white/10 p-4">
                 <h3 className="flex items-center gap-2 text-[14px] font-bold text-[#1e293b]">
@@ -586,7 +585,7 @@ export function NotificationPanel() {
                       exit={{ opacity: 0, x: 50, height: 0 }}
                       transition={{ delay: 0.05 + i * 0.06 }}
                       className="relative mb-1.5 flex gap-2.5 rounded-xl p-2.5 transition hover:bg-[#f1f5f9]"
-                      style={{ background: n.unread ? "#f8fafc" : "transparent" }}
+                      style={{ background: n.unread ? "var(--overlay-surface-2)" : "transparent" }}
                     >
                       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg" style={{ background: `${n.color}20` }}>
                         <div className="h-2 w-2 rounded-full" style={{ background: n.color }} />
@@ -622,6 +621,7 @@ export function ContactFormModal() {
   const [open, setOpen] = useState(false);
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const canSend = form.name.trim().length > 1 && form.email.includes("@") && form.message.trim().length > 4;
   return (
     <OverlayStage>
       <TriggerCenter>
@@ -637,8 +637,8 @@ export function ContactFormModal() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 20 }}
               transition={SPRING}
-              className="rounded-2xl bg-white shadow-2xl"
-              style={{ border: "1px solid #e2e8f0" }}
+              className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+              style={{ border: "1px solid var(--overlay-border)" }}
             >
               {/* Gradient header */}
               <div className="relative h-16 overflow-hidden" style={{ background: "linear-gradient(135deg, #06b6d4, #3b82f6)" }}>
@@ -701,9 +701,9 @@ export function ContactFormModal() {
                         className="w-full resize-none rounded-lg border bg-slate-50 border border-slate-200 px-3 py-2 text-[12px] text-[#1e293b] outline-none"
                       />
                       <DemoButton
-                        onClick={() => setSent(true)}
+                        onClick={() => { if (canSend) setSent(true); }}
                         color="#06b6d4"
-                        className="w-full"
+                        className={`w-full ${canSend ? "" : "pointer-events-none opacity-45"}`}
                       >
                         <Send className="h-3.5 w-3.5" /> Send Message
                       </DemoButton>
@@ -737,14 +737,14 @@ export function UpgradePlanModal() {
       </TriggerCenter>
       <AnimatePresence>
         {open && (
-          <ModalOverlay onClose={() => setOpen(false)}>
+          <ModalOverlay onClose={() => setOpen(false)} size="wide">
             <motion.div
               initial={{ opacity: 0, scale: 0.92, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 20 }}
               transition={SPRING}
-              className="rounded-2xl bg-white shadow-2xl"
-              style={{ border: "1px solid #e2e8f0" }}
+              className="overflow-hidden rounded-2xl bg-white shadow-2xl"
+              style={{ border: "1px solid var(--overlay-border)" }}
             >
               <div className="relative overflow-hidden p-5 text-center" style={{ background: "linear-gradient(135deg, #f59e0b20, #ec489920)" }}>
                 <div className="absolute right-3 top-3"><CloseButton onClick={() => setOpen(false)} /></div>
@@ -754,13 +754,13 @@ export function UpgradePlanModal() {
                 <h3 className="mt-2 text-[16px] font-bold text-[#1e293b]">Upgrade Your Plan</h3>
                 <p className="text-[11px] text-[#64748b]">Unlock premium features and scale faster</p>
                 {/* Billing toggle */}
-                <div className="mt-3 inline-flex items-center gap-0.5 rounded-lg p-0.5" style={{ background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+                <div className="mt-3 inline-flex items-center gap-0.5 rounded-lg p-0.5" style={{ background: "var(--overlay-surface-2)", border: "1px solid var(--overlay-border)" }}>
                   {(["monthly", "yearly"] as const).map(c => (
                     <button
                       key={c}
                       onClick={() => setCycle(c)}
                       className="rounded-md px-3 py-1 text-[10.5px] font-semibold capitalize transition"
-                      style={{ background: cycle === c ? "#ffffff" : "transparent", color: cycle === c ? "#1e293b" : "#64748b" }}
+                      style={{ background: cycle === c ? "var(--overlay-surface)" : "transparent", color: cycle === c ? "var(--overlay-text)" : "var(--overlay-muted)" }}
                     >
                       {c} {c === "yearly" && <span className="text-emerald-500">-20%</span>}
                     </button>
@@ -768,7 +768,7 @@ export function UpgradePlanModal() {
                 </div>
               </div>
               {/* Plans grid */}
-              <div className="grid grid-cols-3 gap-2.5 p-4">
+              <div className="grid grid-cols-1 gap-3 p-4 sm:grid-cols-3">
                 {plans.map((plan, i) => (
                   <motion.div
                     key={plan.name}
@@ -776,7 +776,7 @@ export function UpgradePlanModal() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 + i * 0.08 }}
                     className="relative overflow-hidden rounded-xl border-2 p-3"
-                    style={{ borderColor: plan.popular ? plan.color : "#e2e8f0" }}
+                    style={{ borderColor: plan.popular ? plan.color : "var(--overlay-border)" }}
                   >
                     {plan.popular && (
                       <span className="absolute right-2 top-2 rounded-full px-1.5 py-0.5 text-[8px] font-bold text-white" style={{ background: plan.color }}>POPULAR</span>

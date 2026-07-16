@@ -50,7 +50,7 @@ export function OnboardingDialog() {
                     animate={{ width: i === step ? 24 : 8, opacity: i <= step ? 1 : 0.3 }}
                     transition={SPRING}
                     className="h-2 rounded-full"
-                    style={{ background: i <= step ? s.color : "#e2e8f0" }}
+                    style={{ background: i <= step ? s.color : "var(--overlay-border)" }}
                   />
                 ))}
               </div>
@@ -152,7 +152,7 @@ export function MultiStepModal() {
                       <span className="mt-1 text-[8.5px] font-semibold text-[#64748b]">{label}</span>
                     </div>
                     {i < steps.length - 1 && (
-                      <div className="mx-1 h-0.5 flex-1 rounded-full transition-colors" style={{ background: i < step ? "#3b82f6" : "#e2e8f0" }} />
+                      <div className="mx-1 h-0.5 flex-1 rounded-full transition-colors" style={{ background: i < step ? "#3b82f6" : "var(--overlay-border)" }} />
                     )}
                   </div>
                 ))}
@@ -238,7 +238,7 @@ export function FullscreenEditor() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="absolute inset-0 z-50 flex flex-col"
-            style={{ background: "#ffffff" }}
+            style={{ background: "var(--overlay-surface)" }}
           >
             {/* Toolbar */}
             <div className="flex items-center justify-between border-b bg-white/10 px-4 py-2.5">
@@ -297,7 +297,14 @@ export function MobileBottomSheet() {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 360, damping: 38 }}
-              className="absolute bottom-0 left-0 right-0 z-50 overflow-hidden rounded-t-2xl bg-[#ffffff] shadow-2xl"
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.35 }}
+              onDragEnd={(_, info) => { if (info.offset.y > 80 || info.velocity.y > 650) setOpen(false); }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Sort and filter"
+              className="absolute bottom-0 left-0 right-0 z-50 max-h-[85%] overflow-hidden rounded-t-2xl bg-[#ffffff] shadow-2xl"
               style={{ border: "1px solid #e2e8f0", borderBottom: "none" }}>
               {/* Drag handle */}
               <div className="flex justify-center pt-3 pb-1">
@@ -343,8 +350,8 @@ export function MobileBottomSheet() {
 
 // ─── 21. Context Menu (right-click) ─────────────────────────────────────────
 export function ContextMenu() {
-  const [open, setOpen] = useState(false);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [open, setOpen] = useState(true);
+  const [pos, setPos] = useState({ x: 80, y: 80 });
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!open) return;
@@ -381,17 +388,20 @@ export function ContextMenu() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.92 }}
             transition={{ duration: 0.12 }}
+            role="menu"
+            aria-label="File actions"
             className="absolute z-50 w-48 overflow-hidden rounded-xl border bg-white/10 bg-[#ffffff] py-1 shadow-2xl"
-            style={{ left: Math.min(pos.x, 300), top: Math.min(pos.y, 250) }}
+            style={{ left: `clamp(8px, ${pos.x}px, calc(100% - 200px))`, top: `clamp(8px, ${pos.y}px, calc(100% - 248px))` }}
           >
             {items.map((item, i) => item.divider ? (
               <div key={i} className="my-1 h-px bg-[#e2e8f0]" />
             ) : (
               <button
                 key={i}
+                role="menuitem"
                 onClick={() => setOpen(false)}
                 className="flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-[12px] font-medium transition hover:bg-[#f1f5f9]"
-                style={{ color: item.danger ? "#ef4444" : "#1e293b" }}
+                style={{ color: item.danger ? "#ef4444" : "var(--overlay-text)" }}
               >
                 <item.icon className="h-3.5 w-3.5" strokeWidth={2} />
                 <span className="flex-1">{item.label}</span>
@@ -407,12 +417,18 @@ export function ContextMenu() {
 
 // ─── 22. Hover Card (rich preview) ──────────────────────────────────────────
 export function HoverCard() {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   return (
     <OverlayStage>
       <div className="absolute inset-0 flex items-center justify-center">
         <div
           className="relative"
+          tabIndex={0}
+          role="button"
+          aria-haspopup="dialog"
+          aria-expanded={show}
+          onFocus={() => setShow(true)}
+          onKeyDown={(event) => { if (event.key === "Escape") setShow(false); }}
           onMouseEnter={() => setShow(true)}
           onMouseLeave={() => setShow(false)}
         >
@@ -430,7 +446,7 @@ export function HoverCard() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 8, scale: 0.95 }}
                 transition={{ duration: 0.18 }}
-                className="absolute left-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-2xl border bg-white/10 bg-[#ffffff] shadow-2xl"
+                className="absolute bottom-full left-0 z-50 mb-2 w-64 overflow-hidden rounded-2xl border bg-white/10 bg-[#ffffff] shadow-2xl"
               >
                 <div className="h-14" style={{ background: "linear-gradient(135deg, #8b5cf6, #ec4899)" }} />
                 <div className="px-4 pb-3">
@@ -478,10 +494,10 @@ export function PopoverForm() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 8, scale: 0.92 }}
                 transition={SPRING}
-                className="mt-3 w-64 overflow-visible rounded-2xl border border-slate-200 bg-white shadow-2xl"
+                className="absolute bottom-full left-1/2 z-50 mb-3 -ml-32 w-64 overflow-visible rounded-2xl border border-slate-200 bg-white shadow-2xl"
               >
                 {/* Arrow */}
-                <div className="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-l border-t bg-white/10" style={{ background: "#ffffff" }} />
+                <div className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-b border-r bg-white/10" style={{ background: "var(--overlay-surface)" }} />
                 <div className="p-4">
                   <h3 className="text-[13px] font-bold text-[#1e293b]">Subscribe to Newsletter</h3>
                   <p className="mt-0.5 text-[10.5px] text-[#64748b]">Get weekly updates in your inbox.</p>
@@ -527,7 +543,10 @@ export function NestedDrawer() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 360, damping: 36 }}
-              className="absolute right-0 top-0 z-50 flex h-full w-[300px] flex-col overflow-hidden bg-[#ffffff] shadow-2xl"
+              role="dialog"
+              aria-modal="true"
+              aria-label="File browser"
+              className="absolute right-0 top-0 z-50 flex h-full w-full max-w-[320px] flex-col overflow-hidden bg-[#ffffff] shadow-2xl"
               style={{ border: "1px solid #e2e8f0" }}
             >
               {/* Header with breadcrumb */}

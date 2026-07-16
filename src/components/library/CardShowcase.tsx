@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { ResponsivePreviewToolbar } from "@/components/navbar-showcase/ResponsivePreviewToolbar";
 import { CodePanelLoader } from "./CodePanelLoader";
 import { DocsPanel } from "./DocsPanel";
@@ -77,9 +77,11 @@ export function CardShowcase({ codeMetadata, slug, children }: CardShowcaseProps
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: EASE }}
             >
-              <CardPreviewCanvas fullCanvas={fullCanvas}>
-                {children}
-              </CardPreviewCanvas>
+              <MotionConfig reducedMotion="user">
+                <CardPreviewCanvas fullCanvas={fullCanvas}>
+                  {children}
+                </CardPreviewCanvas>
+              </MotionConfig>
             </motion.div>
           ) : tab === "code" ? (
             <motion.div

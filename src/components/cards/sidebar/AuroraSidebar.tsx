@@ -7,7 +7,7 @@ import {
   ChevronLeft, Search, Bell, Sun, Plus, Star, Clock, Archive,
   HelpCircle, LogOut, Zap, ChevronRight, Moon,
 } from "lucide-react";
-import { useSidebarTheme } from "./shared";
+import { sidebarRootClassName, sidebarThemeButtonProps, useResponsiveSidebarCollapse, useSidebarTheme } from "./shared";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -34,7 +34,7 @@ const NAV_ITEMS: NavItem[] = [
 
 export function AuroraSidebar() {
   const { isDark, toggle } = useSidebarTheme(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const { collapsed, setCollapsed, containerRef, searchInputRef, expandAndFocusSearch, reducedMotion } = useResponsiveSidebarCollapse();
   const [active, setActive] = useState("dashboard");
   const [search, setSearch] = useState("");
   const [hovered, setHovered] = useState<string | null>(null);
@@ -66,11 +66,11 @@ export function AuroraSidebar() {
   const contentBg = isDark ? "#0a0a0f" : "#f8fafc";
 
   return (
-    <div className="flex h-full min-h-full w-full overflow-hidden" style={{ background: appBg }}>
+    <div ref={containerRef} data-theme={isDark ? "dark" : "light"} className={sidebarRootClassName(isDark, "flex h-full min-h-full w-full overflow-hidden")} style={{ background: appBg }}>
       {/* ── SIDEBAR ── */}
       <motion.aside
         animate={{ width: collapsed ? 72 : 264 }}
-        transition={{ duration: 0.35, ease: EASE }}
+        transition={{ duration: reducedMotion ? 0 : 0.35, ease: EASE }}
         className="relative flex h-full shrink-0 flex-col"
         style={{ background: sidebarBg, borderRight: `1px solid ${mainBorder}`, boxShadow: isDark ? "none" : "4px 0 24px -8px rgba(0,0,0,0.06)" }}
       >
@@ -101,11 +101,11 @@ export function AuroraSidebar() {
                 exit={{ opacity: 0 }}
                 className="ml-auto flex items-center gap-1"
               >
-                <button onClick={toggle} className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
+                <button {...sidebarThemeButtonProps(isDark)} onClick={toggle} className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
                   {isDark ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
                 </button>
                 <button
-                  onClick={() => setCollapsed(true)}
+                  aria-label="Collapse sidebar" aria-expanded={!collapsed} onClick={() => setCollapsed(true)}
                   className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5"
                   style={{ color: textMuted }}
                 >
@@ -122,6 +122,8 @@ export function AuroraSidebar() {
             <div className="relative">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2" strokeWidth={2} style={{ color: textMuted }} />
               <input
+                ref={searchInputRef}
+                aria-label="Search navigation"
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -131,14 +133,14 @@ export function AuroraSidebar() {
               />
             </div>
           ) : (
-            <button className="flex h-9 w-full items-center justify-center rounded-xl border transition hover:bg-black/5 dark:hover:bg-white/5" style={{ background: inputBg, borderColor: inputBorder, color: textMuted }}>
+            <button onClick={expandAndFocusSearch} aria-label="Expand sidebar and search" className="flex h-9 w-full items-center justify-center rounded-xl border transition hover:bg-black/5" style={{ background: inputBg, borderColor: inputBorder, color: textMuted }}>
               <Search className="h-4 w-4" />
             </button>
           )}
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden px-3 pb-2" style={{ scrollbarWidth: "none" }}>
+        <nav aria-label="Primary navigation" className="flex-1 overflow-y-auto overflow-x-hidden px-3 pb-2" style={{ scrollbarWidth: "none" }}>
           {Object.entries(sections).map(([sectionName, items]) => (
             <div key={sectionName} className="mb-3">
               <AnimatePresence>
@@ -162,6 +164,8 @@ export function AuroraSidebar() {
                   return (
                     <button
                       key={item.id}
+                      aria-label={item.label}
+                      aria-current={isActive ? "page" : undefined}
                       onClick={() => setActive(item.id)}
                       onMouseEnter={() => setHovered(item.id)}
                       onMouseLeave={() => setHovered(null)}
@@ -224,11 +228,11 @@ export function AuroraSidebar() {
         {/* Expand button + theme toggle when collapsed */}
         {collapsed && (
           <div className="shrink-0 flex flex-col items-center gap-2 px-2 pb-3">
-            <button onClick={toggle} className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
+            <button {...sidebarThemeButtonProps(isDark)} onClick={toggle} className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
               {isDark ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
             </button>
             <button
-              onClick={() => setCollapsed(false)}
+              aria-label="Expand sidebar" aria-expanded={!collapsed} onClick={() => setCollapsed(false)}
               className="flex h-9 w-full items-center justify-center rounded-xl border transition hover:bg-black/5 dark:hover:bg-white/5"
               style={{ background: inputBg, borderColor: inputBorder, color: textMuted }}
             >
@@ -256,7 +260,7 @@ export function AuroraSidebar() {
                     <p className="truncate text-[12px] font-semibold" style={{ color: textPrimary }}>Alex Morgan</p>
                     <p className="truncate text-[10px]" style={{ color: textMuted }}>alex@aurora.io</p>
                   </div>
-                  <button className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5 hover:text-rose-500" style={{ color: textMuted }}>
+                  <button aria-label="Log out" className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5 hover:text-rose-500" style={{ color: textMuted }}>
                     <LogOut className="h-3.5 w-3.5" />
                   </button>
                 </motion.div>
@@ -275,10 +279,10 @@ export function AuroraSidebar() {
             </h1>
           </div>
           <div className="flex-1" />
-          <button className="flex h-9 w-9 items-center justify-center rounded-xl transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
+          <button aria-label="Add item" className="flex h-9 w-9 items-center justify-center rounded-xl transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
             <Plus className="h-4 w-4" />
           </button>
-          <button className="relative flex h-9 w-9 items-center justify-center rounded-xl transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
+          <button aria-label="Notifications" className="relative flex h-9 w-9 items-center justify-center rounded-xl transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
             <Bell className="h-4 w-4" />
             <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-rose-500" />
           </button>

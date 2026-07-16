@@ -919,3 +919,53 @@ a {
 }
 .dark .insight-dashboard-blue.dark\:bg-ink-950,
 .dark .insight-dashboard-blue .dark\:bg-ink-950 { background-color: var(--ink-950) !important; }
+
+/* Premium overlay demos: semantic light/dark surfaces and preview-safe controls. */
+.overlay-demo {
+  --overlay-stage: #eef2f7;
+  --overlay-surface: #ffffff;
+  --overlay-surface-2: #f8fafc;
+  --overlay-input: #f8fafc;
+  --overlay-control: rgba(255, 255, 255, 0.82);
+  --overlay-text: #172033;
+  --overlay-muted: #64748b;
+  --overlay-subtle: #94a3b8;
+  --overlay-border: #e2e8f0;
+  color: var(--overlay-text);
+  color-scheme: light;
+}
+.dark .overlay-demo {
+  --overlay-stage: #080b13;
+  --overlay-surface: #121722;
+  --overlay-surface-2: #181f2d;
+  --overlay-input: #0d121c;
+  --overlay-control: rgba(255, 255, 255, 0.07);
+  --overlay-text: #f8fafc;
+  --overlay-muted: #a8b3c5;
+  --overlay-subtle: #78859a;
+  --overlay-border: rgba(255, 255, 255, 0.11);
+  color-scheme: dark;
+}
+.dark .overlay-demo .bg-white,
+.dark .overlay-demo .bg-\[\#ffffff\] { background-color: var(--overlay-surface) !important; }
+.dark .overlay-demo .bg-slate-50,
+.dark .overlay-demo .bg-\[\#f8fafc\],
+.dark .overlay-demo .hover\:bg-\[\#f1f5f9\]:hover { background-color: var(--overlay-surface-2) !important; }
+.dark .overlay-demo .bg-white\/10 { background-color: rgba(255, 255, 255, 0.035) !important; }
+.dark .overlay-demo .text-\[\#1e293b\],
+.dark .overlay-demo .text-slate-900,
+.dark .overlay-demo .text-slate-800,
+.dark .overlay-demo .text-slate-700 { color: var(--overlay-text) !important; }
+.dark .overlay-demo .text-\[\#64748b\],
+.dark .overlay-demo .text-slate-600,
+.dark .overlay-demo .text-slate-500,
+.dark .overlay-demo .text-slate-400 { color: var(--overlay-muted) !important; }
+.dark .overlay-demo .text-\[\#94a3b8\],
+.dark .overlay-demo .text-slate-300 { color: var(--overlay-subtle) !important; }
+.dark .overlay-demo .border-slate-100,
+.dark .overlay-demo .border-slate-200,
+.dark .overlay-demo .border-\[\#e2e8f0\],
+.dark .overlay-demo .border { border-color: var(--overlay-border) !important; }
+.dark .overlay-demo input,
+.dark .overlay-demo textarea { caret-color: #93c5fd; }
+.overlay-demo [data-modal-content] { scrollbar-gutter: stable; }

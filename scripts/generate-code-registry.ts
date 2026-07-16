@@ -31,6 +31,9 @@ const FILE_OVERRIDES: Record<string, string> = {
   "cta-integration-cta-card": "CtaIntegrationCard",
   "cta-testimonial-cta-card": "CtaTestimonialCard",
 };
+const FILE_PATH_OVERRIDES: Record<string, string> = {
+  "command-palette-card": join("overlays", "CommandPaletteCard.tsx"),
+};
 // Read cards.ts to extract the slug → component name mapping.
 function parseCardsTs(): CardEntry[] {
   const cardsTs = readFileSync(CARDS_DATA, "utf-8");
@@ -137,13 +140,16 @@ function parseCardsTs(): CardEntry[] {
     // comparable form: strip "card" suffix from slug, lowercase, remove hyphens.
     const slugNorm = slug.replace(/-card$/, "").replace(/-/g, "");
     const overrideName = FILE_OVERRIDES[slug];
-    const match = overrideName
-      ? allFiles.find((f) => f.name === overrideName)
-      : allFiles.find((f) => {
-          // "CinematicFolderCard" -> "cinematicfolder" (strip "Card", lowercase)
-          const fileNorm = f.name.replace(/Card$/, "").toLowerCase();
-          return fileNorm === slugNorm || f.name.toLowerCase().replace(/-/g, "").includes(slugNorm);
-        });
+    const overridePath = FILE_PATH_OVERRIDES[slug];
+    const match = overridePath
+      ? allFiles.find((file) => file.path.endsWith(overridePath))
+      : overrideName
+        ? allFiles.find((file) => file.name === overrideName)
+        : allFiles.find((file) => {
+            // "CinematicFolderCard" -> "cinematicfolder" (strip "Card", lowercase)
+            const fileNorm = file.name.replace(/Card$/, "").toLowerCase();
+            return fileNorm === slugNorm || file.name.toLowerCase().replace(/-/g, "").includes(slugNorm);
+          });
 
     if (match) {
       entries.push({ slug, componentName: match.name, source, filePath: match.path });
@@ -163,7 +169,7 @@ interface LocalDep {
 
 function detectImportPaths(source: string): string[] {
   const paths = new Set<string>();
-  const re = /(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s*)["']([^"']+)["']/g;
+  const re = /(?:\bfrom\s*|\bimport\s*\(\s*|^\s*import\s*)["']([^"']+)["']/gm;
   let match: RegExpExecArray | null;
   while ((match = re.exec(source)) !== null) paths.add(match[1]);
   return [...paths];

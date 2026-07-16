@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   LayoutDashboard, FolderOpen, CheckSquare, Users, BarChart3, Settings,
   Search, Bell, Plus, Star, Clock, Archive, HelpCircle, LogOut, Grid3x3, Sun, Moon,
 } from "lucide-react";
-import { useSidebarTheme } from "./shared";
+import { sidebarRootClassName, sidebarThemeButtonProps, useSidebarContainerWidth, useSidebarTheme } from "./shared";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -24,6 +24,8 @@ const TILES = [
 
 export function AuroraBentoSidebar() {
   const { isDark, toggle } = useSidebarTheme(false);
+  const { containerRef, isNarrow } = useSidebarContainerWidth<HTMLDivElement>();
+  const reducedMotion = Boolean(useReducedMotion());
   const [active, setActive] = useState("dashboard");
   const [search, setSearch] = useState("");
 
@@ -43,15 +45,15 @@ export function AuroraBentoSidebar() {
   const inputBorder = isDark ? "#1f1f2a" : "#e2e8f0";
 
   return (
-    <div className="flex h-full min-h-full w-full overflow-hidden" style={{ background: appBg }}>
-      <aside className="relative flex h-full shrink-0 flex-col" style={{ width: 340, background: sidebarBg, borderRight: `1px solid ${mainBorder}` }}>
+    <div ref={containerRef} data-theme={isDark ? "dark" : "light"} className={sidebarRootClassName(isDark, "flex h-full min-h-full w-full overflow-hidden")} style={{ background: appBg }}>
+      <aside aria-label="Bento workspace sidebar" className="relative flex h-full shrink-0 flex-col" style={{ width: isNarrow ? "100%" : 340, background: sidebarBg, borderRight: isNarrow ? "none" : `1px solid ${mainBorder}` }}>
         {/* Brand */}
         <div className="flex h-14 shrink-0 items-center gap-2.5 px-5" style={{ borderBottom: `1px solid ${headerBorder}` }}>
           <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 shadow-lg shadow-indigo-500/20">
             <Grid3x3 className="h-5 w-5 text-white" strokeWidth={2} />
           </div>
           <div><span className="text-[14px] font-bold" style={{ color: textPrimary }}>Bento</span><p className="text-[9px]" style={{ color: textMuted }}>Grid Nav</p></div>
-          <button onClick={toggle} className="ml-auto flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
+          <button {...sidebarThemeButtonProps(isDark)} onClick={toggle} className="ml-auto flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
             {isDark ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
           </button>
         </div>
@@ -60,14 +62,14 @@ export function AuroraBentoSidebar() {
         <div className="shrink-0 p-4">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2" style={{ color: textMuted }} />
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search..."
+            <input aria-label="Search navigation" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search..."
               className="w-full rounded-2xl border py-2.5 pl-10 pr-4 text-[12px] outline-none focus:ring-2 focus:ring-indigo-100"
               style={{ background: inputBg, borderColor: inputBorder, color: textPrimary }} />
           </div>
         </div>
 
         {/* Bento grid nav */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden px-4 pb-4" style={{ scrollbarWidth: "none" }}>
+        <nav aria-label="Primary navigation" className="flex-1 overflow-y-auto overflow-x-hidden px-4 pb-4" style={{ scrollbarWidth: "none" }}>
           <div className="grid grid-cols-2 gap-2.5">
             {filtered.map((tile, i) => {
               const isActive = active === tile.id;
@@ -75,11 +77,14 @@ export function AuroraBentoSidebar() {
               return (
                 <motion.button
                   key={tile.id}
+                  aria-label={tile.label}
+                  aria-current={isActive ? "page" : undefined}
+                  title={tile.label}
                   onClick={() => setActive(tile.id)}
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={reducedMotion ? false : { opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.04, duration: 0.3, ease: EASE }}
-                  whileHover={{ y: -2 }}
+                  transition={reducedMotion ? { duration: 0 } : { delay: i * 0.04, duration: 0.3, ease: EASE }}
+                  whileHover={reducedMotion ? undefined : { y: -2 }}
                   className="group relative flex flex-col gap-2 rounded-2xl p-3 text-left outline-none transition"
                   style={{
                     gridColumn: tile.span === 2 ? "span 2" : "span 1",
@@ -106,18 +111,18 @@ export function AuroraBentoSidebar() {
           <div className="flex items-center gap-2.5 rounded-2xl p-2.5 transition hover:bg-black/5 dark:hover:bg-white/5" style={{ border: `1px solid ${tileBorder}` }}>
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 text-[11px] font-bold text-white ring-2 ring-white/20">AM</div>
             <div className="min-w-0 flex-1"><p className="truncate text-[12px] font-semibold" style={{ color: textPrimary }}>Alex Morgan</p><p className="truncate text-[10px]" style={{ color: textMuted }}>alex@bento.io</p></div>
-            <button className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:text-rose-500" style={{ color: textMuted }}><LogOut className="h-3.5 w-3.5" /></button>
+            <button aria-label="Log out" className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:text-rose-500" style={{ color: textMuted }}><LogOut className="h-3.5 w-3.5" /></button>
           </div>
         </div>
       </aside>
 
       {/* Content */}
-      <div className="flex min-w-0 flex-1 flex-col" style={{ background: appBg }}>
+      <div aria-hidden={isNarrow} className="flex min-w-0 flex-1 flex-col" style={{ background: appBg, display: isNarrow ? "none" : undefined }}>
         <header className="flex h-14 shrink-0 items-center gap-4 px-6" style={{ borderBottom: `1px solid ${mainBorder}`, background: sidebarBg }}>
           <h1 className="text-[14px] font-bold capitalize" style={{ color: textPrimary }}>{TILES.find(t => t.id === active)?.label}</h1>
           <div className="flex-1" />
-          <button className="flex h-8 w-8 items-center justify-center rounded-xl transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Plus className="h-4 w-4" /></button>
-          <button className="relative flex h-8 w-8 items-center justify-center rounded-xl transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Bell className="h-4 w-4" /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-rose-500" /></button>
+          <button aria-label="Add item" className="flex h-8 w-8 items-center justify-center rounded-xl transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Plus className="h-4 w-4" /></button>
+          <button aria-label="Notifications" className="relative flex h-8 w-8 items-center justify-center rounded-xl transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Bell className="h-4 w-4" /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-rose-500" /></button>
         </header>
         <div className="flex flex-1 items-center justify-center">
           <div className="text-center"><div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: tileBg }}><LayoutDashboard className="h-7 w-7" strokeWidth={1.5} style={{ color: textMuted }} /></div><p className="text-[13px] font-semibold" style={{ color: textMuted }}>Select a tile</p><p className="text-[11px]" style={{ color: textMuted }}>Content will appear here</p></div>

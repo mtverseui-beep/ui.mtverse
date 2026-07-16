@@ -1,39 +1,40 @@
 "use client";
-import { useState, createContext, useContext, ReactNode } from "react";
-import { Sun, Moon } from "lucide-react";
 
-interface BgContextType { dark: boolean; }
-export const BgContext = createContext<BgContextType>({ dark: true });
-export const useBg = () => useContext(BgContext);
+import { createContext, useContext, useState, type ReactNode } from "react";
+import { Moon, Sun } from "lucide-react";
 
-interface BackgroundShellProps {
-  children: ReactNode;
-  darkDefault?: boolean;
+interface BgContextType {
+  dark: boolean;
 }
 
-/**
- * Clean, minimal wrapper — just dark/light toggle.
- * No content overlay, no intensity selector, no star button.
- * Professional and production-ready.
- */
-export function BackgroundShell({ children, darkDefault = true }: BackgroundShellProps) {
+const BgContext = createContext<BgContextType | null>(null);
+
+export function useBg() {
+  const context = useContext(BgContext);
+  if (!context) throw new Error("useBg must be used inside BackgroundShell");
+  return context;
+}
+
+export function BackgroundShell({ children, darkDefault = false }: { children: ReactNode; darkDefault?: boolean }) {
   const [dark, setDark] = useState(darkDefault);
+
   return (
     <BgContext.Provider value={{ dark }}>
-      <div className="relative h-full w-full overflow-hidden">
+      <div data-bg-theme={dark ? "dark" : "light"} className={`relative h-full min-h-full w-full overflow-hidden ${dark ? "dark" : ""}`}>
         <div className="absolute inset-0">{children}</div>
-        {/* Single clean toggle — bottom right */}
         <button
-          onClick={() => setDark(!dark)}
-          className="absolute bottom-3 right-3 z-20 flex h-8 w-8 items-center justify-center rounded-lg backdrop-blur-md transition"
+          type="button"
+          onClick={() => setDark((current) => !current)}
+          aria-label={dark ? "Switch background to light mode" : "Switch background to dark mode"}
+          aria-pressed={dark}
+          className="absolute bottom-4 right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full border shadow-lg backdrop-blur-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           style={{
-            background: dark ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.7)",
-            border: `1px solid ${dark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)"}`,
-            color: dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.5)",
+            background: dark ? "rgba(15,23,42,0.72)" : "rgba(255,255,255,0.78)",
+            borderColor: dark ? "rgba(255,255,255,0.14)" : "rgba(15,23,42,0.10)",
+            color: dark ? "#f8fafc" : "#0f172a",
           }}
-          title="Toggle dark/light"
         >
-          {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          {dark ? <Sun aria-hidden="true" className="h-4 w-4" /> : <Moon aria-hidden="true" className="h-4 w-4" />}
         </button>
       </div>
     </BgContext.Provider>

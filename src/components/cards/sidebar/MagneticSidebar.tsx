@@ -6,7 +6,7 @@ import {
   ChevronLeft, Search, Bell, Plus, Star, Clock, Archive,
   HelpCircle, LogOut, Magnet, Sun, Moon,
 } from "lucide-react";
-import { useSidebarTheme } from "./shared";
+import { sidebarRootClassName, sidebarThemeButtonProps, useResponsiveSidebarCollapse, useSidebarTheme } from "./shared";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -25,20 +25,12 @@ const NAV = [
 
 export function MagneticSidebar() {
   const { isDark, toggle } = useSidebarTheme(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const { collapsed, setCollapsed, containerRef, searchInputRef, expandAndFocusSearch, reducedMotion } = useResponsiveSidebarCollapse();
   const [active, setActive] = useState("dashboard");
   const [search, setSearch] = useState("");
-  const [mouseX, setMouseX] = useState(0);
-  const railRef = useRef<HTMLDivElement>(null);
 
   const filtered = NAV.filter(i => i.label.toLowerCase().includes(search.toLowerCase()));
   const sections = filtered.reduce((acc, i) => { (acc[i.section] = acc[i.section] || []).push(i); return acc; }, {} as Record<string, typeof NAV>);
-
-  function handleMouseMove(e: React.MouseEvent) {
-    if (!railRef.current) return;
-    const rect = railRef.current.getBoundingClientRect();
-    setMouseX(e.clientX - rect.left);
-  }
 
   // Theme-aware palette
   const bg = isDark
@@ -54,15 +46,12 @@ export function MagneticSidebar() {
   const inputBorder = isDark ? "rgba(255,255,255,0.05)" : "#e2e8f0";
 
   return (
-    <div className="flex h-full min-h-full w-full overflow-hidden" style={{ background: bg }}>
+    <div ref={containerRef} data-theme={isDark ? "dark" : "light"} className={sidebarRootClassName(isDark, "flex h-full min-h-full w-full overflow-hidden")} style={{ background: bg }}>
       <motion.aside
         animate={{ width: collapsed ? 64 : 250 }}
-        transition={{ duration: 0.35, ease: EASE }}
+        transition={{ duration: reducedMotion ? 0 : 0.35, ease: EASE }}
         className="relative flex h-full shrink-0 flex-col"
         style={{ background: asideBg, borderRight: `1px solid ${asideBorder}`, backdropFilter: "blur(20px)" }}
-        ref={railRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={() => setMouseX(0)}
       >
         {/* Brand */}
         <div className="flex h-14 shrink-0 items-center gap-2.5 px-4" style={{ justifyContent: collapsed ? "center" : "flex-start" }}>
@@ -71,26 +60,26 @@ export function MagneticSidebar() {
           </div>
           <AnimatePresence>{!collapsed && <motion.span initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.15 }} className="text-[14px] font-bold" style={{ color: textPrimary }}>Magnet</motion.span>}</AnimatePresence>
           <AnimatePresence>{!collapsed && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="ml-auto flex items-center gap-1">
-            <button onClick={toggle} className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
+            <button {...sidebarThemeButtonProps(isDark)} onClick={toggle} className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>
               {isDark ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
             </button>
-            <motion.button onClick={() => setCollapsed(true)} className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><ChevronLeft className="h-3.5 w-3.5" /></motion.button>
+            <motion.button aria-label="Collapse sidebar" aria-expanded={!collapsed} onClick={() => setCollapsed(true)} className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><ChevronLeft className="h-3.5 w-3.5" /></motion.button>
           </motion.div>}</AnimatePresence>
         </div>
 
         {/* Search */}
         <div className="shrink-0 px-3 pb-2">
           {!collapsed ? (
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search..."
+            <input ref={searchInputRef} aria-label="Search navigation" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search..."
               className="w-full rounded-xl border py-2 px-3 text-[12px] outline-none focus:border-indigo-500/30"
               style={{ background: inputBg, borderColor: inputBorder, color: textPrimary }} />
           ) : (
-            <button className="flex h-9 w-full items-center justify-center rounded-xl border transition" style={{ background: inputBg, borderColor: inputBorder, color: textMuted }}><Search className="h-4 w-4" /></button>
+            <button onClick={expandAndFocusSearch} aria-label="Expand sidebar and search" className="flex h-9 w-full items-center justify-center rounded-xl border transition" style={{ background: inputBg, borderColor: inputBorder, color: textMuted }}><Search className="h-4 w-4" /></button>
           )}
         </div>
 
         {/* Nav with magnetic effect */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden px-2" style={{ scrollbarWidth: "none" }}>
+        <nav aria-label="Primary navigation" className="flex-1 overflow-y-auto overflow-x-hidden px-2" style={{ scrollbarWidth: "none" }}>
           {Object.entries(sections).map(([section, items]) => (
             <div key={section} className="mb-2">
               <AnimatePresence>{!collapsed && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mb-1 px-2 text-[8px] font-bold uppercase tracking-[0.16em]" style={{ color: sectionLabel }}>{section}</motion.p>}</AnimatePresence>
@@ -98,7 +87,7 @@ export function MagneticSidebar() {
                 {items.map(item => {
                   const isActive = active === item.id;
                   return (
-                    <MagneticItem key={item.id} item={item} isActive={isActive} onClick={() => setActive(item.id)} collapsed={collapsed} mouseX={mouseX} railWidth={collapsed ? 64 : 250} isDark={isDark} textPrimary={textPrimary} textSecondary={textSecondary} textMuted={textMuted} />
+                    <MagneticItem key={item.id} item={item} isActive={isActive} onClick={() => setActive(item.id)} collapsed={collapsed} reducedMotion={reducedMotion} isDark={isDark} textPrimary={textPrimary} textSecondary={textSecondary} textMuted={textMuted} />
                   );
                 })}
               </div>
@@ -106,13 +95,13 @@ export function MagneticSidebar() {
           ))}
         </nav>
 
-        {collapsed && <div className="shrink-0 flex flex-col items-center gap-2 px-2 pb-3"><button onClick={toggle} className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>{isDark ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}</button><button onClick={() => setCollapsed(false)} className="flex h-9 w-full items-center justify-center rounded-xl border transition" style={{ background: inputBg, borderColor: inputBorder, color: textMuted }}><ChevronLeft className="h-4 w-4 rotate-180" /></button></div>}
+        {collapsed && <div className="shrink-0 flex flex-col items-center gap-2 px-2 pb-3"><button {...sidebarThemeButtonProps(isDark)} onClick={toggle} className="flex h-7 w-7 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}>{isDark ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}</button><button aria-label="Expand sidebar" aria-expanded={!collapsed} onClick={() => setCollapsed(false)} className="flex h-9 w-full items-center justify-center rounded-xl border transition" style={{ background: inputBg, borderColor: inputBorder, color: textMuted }}><ChevronLeft className="h-4 w-4 rotate-180" /></button></div>}
 
         {/* User */}
         <div className="shrink-0 p-2" style={{ borderTop: `1px solid ${asideBorder}` }}>
           <div className="flex items-center gap-2.5 rounded-xl transition" style={{ justifyContent: collapsed ? "center" : "flex-start", padding: collapsed ? "0" : "0.375rem" }}>
             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" alt="Alex" className="h-8 w-8 shrink-0 rounded-full object-cover" />
-            <AnimatePresence>{!collapsed && <motion.div initial={{ opacity: 0, x: -3 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -3 }} transition={{ duration: 0.12 }} className="flex min-w-0 flex-1 items-center justify-between"><p className="truncate text-[11px] font-medium" style={{ color: textPrimary }}>Alex Morgan</p><button className="transition hover:text-rose-400" style={{ color: textMuted }}><LogOut className="h-3.5 w-3.5" /></button></motion.div>}</AnimatePresence>
+            <AnimatePresence>{!collapsed && <motion.div initial={{ opacity: 0, x: -3 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -3 }} transition={{ duration: 0.12 }} className="flex min-w-0 flex-1 items-center justify-between"><p className="truncate text-[11px] font-medium" style={{ color: textPrimary }}>Alex Morgan</p><button aria-label="Log out" className="transition hover:text-rose-400" style={{ color: textMuted }}><LogOut className="h-3.5 w-3.5" /></button></motion.div>}</AnimatePresence>
           </div>
         </div>
       </motion.aside>
@@ -122,8 +111,8 @@ export function MagneticSidebar() {
         <header className="flex h-14 shrink-0 items-center gap-4 px-6" style={{ borderBottom: `1px solid ${asideBorder}` }}>
           <h1 className="text-[14px] font-bold capitalize" style={{ color: textPrimary }}>{NAV.find(i => i.id === active)?.label}</h1>
           <div className="flex-1" />
-          <button className="flex h-8 w-8 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Plus className="h-4 w-4" /></button>
-          <button className="relative flex h-8 w-8 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Bell className="h-4 w-4" /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-indigo-400" /></button>
+          <button aria-label="Add item" className="flex h-8 w-8 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Plus className="h-4 w-4" /></button>
+          <button aria-label="Notifications" className="relative flex h-8 w-8 items-center justify-center rounded-lg transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Bell className="h-4 w-4" /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-indigo-400" /></button>
         </header>
         <div className="flex flex-1 items-center justify-center">
           <div className="text-center"><div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)" }}><LayoutDashboard className="h-7 w-7" strokeWidth={1.5} style={{ color: textMuted }} /></div><p className="text-[13px] font-medium" style={{ color: textMuted }}>Move cursor to feel magnetic pull</p></div>
@@ -133,8 +122,8 @@ export function MagneticSidebar() {
   );
 }
 
-function MagneticItem({ item, isActive, onClick, collapsed, mouseX, railWidth, isDark, textPrimary, textSecondary, textMuted }: {
-  item: typeof NAV[0]; isActive: boolean; onClick: () => void; collapsed: boolean; mouseX: number; railWidth: number;
+function MagneticItem({ item, isActive, onClick, collapsed, reducedMotion, isDark, textPrimary, textSecondary, textMuted }: {
+  item: typeof NAV[0]; isActive: boolean; onClick: () => void; collapsed: boolean; reducedMotion: boolean;
   isDark: boolean; textPrimary: string; textSecondary: string; textMuted: string;
 }) {
   const ref = useRef<HTMLButtonElement>(null);
@@ -142,7 +131,7 @@ function MagneticItem({ item, isActive, onClick, collapsed, mouseX, railWidth, i
   const Icon = item.icon;
 
   function handleMove(e: React.MouseEvent) {
-    if (!ref.current || collapsed) return;
+    if (reducedMotion || !ref.current || collapsed) return;
     const rect = ref.current.getBoundingClientRect();
     const center = rect.left + rect.width / 2;
     const dist = e.clientX - center;
@@ -155,12 +144,15 @@ function MagneticItem({ item, isActive, onClick, collapsed, mouseX, railWidth, i
   return (
     <motion.button
       ref={ref}
+      aria-label={item.label}
+      aria-current={isActive ? "page" : undefined}
       onClick={onClick}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      animate={{ x: localX }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group relative flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-[12px] font-medium outline-none transition"
+      onFocus={handleLeave}
+      animate={{ x: reducedMotion ? 0 : localX }}
+      transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 20 }}
+      className="group relative flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-[12px] font-medium outline-none transition focus-visible:ring-2 focus-visible:ring-indigo-400"
       style={{
         color: isActive ? (isDark ? "#fff" : "#4338ca") : textSecondary,
         background: isActive

@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   LayoutDashboard, FolderOpen, CheckSquare, Users, BarChart3, Settings,
-  Search, Bell, Plus, Star, Clock, Archive, HelpCircle, LogOut, Hexagon,
+  Search, Bell, Plus, Star, Clock, Archive, HelpCircle, Hexagon,
   Sun, Moon,
 } from "lucide-react";
-import { useSidebarTheme } from "./shared";
+import { sidebarRootClassName, sidebarThemeButtonProps, useSidebarContainerWidth, useSidebarTheme } from "./shared";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -27,6 +27,9 @@ export function CompactPillSidebar() {
   const { isDark, toggle } = useSidebarTheme(false);
   const [active, setActive] = useState("dashboard");
   const [hovered, setHovered] = useState<string | null>(null);
+  const [pinned, setPinned] = useState<string | null>(null);
+  const { containerRef, isNarrow } = useSidebarContainerWidth<HTMLDivElement>(500);
+  const reducedMotion = Boolean(useReducedMotion());
 
   const bg = isDark ? "#0a0a0f" : "#f8fafc";
   const railBg = isDark ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.7)";
@@ -39,16 +42,16 @@ export function CompactPillSidebar() {
   const contentBg = isDark ? "transparent" : "#ffffff";
 
   return (
-    <div className="flex h-full min-h-full w-full overflow-hidden" style={{ background: bg }}>
+    <div ref={containerRef} data-theme={isDark ? "dark" : "light"} className={sidebarRootClassName(isDark, "flex h-full min-h-full w-full overflow-hidden")} style={{ background: bg }}>
       {/* Pill rail */}
-      <div className="flex h-full shrink-0 flex-col items-center py-4 gap-2" style={{ width: 72, background: railBg, backdropFilter: "blur(8px)", borderRight: `1px solid ${border}` }}>
+      <aside aria-label="Compact workspace sidebar" className="relative z-20 flex h-full shrink-0 flex-col items-center gap-2 overflow-visible py-4" style={{ width: isNarrow ? "100%" : 72, maxWidth: isNarrow ? 220 : undefined, background: railBg, backdropFilter: "blur(8px)", borderRight: `1px solid ${border}` }}>
         {/* Brand */}
         <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 shadow-lg shadow-indigo-500/30">
           <Hexagon className="h-5 w-5 text-white" strokeWidth={2} />
         </div>
 
         {/* Theme toggle */}
-        <button onClick={toggle} className="flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10" style={{ color: textMuted }}>
+        <button {...sidebarThemeButtonProps(isDark)} onClick={toggle} className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${isDark ? "hover:bg-white/10" : "hover:bg-black/5"}`} style={{ color: textMuted }}>
           {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
         </button>
 
@@ -56,34 +59,43 @@ export function CompactPillSidebar() {
         <div className="mb-1 h-px w-8" style={{ background: border }} />
 
         {/* Pill items */}
-        <div className="flex flex-1 flex-col items-center gap-1.5 overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: "none" }}>
+        <nav aria-label="Primary navigation" className="flex flex-1 flex-col items-start gap-1.5 overflow-y-auto overflow-x-hidden" style={{ width: 156, marginRight: -84, paddingLeft: 14, scrollbarWidth: "none" }}>
           {ITEMS.map(item => {
             const isActive = active === item.id;
-            const isHovered = hovered === item.id;
+            const isDisclosed = hovered === item.id || pinned === item.id;
             const Icon = item.icon;
             return (
               <motion.button
                 key={item.id}
-                onClick={() => setActive(item.id)}
+                aria-label={item.label}
+                aria-current={isActive ? "page" : undefined}
+                aria-pressed={pinned === item.id}
+                title={item.label}
+                onClick={() => {
+                  setActive(item.id);
+                  setPinned(current => current === item.id ? null : item.id);
+                }}
                 onMouseEnter={() => setHovered(item.id)}
                 onMouseLeave={() => setHovered(null)}
-                animate={{ width: isHovered ? 140 : 44, borderRadius: isHovered ? 22 : 14 }}
-                transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                className="relative flex h-11 shrink-0 items-center gap-2.5 overflow-hidden"
+                onFocus={() => setHovered(item.id)}
+                onBlur={() => setHovered(null)}
+                animate={{ width: isDisclosed ? 140 : 44, borderRadius: isDisclosed ? 22 : 14 }}
+                transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 28 }}
+                className="relative z-30 flex h-11 shrink-0 items-center gap-2.5 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
                 style={{
-                  background: isActive ? item.color : isHovered ? hoverBg : idleBg,
+                  background: isActive ? item.color : isDisclosed ? hoverBg : idleBg,
                   justifyContent: "flex-start",
                   paddingLeft: 11,
                 }}
               >
                 <Icon className="h-5 w-5 shrink-0" strokeWidth={2.2} style={{ color: isActive ? "#fff" : isDark ? "rgba(255,255,255,0.6)" : item.color }} />
                 <AnimatePresence>
-                  {isHovered && (
+                  {isDisclosed && (
                     <motion.span
                       initial={{ opacity: 0, x: -5 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -5 }}
-                      transition={{ duration: 0.15 }}
+                      transition={reducedMotion ? { duration: 0 } : { duration: 0.15 }}
                       className="whitespace-nowrap text-[12px] font-semibold"
                       style={{ color: isActive ? "#fff" : isDark ? "rgba(255,255,255,0.9)" : "#1e293b" }}
                     >
@@ -91,29 +103,29 @@ export function CompactPillSidebar() {
                     </motion.span>
                   )}
                 </AnimatePresence>
-                {isActive && !isHovered && <motion.div layoutId="pill-active-dot" className="absolute -right-1 h-2 w-2 rounded-full bg-white" transition={{ type: "spring", stiffness: 400, damping: 30 }} />}
+                {isActive && !isDisclosed && <motion.div layoutId="pill-active-dot" className="absolute -right-1 h-2 w-2 rounded-full bg-white" transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 30 }} />}
               </motion.button>
             );
           })}
-        </div>
+        </nav>
 
         {/* User */}
-        <button className="relative h-10 w-10 rounded-full overflow-hidden ring-2 transition hover:ring-indigo-400" style={{ "--tw-ring-color": border } as React.CSSProperties}>
+        <button aria-label="Open Alex Morgan profile" className="relative h-10 w-10 overflow-hidden rounded-full ring-2 transition focus-visible:outline-none focus-visible:ring-4 hover:ring-indigo-400" style={{ "--tw-ring-color": border } as React.CSSProperties}>
           <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" alt="Alex" className="h-full w-full object-cover" />
         </button>
-      </div>
+      </aside>
 
       {/* Content */}
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div aria-hidden={isNarrow} className="flex min-w-0 flex-1 flex-col" style={{ display: isNarrow ? "none" : undefined }}>
         <header className="flex h-14 shrink-0 items-center gap-4 px-6" style={{ borderBottom: `1px solid ${border}`, background: contentBg }}>
           <h1 className="text-[14px] font-bold capitalize" style={{ color: textPrimary }}>{ITEMS.find(i => i.id === active)?.label}</h1>
           <div className="flex-1" />
-          <button className="flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Search className="h-4 w-4" /></button>
-          <button className="flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Plus className="h-4 w-4" /></button>
-          <button className="relative flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/5" style={{ color: textMuted }}><Bell className="h-4 w-4" /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full" style={{ background: ITEMS.find(i => i.id === active)?.color }} /></button>
+          <button aria-label="Search" className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${isDark ? "hover:bg-white/10" : "hover:bg-black/5"}`} style={{ color: textMuted }}><Search className="h-4 w-4" /></button>
+          <button aria-label="Add item" className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${isDark ? "hover:bg-white/10" : "hover:bg-black/5"}`} style={{ color: textMuted }}><Plus className="h-4 w-4" /></button>
+          <button aria-label="Notifications" className={`relative flex h-8 w-8 items-center justify-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${isDark ? "hover:bg-white/10" : "hover:bg-black/5"}`} style={{ color: textMuted }}><Bell className="h-4 w-4" /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full" style={{ background: ITEMS.find(i => i.id === active)?.color }} /></button>
         </header>
         <div className="flex flex-1 items-center justify-center">
-          <div className="text-center"><div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: idleBg }}><LayoutDashboard className="h-7 w-7" strokeWidth={1.5} style={{ color: textDim }} /></div><p className="text-[13px] font-medium" style={{ color: textDim }}>Hover icons to expand pills</p></div>
+          <div className="text-center"><div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: idleBg }}><LayoutDashboard className="h-7 w-7" strokeWidth={1.5} style={{ color: textDim }} /></div><p className="text-[13px] font-medium" style={{ color: textDim }}>Focus, hover, or tap icons to expand pills</p></div>
         </div>
       </div>
     </div>
