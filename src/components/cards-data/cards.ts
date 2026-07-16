@@ -389,8 +389,8 @@ export const cardRoutes: CardMeta[] = [
   { slug: "cta-sticky-bottom-card", href: "/components/cards/cta-sticky-bottom-card", title: "Sticky Bottom CTA", category: "CTA", icon: Sparkle, accent: "#18181b", animation: "Fixed bottom bar + dismiss + CTA + dark", source: "more" },
   { slug: "cta-mobile-app-card", href: "/components/cards/cta-mobile-app-card", title: "Mobile App CTA", category: "CTA", icon: Sparkle, accent: "#2563eb", animation: "App screenshot + features + download buttons", source: "more" },
 
-  // ── Charts (PRO) ── Insight Bento Dashboard — 30 animated bento cards
-  { slug: "insight-bento-dashboard-card", href: "/components/cards/insight-bento-dashboard-card", title: "Insight Bento Dashboard", category: "Charts", icon: BarChart3, accent: "#ec1e79", animation: "30 animated bento cards · bar/line/area/donut/radial/wave/contribution · masonry grid", source: "more" },
+  // ── Charts (PRO) ── Insight Bento Dashboard — 35 animated bento cards
+  { slug: "insight-bento-dashboard-card", href: "/components/cards/insight-bento-dashboard-card", title: "Insight Bento Dashboard", category: "Charts", icon: BarChart3, accent: "#ec1e79", animation: "35 animated bento cards · bar/line/area/donut/radial/wave/contribution · masonry grid", source: "more" },
   { slug: "insight-bento-monochrome-blue-card", href: "/components/cards/insight-bento-monochrome-blue-card", title: "Insight Bento Monochrome Blue", category: "Charts", icon: BarChart3, accent: "#2563eb", animation: "Monochrome blue palette · navy → royal → sky → cyan · 35 animated bento cards", source: "more" },
 
   // ── Modals & Drawers (24 components) ──

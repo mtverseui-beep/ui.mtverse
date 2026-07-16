@@ -106,7 +106,7 @@ export function NeumorphicProfileGridCard() {
 
       <div
         className="neu-surface rounded-[22px] p-3.5 sm:p-4"
-        style={{ background: "var(--neu-bg)", boxShadow: "12px 12px 24px rgba(0,0,0,0.08), -12px -12px 24px rgba(255,255,255,0.9)" }}
+        style={{ background: "var(--neu-bg)", boxShadow: "var(--neu-out)" }}
       >
         {/* Header */}
         <div className="mb-3 flex items-center justify-between">

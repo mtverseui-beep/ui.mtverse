@@ -1,21 +1,21 @@
 "use client";
 
+import { useId } from "react";
 import { AreaChart, Area, ResponsiveContainer } from "recharts";
+import { useReducedMotion } from "./useReducedMotion";
 
 export function WaveStack({
   data,
   keys,
   height = 140,
-  fallback,
 }: {
   data: Record<string, any>[];
   keys: { key: string; color: string }[];
   height?: number;
   fallback?: React.ReactNode;
 }) {
-  if (fallback && data.length === 0) return <>{fallback}</>;
-  // Unique gradient id per-instance
-  const uid = Math.random().toString(36).slice(2, 7);
+  const uid = useId().replace(/:/g, "");
+  const reduceMotion = useReducedMotion();
   return (
     <ResponsiveContainer width="100%" height={height}>
       <AreaChart data={data} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
@@ -28,16 +28,7 @@ export function WaveStack({
           ))}
         </defs>
         {keys.map((k, i) => (
-          <Area
-            key={`${k.key}-${i}`}
-            type="monotone"
-            dataKey={k.key}
-            stroke="none"
-            fill={`url(#wave-${k.key}-${uid})`}
-            isAnimationActive
-            animationDuration={1300}
-            animationEasing="ease-out"
-          />
+          <Area key={`${k.key}-${i}`} type="monotone" dataKey={k.key} stroke="none" fill={`url(#wave-${k.key}-${uid})`} isAnimationActive={!reduceMotion} animationDuration={1300} animationEasing="ease-out" />
         ))}
       </AreaChart>
     </ResponsiveContainer>

@@ -31,11 +31,11 @@ const PROJECT: FolderProject = {
   lastUpdated: "Updated 2h ago",
   accent: "cyan",
   previews: [
-    { src: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=400&q=85", alt: "Cinematic portrait — creative director in studio light" },
-    { src: "https://images.unsplash.com/photo-1492288991661-058aa541ff43?auto=format&fit=crop&w=400&q=85", alt: "Cinematic portrait — photographer at golden hour" },
-    { src: "https://images.unsplash.com/photo-1487621167305-5d248087c724?auto=format&fit=crop&w=400&q=85", alt: "Cinematic portrait — focused craftsperson at work" },
-    { src: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=400&q=85", alt: "Cinematic portrait — visionary in dramatic key light" },
-    { src: "https://images.unsplash.com/photo-1496440737103-cd596325d314?auto=format&fit=crop&w=400&q=85", alt: "Cinematic portrait — atmospheric lone silhouette" },
+    { src: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&q=85", alt: "Cinematic film production set under dramatic lighting" },
+    { src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=400&q=85", alt: "Professional cinema camera ready for production" },
+    { src: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=400&q=85", alt: "Filmmaker capturing a scene through a camera" },
+    { src: "https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=400&q=85", alt: "Vintage film reels arranged for editing" },
+    { src: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=400&q=85", alt: "Atmospheric cinema auditorium with glowing screen" },
   ],
 };
 
@@ -261,9 +261,7 @@ export function CinematicFolderCard() {
           className="relative z-0 rounded-2xl"
           animate={{
             rotateX: isActive ? 15 : 0,
-            // Dark surface for both themes — the back panel is the "folder"
-            // behind the images, always dark so images pop.
-            backgroundColor: isGenerating ? "#111111" : "#1a1a1a",
+            backgroundColor: isGenerating ? "var(--card-surface-3)" : "var(--card-surface-2)",
           }}
           transition={{
             rotateX: { type: "spring", stiffness: 200, damping: 25, mass: 0.8 },
@@ -271,7 +269,8 @@ export function CinematicFolderCard() {
           }}
           style={{
             height: "224px",
-            border: "1px solid rgba(255, 255, 255, 0.06)",
+            border: "1px solid var(--card-border)",
+            boxShadow: "0 12px 30px -22px rgba(15, 23, 42, 0.45)",
             transformStyle: "preserve-3d",
             transformOrigin: "center bottom",
           }}
@@ -300,7 +299,7 @@ export function CinematicFolderCard() {
                   >
                     <svg
                       style={{ width: size, height: size, opacity }}
-                      className="text-white"
+                      className="text-cyan-500/55 dark:text-white"
                       viewBox="0 0 24 24"
                       fill="currentColor"
                     >
@@ -313,12 +312,12 @@ export function CinematicFolderCard() {
           )}
 
           {/* Top highlight */}
-          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-slate-400/30 to-transparent dark:via-white/30" />
 
           {/* Folder header */}
           <div className="absolute left-4 top-3 z-20 flex items-center gap-2">
             <Folder className={`h-3.5 w-3.5 ${ACCENT.text}`} strokeWidth={1.8} />
-            <span className="font-mono text-[10px] tracking-wider text-white/35">{project.id.toUpperCase()}</span>
+            <span className="font-mono text-[10px] font-medium tracking-wider text-slate-600 dark:text-slate-300">{project.id.toUpperCase()}</span>
           </div>
 
           {/* Status pill */}
@@ -383,7 +382,10 @@ export function CinematicFolderCard() {
                   }}
                   style={{ zIndex }}
                 >
-                  <div className="h-[160px] w-[100px] overflow-hidden rounded-lg border border-white/[0.04] shadow-[0_8px_24px_-8px_rgba(0,0,0,0.7)]">
+                  <div
+                    className="h-[160px] w-[100px] overflow-hidden rounded-lg border shadow-[0_10px_26px_-10px_rgba(15,23,42,0.30)] dark:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.7)]"
+                    style={{ borderColor: "var(--card-border)" }}
+                  >
                     {imageUrl && (
                       <motion.div
                         animate={{
@@ -404,7 +406,7 @@ export function CinematicFolderCard() {
 
         {/* ───────── FRONT PANEL ───────── */}
         <motion.div
-          className="absolute bottom-0 left-0 right-0 z-10 overflow-hidden rounded-2xl"
+          className="absolute bottom-0 left-0 right-0 z-10 overflow-hidden rounded-2xl shadow-[0_16px_34px_-22px_rgba(15,23,42,0.42)] dark:shadow-[0_16px_34px_-22px_rgba(0,0,0,0.8)]"
           animate={{
             rotateX: isActive ? -25 : 0,
             // Front panel uses theme-aware surface — light in light mode,
@@ -416,8 +418,6 @@ export function CinematicFolderCard() {
             backgroundColor: { duration: TRANSITION_DURATION, ease: EASE_OUT_EXPO },
           }}
           style={{
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
             border: "1px solid var(--card-border)",
             transformStyle: "preserve-3d",
             transformOrigin: "center bottom",
@@ -439,7 +439,7 @@ export function CinematicFolderCard() {
               className="pointer-events-none absolute -inset-px overflow-hidden rounded-t-lg transition-all duration-500"
               style={{
                 opacity: isEditing ? 1 : 0,
-                background: "linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)",
+                background: "linear-gradient(180deg, var(--card-hover) 0%, transparent 100%)",
               }}
             />
             <div
@@ -453,7 +453,7 @@ export function CinematicFolderCard() {
             />
 
             <h3
-              className={`relative z-0 line-clamp-2 min-h-[2.75rem] text-base font-semibold leading-snug cs-text transition-all duration-200 ${isActive ? "" : "cs-muted"}`}
+              className="relative z-0 line-clamp-2 min-h-[2.75rem] text-base font-semibold leading-snug cs-text transition-all duration-200"
               style={{ opacity: isEditing ? 0 : 1, pointerEvents: isEditing ? "none" : "auto" }}
             >
               {project.title}
@@ -630,12 +630,12 @@ export function CinematicFolderCard() {
                 onMouseLeave={cancelDeleteCountdown}
                 onTouchStart={startDeleteCountdown}
                 onTouchEnd={cancelDeleteCountdown}
-                className="mt-3 w-32 rounded-lg bg-rose-500/20 py-2 text-[12px] font-semibold text-rose-300 transition hover:bg-rose-500/30"
+                className="mt-3 w-32 rounded-lg bg-rose-500/15 py-2 text-[12px] font-semibold text-rose-700 transition hover:bg-rose-500/25 dark:bg-rose-500/20 dark:text-rose-300 dark:hover:bg-rose-500/30"
               >
                 {isDeleting ? `Deleting… ${Math.round(deleteProgress)}%` : "Hold to delete"}
               </button>
               {isDeleting && (
-                <div className="mt-2 h-0.5 w-32 overflow-hidden rounded-full bg-white/10">
+                <div className="mt-2 h-0.5 w-32 overflow-hidden rounded-full bg-slate-900/10 dark:bg-white/10">
                   <div
                     className="h-full rounded-full bg-rose-500 transition-all duration-75"
                     style={{ width: `${deleteProgress}%` }}

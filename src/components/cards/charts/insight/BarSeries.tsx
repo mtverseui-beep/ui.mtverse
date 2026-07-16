@@ -8,6 +8,7 @@ import {
   Tooltip,
   Cell,
 } from "recharts";
+import { useReducedMotion } from "./useReducedMotion";
 
 export type SeriesDef = { key: string; color: string; name?: string };
 
@@ -21,7 +22,6 @@ export function BarSeries({
   stacked = false,
   showAxis = false,
   barGap = 4,
-  fallback,
 }: {
   data: Record<string, any>[];
   keys: SeriesDef[];
@@ -34,28 +34,24 @@ export function BarSeries({
   barGap?: number;
   fallback?: React.ReactNode;
 }) {
-  // Show fallback (spinner/placeholder) until the dynamic import resolves.
-  if (fallback && data.length === 0) return <>{fallback}</>;
+  const reduceMotion = useReducedMotion();
   return (
     <ResponsiveContainer width="100%" height={height}>
       <BarChart data={data} barGap={barGap} margin={{ top: 4, right: 2, bottom: showAxis ? 0 : -4, left: 2 }}>
         {showAxis && (
-          <XAxis
-            dataKey={xKey}
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: "#8686a0", fontSize: 10 }}
-            interval={0}
-          />
+          <XAxis dataKey={xKey} axisLine={false} tickLine={false} tick={{ fill: "#8686a0", fontSize: 10 }} interval={0} />
         )}
         <Tooltip
           cursor={{ fill: "rgba(18,18,26,0.04)" }}
           contentStyle={{
+            backgroundColor: "var(--chart-tooltip-bg)",
+            border: "1px solid var(--chart-tooltip-border)",
             borderRadius: 12,
-            border: "none",
             boxShadow: "0 8px 24px rgba(18,18,26,0.14)",
+            color: "var(--chart-tooltip-text)",
             fontSize: 12,
           }}
+          labelStyle={{ color: "var(--chart-tooltip-text)" }}
         />
         {keys.map((k, i) => (
           <Bar
@@ -64,17 +60,9 @@ export function BarSeries({
             name={k.name ?? k.key}
             fill={k.color}
             stackId={stacked ? "s" : undefined}
-            radius={
-              stacked
-                ? i === keys.length - 1
-                  ? [radius, radius, 0, 0]
-                  : i === 0
-                  ? [0, 0, radius, radius]
-                  : [0, 0, 0, 0]
-                : [radius, radius, radius, radius]
-            }
+            radius={stacked ? (i === keys.length - 1 ? [radius, radius, 0, 0] : i === 0 ? [0, 0, radius, radius] : [0, 0, 0, 0]) : [radius, radius, radius, radius]}
             barSize={barSize}
-            isAnimationActive
+            isAnimationActive={!reduceMotion}
             animationDuration={900}
             animationEasing="ease-out"
           />
@@ -94,7 +82,6 @@ export function BarSeriesRainbow({
   barSize = 14,
   highlightIndex,
   highlightColor,
-  fallback,
 }: {
   data: Record<string, any>[];
   xKey?: string;
@@ -107,29 +94,21 @@ export function BarSeriesRainbow({
   highlightColor?: string;
   fallback?: React.ReactNode;
 }) {
-  if (fallback && data.length === 0) return <>{fallback}</>;
+  const reduceMotion = useReducedMotion();
   return (
     <ResponsiveContainer width="100%" height={height}>
       <BarChart data={data} margin={{ top: 4, right: 2, bottom: 0, left: 2 }}>
-        <XAxis
-          dataKey={xKey}
-          axisLine={false}
-          tickLine={false}
-          tick={{ fill: "#8686a0", fontSize: 10 }}
-        />
+        <XAxis dataKey={xKey} axisLine={false} tickLine={false} tick={{ fill: "#8686a0", fontSize: 10 }} />
         <Tooltip
           cursor={{ fill: "rgba(18,18,26,0.04)" }}
-          contentStyle={{ borderRadius: 12, border: "none", boxShadow: "0 8px 24px rgba(18,18,26,0.14)", fontSize: 12 }}
+          contentStyle={{ backgroundColor: "var(--chart-tooltip-bg)", border: "1px solid var(--chart-tooltip-border)", borderRadius: 12, boxShadow: "0 8px 24px rgba(18,18,26,0.14)", color: "var(--chart-tooltip-text)", fontSize: 12 }}
+          labelStyle={{ color: "var(--chart-tooltip-text)" }}
         />
-        <Bar dataKey={valueKey} radius={[radius, radius, radius, radius]} barSize={barSize} isAnimationActive animationDuration={900} key={`rainbow-${barSize}`}>
+        <Bar dataKey={valueKey} radius={[radius, radius, radius, radius]} barSize={barSize} isAnimationActive={!reduceMotion} animationDuration={900} key={`rainbow-${barSize}`}>
           {data.map((d, i) => (
             <Cell
               key={`cell-${i}-${d?.[valueKey] ?? 0}`}
-              fill={
-                highlightIndex !== undefined && i === highlightIndex
-                  ? highlightColor ?? colors[i % colors.length]
-                  : colors[i % colors.length]
-              }
+              fill={highlightIndex !== undefined && i === highlightIndex ? highlightColor ?? colors[i % colors.length] : colors[i % colors.length]}
             />
           ))}
         </Bar>

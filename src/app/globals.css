@@ -869,3 +869,53 @@ a {
 .dark [style*="1px solid #f"] {
   border-color: rgba(255,255,255,0.10) !important;
 }
+
+/* Insight chart runtime surfaces and monochrome theme corrections. */
+.insight-dashboard {
+  --chart-tooltip-bg: #ffffff;
+  --chart-tooltip-border: rgba(18, 18, 26, 0.10);
+  --chart-tooltip-text: #12121a;
+  --chart-track: #eef0f6;
+}
+.insight-dashboard .bg-canvas\/60 { background-color: color-mix(in srgb, var(--canvas) 60%, transparent); }
+.insight-dashboard .recharts-tooltip-wrapper .recharts-default-tooltip {
+  background-color: var(--chart-tooltip-bg) !important;
+  border: 1px solid var(--chart-tooltip-border) !important;
+  color: var(--chart-tooltip-text) !important;
+}
+.insight-dashboard .recharts-tooltip-label { color: var(--chart-tooltip-text) !important; }
+.dark .insight-dashboard {
+  --ink-300: #a8a8ba;
+  --chart-tooltip-bg: #1a1a26;
+  --chart-tooltip-border: rgba(255, 255, 255, 0.12);
+  --chart-tooltip-text: #f5f5fa;
+  --chart-track: rgba(255, 255, 255, 0.10);
+}
+.insight-dashboard-blue {
+  --brand-pink: #2563eb;
+  --brand-magenta: #1d4ed8;
+  --brand-violet: #1e40af;
+  --brand-indigo: #1e3a8a;
+  --brand-navy: #172554;
+  --brand-teal: #0891b2;
+  --brand-cyan: #06b6d4;
+  --brand-blue: #2563eb;
+  --brand-amber: #38bdf8;
+  --brand-gold: #7dd3fc;
+  --brand-lime: #67e8f9;
+  --chart-tooltip-bg: #f8fbff;
+  --chart-tooltip-border: #bfdbfe;
+  --chart-tooltip-text: #172554;
+  --chart-track: #dbeafe;
+}
+.insight-dashboard-blue .bg-brand-pink\/15 { background-color: rgba(37, 99, 235, 0.15); }
+.insight-dashboard-blue .bg-brand-pink\/10 { background-color: rgba(37, 99, 235, 0.10); }
+.dark .insight-dashboard-blue {
+  --ink-300: #a9b9d6;
+  --chart-tooltip-bg: #111d36;
+  --chart-tooltip-border: #1e3a8a;
+  --chart-tooltip-text: #eff6ff;
+  --chart-track: rgba(147, 197, 253, 0.14);
+}
+.dark .insight-dashboard-blue.dark\:bg-ink-950,
+.dark .insight-dashboard-blue .dark\:bg-ink-950 { background-color: var(--ink-950) !important; }

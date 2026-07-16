@@ -27,11 +27,8 @@ export function BentoCard({
       style={{
         // CSS animation delay (s) — replaces Framer Motion stagger
         animationDelay: `${Math.min(delay, 0.5)}s`,
-        // perf: skip rendering/layout work offscreen
-        contentVisibility: "auto",
-        containIntrinsicSize: "260px",
-        // perf: contain layout/paint to this card
-        contain: "layout style paint",
+        // Paint containment avoids cross-card repaints without masonry reflow.
+        contain: "paint",
       }}
     >
       {accent && (

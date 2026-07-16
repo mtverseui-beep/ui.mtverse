@@ -1,6 +1,7 @@
 "use client";
 
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { useReducedMotion } from "./useReducedMotion";
 
 export function Donut({
   data,
@@ -8,7 +9,6 @@ export function Donut({
   thickness = 14,
   centerLabel,
   centerSub,
-  fallback,
 }: {
   data: { name: string; value: number; color: string }[];
   size?: number;
@@ -17,19 +17,15 @@ export function Donut({
   centerSub?: string;
   fallback?: React.ReactNode;
 }) {
-  if (fallback && data.length === 0) return <>{fallback}</>;
+  const reduceMotion = useReducedMotion();
   const outer = size / 2;
   const inner = outer - thickness;
   return (
     <div className="relative" style={{ width: size, height: size }}>
       <PieChart width={size} height={size}>
         <Tooltip
-          contentStyle={{
-            borderRadius: 12,
-            border: "none",
-            boxShadow: "0 8px 24px rgba(18,18,26,0.14)",
-            fontSize: 12,
-          }}
+          contentStyle={{ backgroundColor: "var(--chart-tooltip-bg)", border: "1px solid var(--chart-tooltip-border)", borderRadius: 12, boxShadow: "0 8px 24px rgba(18,18,26,0.14)", color: "var(--chart-tooltip-text)", fontSize: 12 }}
+          labelStyle={{ color: "var(--chart-tooltip-text)" }}
         />
         <Pie
           data={data}
@@ -44,13 +40,11 @@ export function Donut({
           paddingAngle={3}
           stroke="none"
           cornerRadius={6}
-          isAnimationActive
+          isAnimationActive={!reduceMotion}
           animationDuration={1000}
           animationEasing="ease-out"
         >
-          {data.map((d, i) => (
-            <Cell key={`${d.name}-${i}`} fill={d.color} />
-          ))}
+          {data.map((d, i) => <Cell key={`${d.name}-${i}`} fill={d.color} />)}
         </Pie>
       </PieChart>
       {(centerLabel || centerSub) && (

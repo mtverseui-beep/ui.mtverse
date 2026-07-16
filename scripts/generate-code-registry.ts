@@ -10,8 +10,8 @@
  * Run:  bun run scripts/generate-code-registry.ts
  */
 
-import { readFileSync, writeFileSync, readdirSync, existsSync } from "fs";
-import { join, basename } from "path";
+import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from "fs";
+import { join, basename, dirname, relative } from "path";
 
 const ROOT = join(import.meta.dir, "..");
 const CARDS_DIR = join(ROOT, "src", "components", "cards");
@@ -156,55 +156,62 @@ function parseCardsTs(): CardEntry[] {
 
 // ── Detect local imports (./something or ../something) in a source file ──
 interface LocalDep {
-  importPath: string; // e.g. "./data/card-data"
-  resolvedPath: string; // absolute path
-  label: string; // display name for the file tab
+  importPath: string;
+  resolvedPath: string;
+  label: string;
+}
+
+function detectImportPaths(source: string): string[] {
+  const paths = new Set<string>();
+  const re = /(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s*)["']([^"']+)["']/g;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(source)) !== null) paths.add(match[1]);
+  return [...paths];
+}
+
+function resolveLocalImport(importPath: string, fileDir: string): string | undefined {
+  if (!importPath.startsWith(".") && !importPath.startsWith("@/")) return undefined;
+  const base = importPath.startsWith("@/")
+    ? join(ROOT, "src", importPath.slice(2))
+    : join(fileDir, importPath);
+  const candidates = [
+    base,
+    ...[".ts", ".tsx", ".js", ".jsx", ".css", ".json"].map((extension) => `${base}${extension}`),
+    ...["index.ts", "index.tsx", "index.js", "index.jsx"].map((file) => join(base, file)),
+  ];
+  return candidates.find((candidate) => existsSync(candidate) && statSync(candidate).isFile());
 }
 
 function detectLocalDeps(source: string, fileDir: string): LocalDep[] {
-  const deps: LocalDep[] = [];
-  // Match: from "./..." or from "../..."
-  const re = /from\s+["'](\.\.?\/[^"']+)["']/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(source)) !== null) {
-    const importPath = m[1];
-    // Try resolving with extensions
-    const candidates = [
-      join(fileDir, importPath),
-      join(fileDir, `${importPath}.ts`),
-      join(fileDir, `${importPath}.tsx`),
-      join(fileDir, `${importPath}.js`),
-      join(fileDir, `${importPath}.jsx`),
-      join(fileDir, importPath, "index.ts"),
-    ];
-    const resolved = candidates.find((p) => existsSync(p));
-    if (resolved) {
-      const label = basename(resolved).replace(/\.(ts|tsx)$/, "");
-      deps.push({ importPath, resolvedPath: resolved, label });
-    }
+  const deps = new Map<string, LocalDep>();
+  for (const importPath of detectImportPaths(source)) {
+    const resolvedPath = resolveLocalImport(importPath, fileDir);
+    if (!resolvedPath) continue;
+    deps.set(resolvedPath, {
+      importPath,
+      resolvedPath,
+      label: basename(resolvedPath).replace(/\.[^.]+$/, ""),
+    });
   }
-  return deps;
+  return [...deps.values()];
 }
 
 // ── Detect npm package imports ──
 function detectNpmPackages(source: string): string[] {
   const packages = new Set<string>();
-  // Match: from "package-name" or from "package-name/sub-path" (skip relative imports)
-  const re = /from\s+["']([^"'.][^"']*?)["']/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(source)) !== null) {
-    const pkg = m[1];
-    if (pkg.startsWith(".") || pkg.startsWith("/")) continue;
-    // Get the root package name (before any /)
-    const root = pkg.split("/")[0];
-    // Skip Node built-ins
-    if (["react", "react-dom", "next", "fs", "path", "crypto"].includes(root))
-      continue;
-    // next/image → next, next/link → next
-    if (root === "next") continue;
+  const builtIns = new Set(["fs", "path", "crypto", "url", "util", "events", "stream", "buffer"]);
+  for (const importPath of detectImportPaths(source)) {
+    if (importPath.startsWith(".") || importPath.startsWith("/") || importPath.startsWith("@/") || importPath.startsWith("node:")) continue;
+    const parts = importPath.split("/");
+    const root = importPath.startsWith("@") ? parts.slice(0, 2).join("/") : parts[0];
+    if (["react", "react-dom", "next"].includes(root) || builtIns.has(root)) continue;
     packages.add(root);
   }
   return [...packages].sort();
+}
+
+function workspacePath(filePath: string): string {
+  return relative(ROOT, filePath).replace(/\\/g, "/");
 }
 
 // ── Generate install command ──
@@ -229,40 +236,24 @@ const registry: Record<string, CardCodeEntry> = {};
 
 for (const entry of entries) {
   const content = readFileSync(entry.filePath, "utf-8");
-  const fileDir = entry.filePath.replace(basename(entry.filePath), "");
-  const localDeps = detectLocalDeps(content, fileDir);
-  const npmPackages = detectNpmPackages(content);
-
-  // Also scan dependency files for transitive npm packages
-  const allNpm = new Set(npmPackages);
+  const allNpm = new Set(detectNpmPackages(content));
   const depContents: { path: string; label: string; content: string }[] = [];
-  const seen = new Set<string>();
+  const seen = new Set<string>([entry.filePath]);
+  const queue = detectLocalDeps(content, dirname(entry.filePath));
 
-  for (const dep of localDeps) {
+  while (queue.length > 0) {
+    const dep = queue.shift()!;
     if (seen.has(dep.resolvedPath)) continue;
     seen.add(dep.resolvedPath);
+
     const depContent = readFileSync(dep.resolvedPath, "utf-8");
     depContents.push({
-      path: dep.resolvedPath.replace(ROOT + "/", ""),
+      path: workspacePath(dep.resolvedPath),
       label: dep.label,
       content: depContent,
     });
-    // Detect npm packages in dependency files too
-    for (const p of detectNpmPackages(depContent)) allNpm.add(p);
-    // Detect transitive local deps (e.g., card-data.ts imports from ../types)
-    const depDir = dep.resolvedPath.replace(basename(dep.resolvedPath), "");
-    const transitiveDeps = detectLocalDeps(depContent, depDir);
-    for (const td of transitiveDeps) {
-      if (seen.has(td.resolvedPath)) continue;
-      seen.add(td.resolvedPath);
-      const tdContent = readFileSync(td.resolvedPath, "utf-8");
-      depContents.push({
-        path: td.resolvedPath.replace(ROOT + "/", ""),
-        label: td.label,
-        content: tdContent,
-      });
-      for (const p of detectNpmPackages(tdContent)) allNpm.add(p);
-    }
+    for (const packageName of detectNpmPackages(depContent)) allNpm.add(packageName);
+    queue.push(...detectLocalDeps(depContent, dirname(dep.resolvedPath)));
   }
 
   // Always include react + react-dom + next for completeness
@@ -278,7 +269,7 @@ for (const entry of entries) {
   registry[entry.slug] = {
     componentName: entry.componentName,
     mainFile: {
-      path: entry.filePath.replace(ROOT + "/", ""),
+      path: workspacePath(entry.filePath),
       label: entry.componentName,
       content,
     },
@@ -352,5 +343,5 @@ export const sharedCssNotes = \`/* Add these utility classes to your globals.css
 `;
 
 writeFileSync(OUT_FILE, output, "utf-8");
-console.log(`\n✓ Wrote code registry to ${OUT_FILE.replace(ROOT + "/", "")}`);
+console.log(`\n✓ Wrote code registry to ${workspacePath(OUT_FILE)}`);
 console.log(`  Total cards: ${Object.keys(registry).length}`);

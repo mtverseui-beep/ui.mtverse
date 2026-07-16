@@ -1,13 +1,14 @@
 "use client";
 
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
+import { useReducedMotion } from "./useReducedMotion";
 
 export function RadialGauge({
   value,
   size = 128,
   thickness = 12,
   color = "#f5a623",
-  trackColor = "#eef0f6",
+  trackColor = "var(--chart-track)",
   label,
   sublabel,
 }: {
@@ -19,31 +20,12 @@ export function RadialGauge({
   label?: string;
   sublabel?: string;
 }) {
-  const data = [{ value }];
+  const reduceMotion = useReducedMotion();
   return (
     <div className="relative" style={{ width: size, height: size }}>
-      <RadialBarChart
-        width={size}
-        height={size}
-        cx="50%"
-        cy="50%"
-        innerRadius={size / 2 - thickness}
-        outerRadius={size / 2}
-        barSize={thickness}
-        data={data}
-        startAngle={90}
-        endAngle={-270}
-      >
+      <RadialBarChart width={size} height={size} cx="50%" cy="50%" innerRadius={size / 2 - thickness} outerRadius={size / 2} barSize={thickness} data={[{ value }]} startAngle={90} endAngle={-270}>
         <PolarAngleAxis type="number" domain={[0, 100]} angleAxisId={0} tick={false} />
-        <RadialBar
-          background={{ fill: trackColor }}
-          dataKey="value"
-          cornerRadius={thickness / 2}
-          fill={color}
-          isAnimationActive
-          animationDuration={1200}
-          animationEasing="ease-out"
-        />
+        <RadialBar background={{ fill: trackColor }} dataKey="value" cornerRadius={thickness / 2} fill={color} isAnimationActive={!reduceMotion} animationDuration={1200} animationEasing="ease-out" />
       </RadialBarChart>
       {(label || sublabel) && (
         <div className="absolute inset-0 flex flex-col items-center justify-center">
@@ -70,36 +52,18 @@ export function MultiRing({
   centerLabel?: string;
   centerSub?: string;
 }) {
+  const reduceMotion = useReducedMotion();
   return (
     <div className="relative" style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        {rings.map((r, i) => {
+        {rings.map((ring, i) => {
           const radius = size / 2 - thickness / 2 - i * (thickness + gap);
           const circumference = 2 * Math.PI * radius;
-          const dash = (r.value / 100) * circumference;
+          const dash = (ring.value / 100) * circumference;
           return (
-            <g key={`${r.color}-${i}`} transform={`rotate(-90 ${size / 2} ${size / 2})`}>
-              <circle
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                fill="none"
-                stroke={r.track ?? "#eef0f6"}
-                strokeWidth={thickness}
-              />
-              <circle
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                fill="none"
-                stroke={r.color}
-                strokeWidth={thickness}
-                strokeLinecap="round"
-                strokeDasharray={`${dash} ${circumference}`}
-                style={{
-                  transition: "stroke-dasharray 1.1s ease-out",
-                }}
-              />
+            <g key={`${ring.color}-${i}`} transform={`rotate(-90 ${size / 2} ${size / 2})`}>
+              <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke={ring.track ?? "var(--chart-track)"} strokeWidth={thickness} />
+              <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke={ring.color} strokeWidth={thickness} strokeLinecap="round" strokeDasharray={`${dash} ${circumference}`} style={{ transition: reduceMotion ? "none" : "stroke-dasharray 1.1s ease-out" }} />
             </g>
           );
         })}

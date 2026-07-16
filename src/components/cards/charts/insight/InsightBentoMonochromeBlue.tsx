@@ -11,33 +11,25 @@ import {
 } from "lucide-react";
 
 import { BentoCard, CardHeader } from "./BentoCard";
+import { withViewportChart } from "./ViewportChart";
 import { Avatar, ProfileRow, Pill, Legend, StatDelta, InlineProgress, Dot } from "./ui";
 
-// ── Client-only chart components (fixes Recharts hydration mismatch) ──
-const BarSeries = dynamic(() => import("./BarSeries").then(m => m.BarSeries), { ssr: false });
-const BarSeriesRainbow = dynamic(() => import("./BarSeries").then(m => m.BarSeriesRainbow), { ssr: false });
-const LineSeries = dynamic(() => import("./LineSeries").then(m => m.LineSeries), { ssr: false });
-const AreaSeries = dynamic(() => import("./AreaSeries").then(m => m.AreaSeries), { ssr: false });
-const Donut = dynamic(() => import("./Donut").then(m => m.Donut), { ssr: false });
-const RadialGauge = dynamic(() => import("./Radial").then(m => m.RadialGauge), { ssr: false });
-const MultiRing = dynamic(() => import("./Radial").then(m => m.MultiRing), { ssr: false });
+// Chart chunks are downloaded and mounted once they approach the viewport.
+const BarSeries = withViewportChart(dynamic(() => import("./BarSeries").then(m => m.BarSeries), { ssr: false }));
+const BarSeriesRainbow = withViewportChart(dynamic(() => import("./BarSeries").then(m => m.BarSeriesRainbow), { ssr: false }));
+const LineSeries = withViewportChart(dynamic(() => import("./LineSeries").then(m => m.LineSeries), { ssr: false }));
+const AreaSeries = withViewportChart(dynamic(() => import("./AreaSeries").then(m => m.AreaSeries), { ssr: false }));
+const Donut = withViewportChart(dynamic(() => import("./Donut").then(m => m.Donut), { ssr: false }));
+const RadialGauge = withViewportChart(dynamic(() => import("./Radial").then(m => m.RadialGauge), { ssr: false }));
+const MultiRing = withViewportChart(dynamic(() => import("./Radial").then(m => m.MultiRing), { ssr: false }));
 const RankBars = dynamic(() => import("./RankBars").then(m => m.RankBars), { ssr: false });
 const ContributionGrid = dynamic(() => import("./ContributionGrid").then(m => m.ContributionGrid), { ssr: false });
-const WaveStack = dynamic(() => import("./WaveStack").then(m => m.WaveStack), { ssr: false });
+const WaveStack = withViewportChart(dynamic(() => import("./WaveStack").then(m => m.WaveStack), { ssr: false }));
 
 import * as D from "./data-blue";
 
-// Reusable lightweight chart placeholder shown while the client chunk loads.
 function ChartFallback({ height = 140 }: { height?: number }) {
-  return (
-    <div
-      style={{ height }}
-      className="flex items-center justify-center rounded-xl bg-canvas/60 dark:bg-white/[0.03]"
-      aria-hidden
-    >
-      <span className="h-1 w-1 animate-ping rounded-full bg-ink-300" />
-    </div>
-  );
+  return <div style={{ height }} className="rounded-xl bg-canvas/60 dark:bg-white/[0.03]" aria-hidden />;
 }
 
 export function InsightBentoMonochromeBlue() {
