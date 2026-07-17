@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import {
   Package, Copy, Check, ExternalLink, Info, PackageOpen,
-  Settings, Zap, Code2, FolderTree, Terminal,
+  Settings, Zap, Code2, FolderTree, Terminal, MoonStar,
 } from "lucide-react";
 import { useState, useCallback } from "react";
 
@@ -17,10 +17,13 @@ interface DocsPanelProps {
   npmPackages: string[];
   dependencies: Array<{ path?: string; label: string; content?: string } | string>;
   category: string;
+  sourcePath?: string;
+  installCommand?: string;
 }
 
 export function DocsPanel({
   slug, title, animation, accent, componentName, npmPackages, dependencies, category,
+  sourcePath, installCommand,
 }: DocsPanelProps) {
   const [copied, setCopied] = useState<string | null>(null);
 
@@ -30,18 +33,30 @@ export function DocsPanel({
     setTimeout(() => setCopied(null), 2000);
   }, []);
 
-  const installCmd = npmPackages.length > 0
-    ? `npm install ${npmPackages.join(" ")}`
-    : "No additional dependencies required";
+  const additionalPackages = npmPackages.filter(
+    (packageName) => !["react", "react-dom", "next"].includes(packageName),
+  );
+  const installCmd = installCommand || (additionalPackages.length > 0
+    ? `npm install ${additionalPackages.join(" ")}`
+    : "No additional dependencies required");
 
-  const importPath = `@/components/cards/${category.toLowerCase() === "core" ? "more" : category.toLowerCase()}/${componentName}`;
+  const importPath = sourcePath
+    ? sourcePath.replace(/^src\//, "@/").replace(/\.(?:tsx?|jsx?)$/, "")
+    : `@/components/cards/${category.toLowerCase() === "core" ? "more" : category.toLowerCase()}/${componentName}`;
   const usageCode = `import { ${componentName} } from "${importPath}"
 
 export default function Example() {
-  return <${componentName} />
+  return (
+    <div className="component-theme-scope">
+      <${componentName} />
+    </div>
+  )
 }`;
 
-  const features = animation.split("·").map(f => f.trim()).filter(Boolean);
+  const features = animation
+    .split(/\s*(?:\u00b7|\u00c2\u00b7)\s*/)
+    .map((feature) => feature.trim())
+    .filter(Boolean);
 
   return (
     <div className="space-y-6 p-2">
@@ -115,6 +130,23 @@ export default function Example() {
         />
       </Section>
 
+      {/* Theme support */}
+      <Section icon={MoonStar} title="Light & dark mode" accent={accent}>
+        <p className="mb-2 text-[12px] leading-relaxed cs-muted">
+          Wrap the component with <code className="font-mono cs-text">component-theme-scope</code>.
+          Add <code className="font-mono cs-text">dark</code> to an ancestor (usually the
+          document element) to switch themes. The shared CSS in the Code tab provides
+          semantic colors and compatibility styles for legacy utility classes.
+        </p>
+        <CodeBlock
+          id="theme"
+          code={`<html className="dark">\n  <div className="component-theme-scope">\n    <${componentName} />\n  </div>\n</html>`}
+          copied={copied}
+          onCopy={handleCopy}
+          label="Theme setup"
+        />
+      </Section>
+
       {/* Dependencies */}
       {dependencies.length > 0 && (
         <Section icon={FolderTree} title="Dependencies" accent={accent}>
@@ -129,10 +161,10 @@ export default function Example() {
       )}
 
       {/* NPM Packages */}
-      {npmPackages.length > 0 && (
+      {additionalPackages.length > 0 && (
         <Section icon={Settings} title="NPM Packages" accent={accent}>
           <div className="flex flex-wrap gap-1.5">
-            {npmPackages.map((pkg, i) => (
+            {additionalPackages.map((pkg, i) => (
               <a
                 key={i}
                 href={`https://www.npmjs.com/package/${pkg}`}

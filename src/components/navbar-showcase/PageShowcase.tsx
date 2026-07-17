@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ResponsivePreviewToolbar } from "./ResponsivePreviewToolbar";
 import { CodePanelLoader } from "@/components/library/CodePanelLoader";
-import { DocsPanel } from "@/components/library/DocsPanel";
-import { cardRoutes } from "@/components/cards-data/cards";
-import type { PublicCodeEntry } from "@/components/library/code-types";
+import { ComponentDocs } from "@/components/library/ComponentDocs";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -19,35 +17,6 @@ interface PageShowcaseProps {
 
 export function PageShowcase({ slug, children }: PageShowcaseProps) {
   const [tab, setTab] = useState<TabId>("preview");
-  const [docsMetadata, setDocsMetadata] = useState<PublicCodeEntry | null>(null);
-
-  useEffect(() => {
-    if (tab !== "docs" || docsMetadata) return;
-
-    const controller = new AbortController();
-    let active = true;
-
-    fetch(`/api/components/${encodeURIComponent(slug)}/code`, {
-      method: "GET",
-      cache: "no-store",
-      signal: controller.signal,
-    })
-      .then(async (response) => {
-        if (!response.ok) throw new Error("Unable to load component metadata.");
-        return response.json() as Promise<{ entry: PublicCodeEntry }>;
-      })
-      .then(({ entry }) => {
-        if (active) setDocsMetadata(entry);
-      })
-      .catch(() => {
-        // The base documentation remains usable when metadata loading fails.
-      });
-
-    return () => {
-      active = false;
-      controller.abort();
-    };
-  }, [docsMetadata, slug, tab]);
 
   const handleTabChange = useCallback(
     (next: TabId) => {
@@ -57,21 +26,7 @@ export function PageShowcase({ slug, children }: PageShowcaseProps) {
     [tab],
   );
 
-
-  // Find card metadata for docs
-  const cardMeta = cardRoutes.find(c => c.slug === slug);
-  const docsPanel = cardMeta ? (
-    <DocsPanel
-      slug={slug}
-      title={cardMeta.title}
-      animation={cardMeta.animation}
-      accent={cardMeta.accent}
-      componentName={docsMetadata?.componentName || slug.replace(/-card$/, "")}
-      npmPackages={docsMetadata?.npmPackages || []}
-      dependencies={docsMetadata?.dependencies || []}
-      category={cardMeta.category}
-    />
-  ) : null;
+  const docsPanel = <ComponentDocs slug={slug} />;
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col">
@@ -143,7 +98,7 @@ function PagePreviewCanvas({ children }: { children: React.ReactNode }) {
           className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden"
           style={{ scrollbarWidth: "thin" }}
         >
-          <div className="flex h-full min-h-[400px] flex-col shrink-0">{children}</div>
+          <div className="component-theme-scope flex h-full min-h-[400px] shrink-0 flex-col">{children}</div>
         </div>
       </div>
     </div>

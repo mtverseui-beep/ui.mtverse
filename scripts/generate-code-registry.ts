@@ -15,9 +15,9 @@ import { join, basename, dirname, relative } from "path";
 
 const ROOT = join(import.meta.dir, "..");
 const CARDS_DIR = join(ROOT, "src", "components", "cards");
-const MORE_DIR = join(CARDS_DIR, "more");
 const CARDS_DATA = join(ROOT, "src", "components", "cards-data", "cards.ts");
 const OUT_FILE = join(ROOT, "src", "components", "library", "code-registry.ts");
+const THEME_CSS_FILE = join(ROOT, "src", "components", "library", "component-theme.css");
 
 // ── Card slug → file mapping (derived from cards.ts) ──
 interface CardEntry {
@@ -35,98 +35,32 @@ const FILE_PATH_OVERRIDES: Record<string, string> = {
   "command-palette-card": join("overlays", "CommandPaletteCard.tsx"),
 };
 // Read cards.ts to extract the slug → component name mapping.
+function findPrimaryExport(source: string, fallbackName: string): string {
+  const exportNames = [...source.matchAll(
+    /export\s+(?:default\s+)?(?:async\s+)?(?:function|const|class)\s+([A-Za-z_$][A-Za-z0-9_$]*)/g,
+  )].map((match) => match[1]);
+
+  if (/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(fallbackName) && exportNames.includes(fallbackName)) {
+    return fallbackName;
+  }
+
+  return exportNames.find((name) => name.endsWith("Card")) ?? exportNames[0] ?? fallbackName;
+}
 function parseCardsTs(): CardEntry[] {
   const cardsTs = readFileSync(CARDS_DATA, "utf-8");
   const entries: CardEntry[] = [];
 
-  // Build a list of all .tsx files in both card directories to match against.
-  const originalFiles = readdirSync(CARDS_DIR)
-    .filter((f) => f.endsWith(".tsx") && f !== "Popover.tsx")
-    .map((f) => ({ name: f.replace(".tsx", ""), path: join(CARDS_DIR, f) }));
-  const moreFiles = readdirSync(MORE_DIR)
-    .filter((f) => f.endsWith(".tsx"))
-    .map((f) => ({ name: f.replace(".tsx", ""), path: join(MORE_DIR, f) }));
-  // Also scan charts subdirectory + nested insight subdirectory.
-  const CHARTS_DIR = join(CARDS_DIR, "charts");
-  const chartsFiles = existsSync(CHARTS_DIR)
-    ? readdirSync(CHARTS_DIR)
-        .filter((f) => f.endsWith(".tsx"))
-        .map((f) => ({ name: f.replace(".tsx", ""), path: join(CHARTS_DIR, f) }))
-    : [];
-  const INSIGHT_DIR = join(CHARTS_DIR, "insight");
-  const insightFiles = existsSync(INSIGHT_DIR)
-    ? readdirSync(INSIGHT_DIR)
-        .filter((f) => f.endsWith(".tsx"))
-        .map((f) => ({ name: f.replace(".tsx", ""), path: join(INSIGHT_DIR, f) }))
-    : [];
-  // Also scan nested charts subdirectories (command-center, financial-terminal, etc.)
-  const nestedDirs = existsSync(CHARTS_DIR)
-    ? readdirSync(CHARTS_DIR, { withFileTypes: true })
-        .filter((d) => d.isDirectory() && d.name !== "insight")
-        .flatMap((d) => {
-          const dir = join(CHARTS_DIR, d.name);
-          return readdirSync(dir)
-            .filter((f) => f.endsWith(".tsx"))
-            .map((f) => ({ name: f.replace(".tsx", ""), path: join(dir, f) }));
-        })
-    : [];
-  // Also scan premium-3d subdirectory (3D gallery + AI chatbot)
-  const PREMIUM_3D_DIR = join(CARDS_DIR, "premium-3d");
-  const premium3dFiles = existsSync(PREMIUM_3D_DIR)
-    ? readdirSync(PREMIUM_3D_DIR)
-        .filter((f) => f.endsWith(".tsx"))
-        .map((f) => ({ name: f.replace(".tsx", ""), path: join(PREMIUM_3D_DIR, f) }))
-    : [];
-  // Also scan premium-3d/ai-chatbot subdirectory
-  const PREMIUM_3D_CHATBOT_DIR = join(PREMIUM_3D_DIR, "ai-chatbot");
-  const premium3dChatbotFiles = existsSync(PREMIUM_3D_CHATBOT_DIR)
-    ? readdirSync(PREMIUM_3D_CHATBOT_DIR)
-        .filter((f) => f.endsWith(".tsx"))
-        .map((f) => ({ name: f.replace(".tsx", ""), path: join(PREMIUM_3D_CHATBOT_DIR, f) }))
-    : [];
-  // Also scan overlays subdirectory
-  const OVERLAYS_DIR = join(CARDS_DIR, "overlays");
-  const overlaysFiles = existsSync(OVERLAYS_DIR)
-    ? readdirSync(OVERLAYS_DIR)
-        .filter((f) => f.endsWith(".tsx"))
-        .map((f) => ({ name: f.replace(".tsx", ""), path: join(OVERLAYS_DIR, f) }))
-    : [];
-  // Also scan sidebar subdirectory
-  const SIDEBAR_DIR = join(CARDS_DIR, "sidebar");
-  const sidebarFiles = existsSync(SIDEBAR_DIR)
-    ? readdirSync(SIDEBAR_DIR)
-        .filter((f) => f.endsWith(".tsx"))
-        .map((f) => ({ name: f.replace(".tsx", ""), path: join(SIDEBAR_DIR, f) }))
-    : [];
-  // Also scan ai subdirectory
-  const AI_DIR = join(CARDS_DIR, "ai");
-  const aiFiles = existsSync(AI_DIR)
-    ? readdirSync(AI_DIR)
-        .filter((f) => f.endsWith(".tsx"))
-        .map((f) => ({ name: f.replace(".tsx", ""), path: join(AI_DIR, f) }))
-    : [];
-  // Also scan backgrounds subdirectory
-  const BG_DIR = join(CARDS_DIR, "backgrounds");
-  const bgFiles = existsSync(BG_DIR)
-    ? readdirSync(BG_DIR)
-        .filter((f) => f.endsWith(".tsx"))
-        .map((f) => ({ name: f.replace(".tsx", ""), path: join(BG_DIR, f) }))
-    : [];
-  // Also scan data subdirectory (DataTable, Toast, Skeletons, Empty States)
-  const DATA_DIR = join(CARDS_DIR, "data");
-  const dataFiles = existsSync(DATA_DIR)
-    ? readdirSync(DATA_DIR)
-        .filter((f) => f.endsWith(".tsx"))
-        .map((f) => ({ name: f.replace(".tsx", ""), path: join(DATA_DIR, f) }))
-    : [];
-  // Also scan tables subdirectory
-  const TABLES_DIR = join(CARDS_DIR, "tables");
-  const tableFiles = existsSync(TABLES_DIR)
-    ? readdirSync(TABLES_DIR)
-        .filter((f) => f.endsWith(".tsx"))
-        .map((f) => ({ name: f.replace(".tsx", ""), path: join(TABLES_DIR, f) }))
-    : [];
-  const allFiles = [...originalFiles, ...moreFiles, ...chartsFiles, ...insightFiles, ...nestedDirs, ...premium3dFiles, ...premium3dChatbotFiles, ...overlaysFiles, ...sidebarFiles, ...aiFiles, ...bgFiles, ...dataFiles, ...tableFiles];
+  // Recursively scan every component folder. This keeps registry coverage in
+  // sync as new categories and nested component groups are added.
+  const scanTsxFiles = (directory: string): Array<{ name: string; path: string }> =>
+    readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+      const entryPath = join(directory, entry.name);
+      if (entry.isDirectory()) return scanTsxFiles(entryPath);
+      if (!entry.isFile() || !entry.name.endsWith(".tsx") || entry.name === "Popover.tsx") return [];
+      return [{ name: entry.name.replace(/\.tsx$/, ""), path: entryPath }];
+    });
+
+  const allFiles = scanTsxFiles(CARDS_DIR).sort((a, b) => a.path.localeCompare(b.path));
 
   // Match lines like: { slug: "cinematic-folder-card", href: "...", title: "Cinematic Folder", ..., source: "original" },
   const re = /\{\s*slug:\s*"([^"]+)".*?source:\s*"(original|more)"/gs;
@@ -141,18 +75,22 @@ function parseCardsTs(): CardEntry[] {
     const slugNorm = slug.replace(/-card$/, "").replace(/-/g, "");
     const overrideName = FILE_OVERRIDES[slug];
     const overridePath = FILE_PATH_OVERRIDES[slug];
+    const exactMatch = allFiles.find(
+      (file) => file.name.replace(/Card$/, "").toLowerCase() === slugNorm,
+    );
+    const fuzzyMatch = allFiles.find(
+      (file) => file.name.toLowerCase().replace(/-/g, "").includes(slugNorm),
+    );
     const match = overridePath
       ? allFiles.find((file) => file.path.endsWith(overridePath))
       : overrideName
         ? allFiles.find((file) => file.name === overrideName)
-        : allFiles.find((file) => {
-            // "CinematicFolderCard" -> "cinematicfolder" (strip "Card", lowercase)
-            const fileNorm = file.name.replace(/Card$/, "").toLowerCase();
-            return fileNorm === slugNorm || file.name.toLowerCase().replace(/-/g, "").includes(slugNorm);
-          });
+        : exactMatch ?? fuzzyMatch;
 
     if (match) {
-      entries.push({ slug, componentName: match.name, source, filePath: match.path });
+      const sourceCode = readFileSync(match.path, "utf-8");
+      const componentName = findPrimaryExport(sourceCode, match.name);
+      entries.push({ slug, componentName, source, filePath: match.path });
     } else {
       console.warn(`⚠ File not found for slug "${slug}"`);
     }
@@ -222,6 +160,7 @@ function workspacePath(filePath: string): string {
 
 // ── Generate install command ──
 function generateInstallCommand(packages: string[]): string {
+  if (packages.length === 0) return "# No additional dependencies required";
   const pkgs = packages.map((p) => `${p}@latest`);
   return `npm install ${pkgs.join(" ")}\n# or:  bun add ${pkgs.join(" ")}\n# or:  pnpm add ${pkgs.join(" ")}`;
 }
@@ -290,6 +229,7 @@ for (const entry of entries) {
 }
 
 // ── Generate the TypeScript output ──
+const themeCss = readFileSync(THEME_CSS_FILE, "utf-8");
 const output = `// ════════════════════════════════════════════════════════════════════════════
 // AUTO-GENERATED by scripts/generate-code-registry.ts — DO NOT EDIT MANUALLY.
 // Regenerate after changing card source files:  bun run scripts/generate-code-registry.ts
@@ -300,52 +240,8 @@ import type { CardCodeEntry } from "./code-types";
 
 export const codeRegistry: Record<string, CardCodeEntry> = ${JSON.stringify(registry, null, 2)};
 
-// CSS notes shared across all cards — the cs-* utility classes from globals.css.
-export const sharedCssNotes = \`/* Add these utility classes to your globals.css.
-   They provide theme-aware card surfaces, text, and borders. */
-
-:root {
-  --card-surface: #ffffff;
-  --card-surface-2: #f8fafc;
-  --card-surface-3: #f1f5f9;
-  --card-text: #0f172a;
-  --card-text-muted: #475569;
-  --card-text-subtle: #94a3b8;
-  --card-border: #e2e8f0;
-  --card-border-subtle: #f1f5f9;
-  --card-hover: #f8fafc;
-  --card-input-bg: #f1f5f9;
-}
-
-.dark {
-  --card-surface: #131218;
-  --card-surface-2: #0f1015;
-  --card-surface-3: #1a1c24;
-  --card-text: #ffffff;
-  --card-text-muted: rgba(255, 255, 255, 0.55);
-  --card-text-subtle: rgba(255, 255, 255, 0.40);
-  --card-border: rgba(255, 255, 255, 0.10);
-  --card-border-subtle: rgba(255, 255, 255, 0.06);
-  --card-hover: rgba(255, 255, 255, 0.06);
-  --card-input-bg: rgba(255, 255, 255, 0.04);
-}
-
-.cs-surface { background-color: var(--card-surface); color: var(--card-text); }
-.cs-surface-2 { background-color: var(--card-surface-2); }
-.cs-surface-3 { background-color: var(--card-surface-3); }
-.cs-text { color: var(--card-text); }
-.cs-muted { color: var(--card-text-muted); }
-.cs-subtle { color: var(--card-text-subtle); }
-.cs-border { border: 1px solid var(--card-border); }
-.cs-border-subtle { border: 1px solid var(--card-border-subtle); }
-.cs-border-b { border-bottom: 1px solid var(--card-border); }
-.cs-border-t { border-top: 1px solid var(--card-border); }
-.cs-border-b-subtle { border-bottom: 1px solid var(--card-border-subtle); }
-.cs-border-t-subtle { border-top: 1px solid var(--card-border-subtle); }
-.cs-hover { transition: background-color 0.15s ease; }
-.cs-hover:hover { background-color: var(--card-hover); }
-.cs-input { background-color: var(--card-input-bg); }
-\`;
+// Theme contract shared by every copied component.
+export const sharedCssNotes = ${JSON.stringify(themeCss)};
 `;
 
 writeFileSync(OUT_FILE, output, "utf-8");

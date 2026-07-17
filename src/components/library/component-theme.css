@@ -1,0 +1,103 @@
+/* Shared component theme contract.
+   Add `component-theme-scope` around a copied component and toggle `dark` on
+   an ancestor. Semantic cs-* utilities and compatibility mappings then share
+   the same light/dark behavior as the library preview. */
+
+:root {
+  --card-surface: #ffffff;
+  --card-surface-2: #f8fafc;
+  --card-surface-3: #f1f5f9;
+  --card-text: #0f172a;
+  --card-text-muted: #475569;
+  --card-text-subtle: #64748b;
+  --card-border: #e2e8f0;
+  --card-border-subtle: #f1f5f9;
+  --card-hover: #f8fafc;
+  --card-input-bg: #f1f5f9;
+}
+
+.dark {
+  --card-surface: #131218;
+  --card-surface-2: #0f1015;
+  --card-surface-3: #1a1c24;
+  --card-text: #fafafa;
+  --card-text-muted: #a1a1aa;
+  --card-text-subtle: #8b8b98;
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-border-subtle: rgba(255, 255, 255, 0.07);
+  --card-hover: rgba(255, 255, 255, 0.07);
+  --card-input-bg: rgba(255, 255, 255, 0.055);
+}
+
+.component-theme-scope {
+  min-width: 0;
+  color: var(--card-text);
+  color-scheme: light;
+}
+
+.dark .component-theme-scope { color-scheme: dark; }
+
+.cs-surface { background-color: var(--card-surface); color: var(--card-text); }
+.cs-surface-2 { background-color: var(--card-surface-2); }
+.cs-surface-3 { background-color: var(--card-surface-3); }
+.cs-text { color: var(--card-text); }
+.cs-muted { color: var(--card-text-muted); }
+.cs-subtle { color: var(--card-text-subtle); }
+.cs-border { border-color: var(--card-border); }
+.cs-border-subtle { border-color: var(--card-border-subtle); }
+.cs-border-b { border-bottom-color: var(--card-border); }
+.cs-border-t { border-top-color: var(--card-border); }
+.cs-border-b-subtle { border-bottom-color: var(--card-border-subtle); }
+.cs-border-t-subtle { border-top-color: var(--card-border-subtle); }
+.cs-hover { transition: background-color 150ms ease; }
+.cs-hover:hover { background-color: var(--card-hover); }
+.cs-input { background-color: var(--card-input-bg); }
+
+/* Legacy light palettes receive readable dark equivalents inside previews. */
+.dark .component-theme-scope :is(.text-slate-700, .text-gray-700, .text-zinc-700, .text-neutral-700) { color: #d4d4d8 !important; }
+.dark .component-theme-scope :is(.text-slate-600, .text-slate-500, .text-slate-400, .text-gray-600, .text-gray-500, .text-gray-400, .text-zinc-600, .text-zinc-500, .text-zinc-400, .text-neutral-600, .text-neutral-500, .text-neutral-400) { color: #a1a1aa !important; }
+.dark .component-theme-scope :is(.text-slate-300, .text-gray-300, .text-zinc-300, .text-neutral-300) { color: #d4d4d8 !important; }
+.dark .component-theme-scope :is(.placeholder\:text-slate-400, .placeholder\:text-slate-500, .placeholder\:text-gray-400)::placeholder { color: #8b8b98 !important; opacity: 1; }
+.dark .component-theme-scope [style*="color: rgba(0, 0, 0"],
+.dark .component-theme-scope [style*="color:rgba(0,0,0"] { color: var(--card-text-muted) !important; }
+
+/* Preserve high-contrast white/black action buttons while surrounding light
+   surfaces are converted by the legacy compatibility rules in globals.css. */
+.dark .component-theme-scope :is(button, a, [role="button"]).bg-white.text-black,
+.dark .component-theme-scope :is(button, a, [role="button"])[style*="background: #fff"][style*="color: #0"],
+.dark .component-theme-scope :is(button, a, [role="button"])[style*="background:#fff"][style*="color:#0"] {
+  background-color: #ffffff !important;
+  color: #09090b !important;
+}
+.dark .component-theme-scope :is(button, a, [role="button"]).bg-white.text-black * { color: #09090b !important; }
+
+/* Fixed-dark showcase designs also gain a light presentation. Interactive
+   black CTAs are restored below so their intended contrast is retained. */
+html:not(.dark) .component-theme-scope :is(.bg-black, .bg-zinc-950, .bg-neutral-950, .bg-slate-950, .bg-gray-950),
+html:not(.dark) .component-theme-scope [style*="background: #000"],
+html:not(.dark) .component-theme-scope [style*="background:#000"],
+html:not(.dark) .component-theme-scope [style*="background: #050"],
+html:not(.dark) .component-theme-scope [style*="background: #080"],
+html:not(.dark) .component-theme-scope [style*="background: #090"],
+html:not(.dark) .component-theme-scope [style*="background: #0a0a"],
+html:not(.dark) .component-theme-scope [style*="background:#0a0a"],
+html:not(.dark) .component-theme-scope [style*="background: #0f0f"],
+html:not(.dark) .component-theme-scope [style*="background:#0f0f"],
+html:not(.dark) .component-theme-scope [style*="background: #111"],
+html:not(.dark) .component-theme-scope [style*="background:#111"] {
+  background-color: #ffffff !important;
+}
+
+html:not(.dark) .component-theme-scope :is(.text-white, .text-zinc-100, .text-neutral-100) { color: #0f172a !important; }
+html:not(.dark) .component-theme-scope :is(.text-white\/80, .text-white\/70, .text-white\/60, .text-white\/50, .text-zinc-300, .text-neutral-300) { color: #475569 !important; }
+html:not(.dark) .component-theme-scope [style*="color: #fff"],
+html:not(.dark) .component-theme-scope [style*="color:#fff"] { color: #0f172a !important; }
+html:not(.dark) .component-theme-scope :is(.border-white\/5, .border-white\/10, .border-white\/15, .border-white\/20) { border-color: rgba(15, 23, 42, 0.12) !important; }
+
+html:not(.dark) .component-theme-scope :is(button, a, [role="button"]).bg-black.text-white,
+html:not(.dark) .component-theme-scope :is(button, a, [role="button"])[style*="background: #000"][style*="color: #fff"],
+html:not(.dark) .component-theme-scope :is(button, a, [role="button"])[style*="background:#000"][style*="color:#fff"] {
+  background-color: #09090b !important;
+  color: #ffffff !important;
+}
+html:not(.dark) .component-theme-scope :is(button, a, [role="button"]).bg-black.text-white * { color: #ffffff !important; }

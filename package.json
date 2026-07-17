@@ -7,6 +7,7 @@
     "gen:registry": "bun run scripts/generate-code-registry.ts",
     "gen:pages": "bun run scripts/generate-card-pages.ts",
     "gen:all": "bun run scripts/generate-code-registry.ts && bun run scripts/generate-card-pages.ts",
+    "audit:library": "bun run scripts/audit-component-library.ts",
     "prebuild": "bun run scripts/generate-code-registry.ts && bun run scripts/generate-card-pages.ts",
     "build": "next build && node -e \"const fs=require('fs');fs.mkdirSync('.next/standalone/.next',{recursive:true});fs.cpSync('.next/static','.next/standalone/.next/static',{recursive:true});fs.cpSync('public','.next/standalone/public',{recursive:true})\"",
     "start": "NODE_ENV=production node .next/standalone/server.js",

@@ -26,11 +26,11 @@ const interTight = Inter_Tight({ variable: "--font-inter-tight", subsets: ["lati
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.mtverse.dev"),
   title: {
-    default: "mtverse — Premium UI Component Library | 250+ Animated React Components",
+    default: "mtverse — Premium UI Component Library | 360+ Animated React Components",
     template: "%s · mtverse UI Library",
   },
   description:
-    "mtverse is a premium open-source UI component library built with Next.js 16, TypeScript, Tailwind CSS, and Framer Motion. 250+ production-ready animated components: navbars, footers, hero sections, pricing tables, auth flows, testimonials, feature grids, CTAs, charts, dashboards, and more. Copy-paste ready with full source code, dark mode, and responsive design.",
+    "mtverse is a premium open-source UI component library built with Next.js 16, TypeScript, Tailwind CSS, and Framer Motion. 360+ production-ready animated components: navbars, footers, hero sections, pricing tables, auth flows, testimonials, feature grids, CTAs, charts, dashboards, and more. Copy-paste ready with full source code, dark mode, and responsive design.",
   keywords: [
     // Brand
     "mtverse",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     "page transitions",
     "scroll animations",
     // SEO long-tail
-    "React UI kit 2025",
+    "React UI kit 2026",
     "best Tailwind components",
     "Next.js dashboard template",
     "Next.js auth template",
@@ -123,7 +123,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.mtverse.dev",
     siteName: "mtverse UI Library",
-    title: "mtverse — Premium UI Component Library | 250+ Animated React Components",
+    title: "mtverse — Premium UI Component Library | 360+ Animated React Components",
     description:
       "Production-ready animated React components built with Next.js, TypeScript, Tailwind CSS, and Framer Motion. Navbars, footers, heroes, pricing, auth, testimonials, charts, dashboards, and more.",
     images: [
@@ -139,7 +139,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "mtverse — Premium UI Component Library",
     description:
-      "250+ production-ready animated React components. Next.js · TypeScript · Tailwind CSS · Framer Motion. Copy-paste ready with full source code.",
+      "360+ production-ready animated React components. Next.js · TypeScript · Tailwind CSS · Framer Motion. Copy-paste ready with full source code.",
     creator: "@mtverse",
     images: ["/mtverse-logo.png"],
   },

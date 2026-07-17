@@ -14,14 +14,13 @@ export interface CardCodeEntry {
 
 export interface CodeEntryMetadata {
   componentName: string;
+  mainFile: Pick<CodeFile, "path" | "label">;
   npmPackages: string[];
   dependencies: Array<Pick<CodeFile, "path" | "label">>;
+  installCommand: string;
 }
 
-export interface PublicCodeFile {
-  label: string;
-  content: string;
-}
+export type PublicCodeFile = Pick<CodeFile, "path" | "label" | "content">;
 
 export interface PublicCodeEntry {
   componentName: string;

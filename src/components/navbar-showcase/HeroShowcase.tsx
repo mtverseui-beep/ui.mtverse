@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ResponsivePreviewToolbar } from "./ResponsivePreviewToolbar";
 import { CodePanelLoader } from "@/components/library/CodePanelLoader";
+import { ComponentDocs } from "@/components/library/ComponentDocs";
 import type { HeroVariant } from "./hero-variants";
 
 // ──────────────────────────────────────────────────────────────────────────
@@ -57,7 +58,7 @@ export function HeroShowcase({ variant }: HeroShowcaseProps) {
                 <HeroComponent />
               </HeroPreviewCanvas>
             </motion.div>
-          ) : (
+          ) : tab === "code" ? (
             <motion.div
               key="code"
               className="absolute inset-0 overflow-y-auto scrollbar-modern p-4 sm:p-6 lg:p-8"
@@ -68,6 +69,21 @@ export function HeroShowcase({ variant }: HeroShowcaseProps) {
             >
               <div className="mx-auto max-w-4xl">
                 <CodePanelLoader slug={variant.slug} />
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="docs"
+              role="tabpanel"
+              aria-label="Documentation"
+              className="absolute inset-0 overflow-y-auto scrollbar-modern p-4 sm:p-6 lg:p-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: EASE }}
+            >
+              <div className="mx-auto max-w-3xl">
+                <ComponentDocs slug={variant.slug} />
               </div>
             </motion.div>
           )}
@@ -94,7 +110,7 @@ function HeroPreviewCanvas({ children }: { children: React.ReactNode }) {
           contain: "paint",
         }}
       >
-        <div className="@container min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="@container component-theme-scope min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
           {children}
         </div>
       </div>

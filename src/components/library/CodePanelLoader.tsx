@@ -33,7 +33,7 @@ function CodePanelRequest({ slug }: { slug: string }) {
 
     fetch(`/api/components/${encodeURIComponent(slug)}/code`, {
       method: "GET",
-      cache: "no-store",
+      cache: "force-cache",
       signal: controller.signal,
     })
       .then(async (response) => {

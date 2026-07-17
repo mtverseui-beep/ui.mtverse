@@ -1,7 +1,7 @@
 /**
  * Card Page Generator
  *
- * Reads the code registry and generates all 25 card route page files
+ * Reads the code registry and generates every card route page and SEO layout
  * at src/app/components/cards/[slug]/page.tsx. Each page uses the shared
  * CardPage wrapper with proper SEO metadata and JSON-LD structured data.
  *
@@ -15,10 +15,13 @@ const ROOT = join(import.meta.dir, "..");
 const CARDS_DATA = join(ROOT, "src", "components", "cards-data", "cards.ts");
 const REGISTRY = join(ROOT, "src", "components", "library", "code-registry.ts");
 const PAGES_DIR = join(ROOT, "src", "app", "components", "cards");
-const CARDS_DIR = join(ROOT, "src", "components", "cards");
 
 interface CardEntry {
   slug: string;
+  href: string;
+  title: string;
+  category: string;
+  animation: string;
   componentName: string;
   source: "original" | "more";
 }
@@ -26,10 +29,18 @@ interface CardEntry {
 function parseCards(): CardEntry[] {
   const cardsTs = readFileSync(CARDS_DATA, "utf-8");
   const entries: CardEntry[] = [];
-  const re = /\{\s*slug:\s*"([^"]+)".*?source:\s*"(original|more)"/gs;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(cardsTs)) !== null) {
-    entries.push({ slug: m[1], componentName: "", source: m[2] as "original" | "more" });
+  const re = /\{\s*slug:\s*"([^"]+)",\s*href:\s*"([^"]+)",\s*title:\s*"([^"]+)",\s*category:\s*"([^"]+)".*?animation:\s*"((?:\\.|[^"\\])*)",\s*source:\s*"(original|more)"\s*\}/g;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(cardsTs)) !== null) {
+    entries.push({
+      slug: match[1],
+      href: match[2],
+      title: match[3],
+      category: match[4],
+      animation: JSON.parse(`"${match[5]}"`) as string,
+      componentName: "",
+      source: match[6] as "original" | "more",
+    });
   }
   return entries;
 }
@@ -47,8 +58,97 @@ function getComponentNames(): Record<string, string> {
   return names;
 }
 
+function getMainFilePaths(): Record<string, string> {
+  const registry = readFileSync(REGISTRY, "utf-8");
+  const paths: Record<string, string> = {};
+  const re = /"([^"]+)":\s*\{\s*"componentName":\s*"[^"]+",\s*"mainFile":\s*\{\s*"path":\s*"([^"]+)"/g;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(registry)) !== null) paths[match[1]] = match[2];
+  return paths;
+}
+
+function clipDescription(value: string, maxLength = 158): string {
+  if (value.length <= maxLength) return value;
+  const clipped = value.slice(0, maxLength - 1);
+  const lastSpace = clipped.lastIndexOf(" ");
+  return `${clipped.slice(0, lastSpace > 110 ? lastSpace : clipped.length).trimEnd()}…`;
+}
+
+function writeSeoLayout(card: CardEntry, pageDir: string) {
+  const title = `${card.title} – ${card.category} React Component`;
+  const description = clipDescription(
+    `${card.title} is a production-ready ${card.category.toLowerCase()} React component featuring ${card.animation}. Copy, customize, and use it in Next.js projects.`,
+  );
+  const keywords = [
+    card.title,
+    `${card.category} component`,
+    `${card.category} React component`,
+    `${card.category} Tailwind component`,
+    "React UI component",
+    "Next.js component",
+    "TypeScript component",
+    "Tailwind CSS component",
+    "Framer Motion component",
+    "dark mode component",
+    "responsive UI component",
+    "copy paste React component",
+  ];
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    name: card.title,
+    description,
+    url: `https://www.mtverse.dev${card.href}`,
+    programmingLanguage: ["TypeScript", "React", "CSS"],
+    runtimePlatform: "Next.js",
+    codeRepository: "https://github.com/mtverse",
+    author: { "@type": "Organization", name: "mtverse", url: "https://www.mtverse.dev" },
+  };
+
+  const layout = `import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: ${JSON.stringify(title)},
+  description: ${JSON.stringify(description)},
+  keywords: ${JSON.stringify(keywords)},
+  alternates: { canonical: ${JSON.stringify(card.href)} },
+  openGraph: {
+    type: "website",
+    url: ${JSON.stringify(card.href)},
+    title: ${JSON.stringify(title)},
+    description: ${JSON.stringify(description)},
+    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: ${JSON.stringify(title)},
+    description: ${JSON.stringify(description)},
+    images: ["/mtverse-logo.png"],
+  },
+  robots: { index: true, follow: true },
+};
+
+const structuredData = ${JSON.stringify(structuredData, null, 2)};
+
+export default function ComponentLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
+      {children}
+    </>
+  );
+}
+`;
+
+  writeFileSync(join(pageDir, "layout.tsx"), layout, "utf-8");
+}
+
 const cards = parseCards();
 const componentNames = getComponentNames();
+const mainFilePaths = getMainFilePaths();
 
 // Slugs that have CUSTOM showcase pages (not the default CardPage wrapper).
 // These are skipped by this generator so their hand-written pages survive.
@@ -248,6 +348,10 @@ const CUSTOM_SHOWCASE_SLUGS = new Set([
 console.log(`Generating ${cards.length} card pages…\n`);
 
 for (const card of cards) {
+  const pageDir = join(PAGES_DIR, card.slug);
+  if (!existsSync(pageDir)) mkdirSync(pageDir, { recursive: true });
+  writeSeoLayout(card, pageDir);
+
   if (CUSTOM_SHOWCASE_SLUGS.has(card.slug)) {
     console.log(`  ⊘ ${card.slug} → skipped (custom showcase)`);
     continue;
@@ -258,41 +362,15 @@ for (const card of cards) {
     continue;
   }
 
-  // Determine import path — check all subdirectories first, fall back to more/
-  const subdirs = ["ai", "backgrounds", "sidebar", "tables", "data", "overlays", "premium-3d", "charts/insight", "premium-kanban", "premium-tinte-chatgpt", "premium-tinte-supabase"];
-  let importPath = `@/components/cards/more/${card.componentName}`;
-  for (const subdir of subdirs) {
-    const candidate = join(CARDS_DIR, subdir, `${card.componentName}.tsx`);
-    if (existsSync(candidate)) {
-      importPath = `@/components/cards/${subdir}/${card.componentName}`;
-      break;
-    }
-  }
-  // If not found in subdirs and source is "original", use root cards dir
-  if (card.source === "original" && importPath.includes("/more/")) {
-    importPath = `@/components/cards/${card.componentName}`;
+  const mainFilePath = mainFilePaths[card.slug];
+  if (!mainFilePath) {
+    console.warn(`âš  Could not find source path for ${card.slug}`);
+    continue;
   }
 
-  // Handle hyphenated component file names (e.g. magicui-animated-beam)
-  // The file name has hyphens but the export name doesn't — we need to read the actual export
-  const isHyphenated = card.componentName.includes("-");
-  let importName = card.componentName;
-  if (isHyphenated) {
-    // Read the file to find the actual export name
-    const filePath = join(ROOT, "src", importPath.replace("@/", "").replace(/\/[^/]+$/, ""), `${card.componentName}.tsx`);
-    try {
-      const fileContent = readFileSync(filePath, "utf-8");
-      const exportMatch = fileContent.match(/export\s+(?:const|function|class)\s+([A-Za-z_$][A-Za-z0-9_$]*)/);
-      if (exportMatch) {
-        importName = exportMatch[1];
-      }
-    } catch (e) {
-      console.warn(`⚠ Could not read ${filePath} for hyphenated component name`);
-    }
-  }
+  const importPath = `@/${mainFilePath.replace(/^src\//, "").replace(/\.(?:tsx?|jsx?)$/, "")}`;
+  const importName = card.componentName;
 
-  const pageDir = join(PAGES_DIR, card.slug);
-  if (!existsSync(pageDir)) mkdirSync(pageDir, { recursive: true });
 
   const fileContent = `import { CardPage } from "@/components/library/CardPage";
 import { ${importName} } from "${importPath}";

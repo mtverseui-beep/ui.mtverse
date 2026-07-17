@@ -35,7 +35,7 @@ export function NavbarPreviewCanvas({
       >
         <div
           ref={scrollRef}
-          className="@container min-h-0 flex-1 overflow-y-auto overflow-x-hidden"
+          className="@container component-theme-scope min-h-0 flex-1 overflow-y-auto overflow-x-hidden"
           style={{ scrollbarWidth: "thin" }}
         >
           {children(scrollRef)}

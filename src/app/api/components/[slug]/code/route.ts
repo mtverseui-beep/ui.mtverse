@@ -22,10 +22,11 @@ export async function GET(
   const entry: PublicCodeEntry = {
     componentName: source.componentName,
     mainFile: {
+      path: source.mainFile.path,
       label: source.mainFile.label,
       content: source.mainFile.content,
     },
-    dependencies: source.dependencies.map(({ label, content }) => ({ label, content })),
+    dependencies: source.dependencies.map(({ path, label, content }) => ({ path, label, content })),
     npmPackages: source.npmPackages,
     installCommand: source.installCommand,
   };
@@ -34,7 +35,7 @@ export async function GET(
 
   return NextResponse.json(payload, {
     headers: {
-      "Cache-Control": "private, no-store, max-age=0",
+      "Cache-Control": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800",
       "X-Content-Type-Options": "nosniff",
     },
   });

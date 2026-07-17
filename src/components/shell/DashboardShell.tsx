@@ -3,6 +3,7 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useSyncExternalStore } from "react";
@@ -26,7 +27,6 @@ import {
   Menu,
   X,
   ChevronRight,
-  Heart,
   Home,
   MousePointerClick,
   Github,
@@ -56,6 +56,14 @@ import {
   cardOnlyCategories,
 } from "@/components/cards-data/cards";
 import type { CardCategory, CardMeta } from "@/components/cards-data/cards";
+
+const AdvancedComponentSearch = dynamic(
+  () => import("./AdvancedComponentSearch").then((module) => module.AdvancedComponentSearch),
+  {
+    ssr: false,
+    loading: () => <div className="h-8 w-40 animate-pulse rounded-lg cs-input sm:w-52 lg:w-72" aria-hidden="true" />,
+  },
+);
 
 // â”€â”€ Motion tokens â”€â”€
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -200,7 +208,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [activeSection, setActiveSection] = React.useState<SectionId>("cards");
   const [mobileCardsOpen, setMobileCardsOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
-  const [favorites, setFavorites] = React.useState<Set<string>>(new Set());
   const mainNavRef = React.useRef<HTMLElement>(null);
   const [mainNavThumb, setMainNavThumb] = React.useState({
     visible: false,
@@ -263,22 +270,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     return cat ? [cat] : [];
   }, [activeSection, sectionRoutes]);
 
-  // Persist favorites across navigations via localStorage.
-  React.useEffect(() => {
-    try {
-      const raw = localStorage.getItem("mtverse:favorites");
-      if (raw) setFavorites(new Set(JSON.parse(raw)));
-    } catch {
-      /* ignore â€” malformed or unavailable */
-    }
-  }, []);
-  React.useEffect(() => {
-    try {
-      localStorage.setItem("mtverse:favorites", JSON.stringify([...favorites]));
-    } catch {
-      /* ignore */
-    }
-  }, [favorites]);
 
   // Close the mobile drawer on route change.
   React.useEffect(() => {
@@ -295,25 +286,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener("keydown", onKey);
   }, [mobileCardsOpen]);
 
-  // âŒ˜K / Ctrl+K focuses the sidebar search.
-  const focusSearch = React.useCallback(() => {
-    if (typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches) {
-      setMobileCardsOpen(true);
-    }
-    requestAnimationFrame(() => {
-      window.dispatchEvent(new CustomEvent("mtverse:focus-search"));
-    });
-  }, []);
-  React.useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        focusSearch();
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [focusSearch]);
 
   // Filter + group cards (respects the active section).
   const filtered = React.useMemo(() => {
@@ -337,14 +309,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   // every pathname change â€” only the active highlight updates.
   const isActive = React.useCallback((href: string) => pathname === href, [pathname]);
 
-  const toggleFavorite = (slug: string) => {
-    setFavorites((prev) => {
-      const next = new Set(prev);
-      if (next.has(slug)) next.delete(slug);
-      else next.add(slug);
-      return next;
-    });
-  };
 
   // Breadcrumb segments â€” hierarchical: Components > <Group> > <Name>
   const breadcrumb = React.useMemo(() => {
@@ -582,8 +546,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           search={search}
           setSearch={setSearch}
           isActive={isActive}
-          favorites={favorites}
-          onToggleFavorite={toggleFavorite}
           sectionLabel={SECTION_LABELS[activeSection]}
         />
       </aside>
@@ -663,8 +625,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   search={search}
                   setSearch={setSearch}
                   isActive={isActive}
-                  favorites={favorites}
-                  onToggleFavorite={toggleFavorite}
                   sectionLabel={SECTION_LABELS[activeSection]}
                   onClose={() => setMobileCardsOpen(false)}
                   hideHeader
@@ -737,19 +697,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
           <div className="flex-1" />
 
-          {/* Command search pill â€” modernized */}
-          <button
-            type="button"
-            aria-label="Search components"
-            onClick={focusSearch}
-            className="hidden h-8 items-center gap-2 rounded-lg border cs-border cs-input px-2.5 text-[12px] cs-subtle transition hover:cs-text sm:flex"
-          >
-            <Search className="h-3.5 w-3.5" strokeWidth={2} />
-            <span className="hidden lg:inline">Search componentsâ€¦</span>
-            <kbd className="ml-1 hidden items-center gap-0.5 rounded-md border cs-border bg-[var(--card-surface)] px-1.5 py-0.5 text-[10px] font-semibold cs-subtle lg:inline-flex">
-              âŒ˜K
-            </kbd>
-          </button>
+          <AdvancedComponentSearch />
 
           {/* GitHub */}
           <a
@@ -931,8 +879,6 @@ const CardsSidebar = React.memo(function CardsSidebar({
   search,
   setSearch,
   isActive,
-  favorites,
-  onToggleFavorite,
   sectionLabel = "Components",
   onClose,
   hideHeader = false,
@@ -941,8 +887,6 @@ const CardsSidebar = React.memo(function CardsSidebar({
   search: string;
   setSearch: (v: string) => void;
   isActive: (href: string) => boolean;
-  favorites: Set<string>;
-  onToggleFavorite?: (slug: string) => void;
   sectionLabel?: string;
   onClose?: () => void;
   hideHeader?: boolean;
@@ -990,12 +934,6 @@ const CardsSidebar = React.memo(function CardsSidebar({
     };
   }, [byCategory, search]);
 
-  // Listen for the global âŒ˜K focus event dispatched from the header.
-  React.useEffect(() => {
-    const handler = () => inputRef.current?.focus();
-    window.addEventListener("mtverse:focus-search", handler);
-    return () => window.removeEventListener("mtverse:focus-search", handler);
-  }, []);
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -1058,7 +996,6 @@ const CardsSidebar = React.memo(function CardsSidebar({
             <ul>
               {items.map((card) => {
                 const active = isActive(card.href);
-                const isFav = favorites.has(card.slug);
                 return (
                   <li key={card.slug}>
                     <Link
@@ -1099,35 +1036,6 @@ const CardsSidebar = React.memo(function CardsSidebar({
                           {card.title}
                         </span>
                       </span>
-                      {isFav ? (
-                        <button
-                          type="button"
-                          aria-label={`Unfavorite ${card.title}`}
-                          aria-pressed={true}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            onToggleFavorite?.(card.slug);
-                          }}
-                          className="shrink-0 rounded-full text-rose-500 outline-none transition hover:scale-110 focus-visible:ring-2 focus-visible:ring-rose-400/40"
-                        >
-                          <Heart className="h-3 w-3 fill-rose-500" strokeWidth={2} />
-                        </button>
-                      ) : (
-                        <button
-                          type="button"
-                          aria-label={`Favorite ${card.title}`}
-                          aria-pressed={false}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            onToggleFavorite?.(card.slug);
-                          }}
-                          className="shrink-0 rounded-full cs-subtle opacity-0 outline-none transition hover:scale-110 hover:text-rose-500 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-rose-400/40 group-hover:opacity-100"
-                        >
-                          <Heart className="h-3 w-3" strokeWidth={2} />
-                        </button>
-                      )}
                       {active && (
                         <span
                           className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md"

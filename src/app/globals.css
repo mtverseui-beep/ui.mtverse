@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "../components/library/component-theme.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -94,7 +95,7 @@
   --card-surface-3: #f1f5f9;
   --card-text: #0f172a;
   --card-text-muted: #475569;
-  --card-text-subtle: #94a3b8;
+  --card-text-subtle: #64748b;
   --card-border: #e2e8f0;
   --card-border-subtle: #f1f5f9;
   --card-hover: #f8fafc;
@@ -143,14 +144,14 @@
   --card-surface: #131218;
   --card-surface-2: #0f1015;
   --card-surface-3: #1a1c24;
-  --card-text: #ffffff;
-  --card-text-muted: rgba(255, 255, 255, 0.55);
-  --card-text-subtle: rgba(255, 255, 255, 0.40);
-  --card-border: rgba(255, 255, 255, 0.10);
-  --card-border-subtle: rgba(255, 255, 255, 0.06);
-  --card-hover: rgba(255, 255, 255, 0.06);
+  --card-text: #fafafa;
+  --card-text-muted: #a1a1aa;
+  --card-text-subtle: #8b8b98;
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-border-subtle: rgba(255, 255, 255, 0.07);
+  --card-hover: rgba(255, 255, 255, 0.07);
   --card-overlay: rgba(0, 0, 0, 0.5);
-  --card-input-bg: rgba(255, 255, 255, 0.04);
+  --card-input-bg: rgba(255, 255, 255, 0.055);
 }
 
 @layer base {

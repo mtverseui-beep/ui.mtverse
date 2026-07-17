@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { ResponsivePreviewToolbar } from "@/components/navbar-showcase/ResponsivePreviewToolbar";
 import { CodePanelLoader } from "./CodePanelLoader";
-import { DocsPanel } from "./DocsPanel";
+import { ComponentDocs } from "./ComponentDocs";
 import { cardRoutes } from "@/components/cards-data/cards";
 import type { CodeEntryMetadata } from "./code-types";
 
@@ -13,6 +13,13 @@ const FULL_CANVAS_CATEGORIES = new Set([
   "Agents",
   "AI",
   "Auth",
+  "Navbar",
+  "Footer",
+  "Pricing",
+  "Hero",
+  "Testimonials",
+  "Features",
+  "CTA",
   "Backgrounds",
   "Charts",
   "Modals",
@@ -43,18 +50,7 @@ export function CardShowcase({ codeMetadata, slug, children }: CardShowcaseProps
   const fullCanvas = cardMeta
     ? FULL_CANVAS_CATEGORIES.has(cardMeta.category)
     : false;
-  const docsPanel = cardMeta ? (
-    <DocsPanel
-      slug={slug}
-      title={cardMeta.title}
-      animation={cardMeta.animation}
-      accent={cardMeta.accent}
-      componentName={codeMetadata?.componentName || slug.replace(/-card$/, "")}
-      npmPackages={codeMetadata?.npmPackages || []}
-      dependencies={codeMetadata?.dependencies || []}
-      category={cardMeta.category}
-    />
-  ) : null;
+  const docsPanel = <ComponentDocs slug={slug} initialMetadata={codeMetadata} />;
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col">
@@ -147,10 +143,10 @@ function CardPreviewCanvas({
       >
         <div className="@container relative min-h-0 flex-1 overflow-y-auto overflow-x-hidden scrollbar-modern">
           {fullCanvas ? (
-            <div className="relative h-full min-h-[440px] w-full">{children}</div>
+            <div className="component-theme-scope relative h-full min-h-[440px] w-full">{children}</div>
           ) : (
             <div className={`relative flex min-h-full w-full ${previewPadding}`}>
-              <div className="my-auto flex w-full min-w-0 shrink-0 justify-center [&>*]:max-w-full">
+              <div className="component-theme-scope my-auto flex w-full min-w-0 shrink-0 justify-center [&>*]:max-w-full">
                 {children}
               </div>
             </div>
