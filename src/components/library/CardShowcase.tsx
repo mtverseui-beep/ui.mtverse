@@ -143,10 +143,10 @@ function CardPreviewCanvas({
       >
         <div className="@container relative min-h-0 flex-1 overflow-y-auto overflow-x-hidden scrollbar-modern">
           {fullCanvas ? (
-            <div className="component-theme-scope relative h-full min-h-[440px] w-full">{children}</div>
+            <div data-component-category={category} className="component-theme-scope relative h-full min-h-[440px] w-full">{children}</div>
           ) : (
             <div className={`relative flex min-h-full w-full ${previewPadding}`}>
-              <div className="component-theme-scope my-auto flex w-full min-w-0 shrink-0 justify-center [&>*]:max-w-full">
+              <div data-component-category={category} className="component-theme-scope my-auto flex w-full min-w-0 shrink-0 justify-center [&>*]:max-w-full">
                 {children}
               </div>
             </div>

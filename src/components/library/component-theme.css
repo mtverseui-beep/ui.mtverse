@@ -101,3 +101,9 @@ html:not(.dark) .component-theme-scope :is(button, a, [role="button"])[style*="b
   color: #ffffff !important;
 }
 html:not(.dark) .component-theme-scope :is(button, a, [role="button"]).bg-black.text-white * { color: #ffffff !important; }
+/* Button showcases use explicit `text-white` on colored actions. The generic
+   fixed-dark compatibility mapping above must not turn those labels/icons
+   dark in light mode. */
+html:not(.dark) .component-theme-scope[data-component-category="Buttons"] :is(.text-white, .text-zinc-100, .text-neutral-100) {
+  color: #ffffff !important;
+}

@@ -79,6 +79,10 @@ if (!rootLayout.includes("360+")) failures.push("Root component-count metadata i
 
 const globals = readFileSync(GLOBALS, "utf-8");
 if (!globals.includes('component-theme.css')) failures.push("Shared component theme CSS is not imported by globals.css");
+const themeContract = readFileSync(join(ROOT, "src", "components", "library", "component-theme.css"), "utf-8");
+const cardShowcase = readFileSync(join(ROOT, "src", "components", "library", "CardShowcase.tsx"), "utf-8");
+if (!cardShowcase.includes("data-component-category={category}")) failures.push("Preview category theme marker is missing");
+if (!themeContract.includes('data-component-category="Buttons"')) failures.push("Button light-mode contrast contract is missing");
 
 const previewShells = [
   join(ROOT, "src", "components", "library", "CardShowcase.tsx"),
