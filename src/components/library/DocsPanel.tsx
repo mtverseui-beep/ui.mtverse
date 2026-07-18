@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import {
   Package, Copy, Check, ExternalLink, Info, PackageOpen,
-  Settings, Zap, Code2, FolderTree, Terminal, MoonStar,
+  Settings, Zap, Code2, FolderTree, Terminal,
 } from "lucide-react";
 import { useState, useCallback } from "react";
 
@@ -127,23 +127,6 @@ export default function Example() {
           copied={copied}
           onCopy={handleCopy}
           label="Example.tsx"
-        />
-      </Section>
-
-      {/* Theme support */}
-      <Section icon={MoonStar} title="Light & dark mode" accent={accent}>
-        <p className="mb-2 text-[12px] leading-relaxed cs-muted">
-          Wrap the component with <code className="font-mono cs-text">component-theme-scope</code>.
-          Add <code className="font-mono cs-text">dark</code> to an ancestor (usually the
-          document element) to switch themes. The shared CSS in the Raw code tab provides
-          semantic colors and compatibility styles for legacy utility classes.
-        </p>
-        <CodeBlock
-          id="theme"
-          code={`<html className="dark">\n  <div className="component-theme-scope">\n    <${componentName} />\n  </div>\n</html>`}
-          copied={copied}
-          onCopy={handleCopy}
-          label="Theme setup"
         />
       </Section>
 

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ResponsivePreviewToolbar } from "./ResponsivePreviewToolbar";
 import { NavbarPreviewCanvas } from "./NavbarPreviewCanvas";
 import { CodePanelLoader } from "@/components/library/CodePanelLoader";
-import { ComponentDocs } from "@/components/library/ComponentDocs";
+import { DocsPanelLoader } from "@/components/library/DocsPanelLoader";
 import type { NavbarVariant } from "./navbar-variants";
 
 // ──────────────────────────────────────────────────────────────────────────
@@ -90,7 +90,7 @@ export function NavbarShowcase({ variant }: NavbarShowcaseProps) {
               transition={{ duration: 0.2, ease: EASE }}
             >
               <div className="mx-auto max-w-3xl">
-                <ComponentDocs slug={variant.slug} />
+                <DocsPanelLoader slug={variant.slug} />
               </div>
             </motion.div>
           )}

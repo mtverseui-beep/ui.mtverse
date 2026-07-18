@@ -57,6 +57,18 @@
 .dark .component-theme-scope :is(.text-slate-700, .text-gray-700, .text-zinc-700, .text-neutral-700) { color: #d4d4d8 !important; }
 .dark .component-theme-scope :is(.text-slate-600, .text-slate-500, .text-slate-400, .text-gray-600, .text-gray-500, .text-gray-400, .text-zinc-600, .text-zinc-500, .text-zinc-400, .text-neutral-600, .text-neutral-500, .text-neutral-400) { color: #a1a1aa !important; }
 .dark .component-theme-scope :is(.text-slate-300, .text-gray-300, .text-zinc-300, .text-neutral-300) { color: #d4d4d8 !important; }
+.dark .component-theme-scope :is(.text-\[\#1e293b\], .text-\[\#2B1A12\], .text-\[\#1d1d1f\], .text-\[\#18181b\], .text-\[\#111\], .text-\[\#44403c\]) { color: var(--card-text) !important; }
+.dark .component-theme-scope :is(.text-\[\#64748b\], .text-\[\#86868b\], .text-\[\#7d8590\], .text-\[\#444\], .text-\[\#666\], .text-\[\#8b8b8b\], .text-\[\#999\], .text-\[\#888\], .text-\[\#555\], .text-\[\#666666\]) { color: var(--card-text-muted) !important; }
+.dark .component-theme-scope :is(.text-\[\#94a3b8\], .text-\[\#a1a1aa\]) { color: var(--card-text-subtle) !important; }
+.dark .component-theme-scope :is(.bg-\[\#ffffff\], .bg-\[\#fafafa\], .bg-\[\#f8fafc\], .bg-\[\#f5f5f7\], .bg-\[\#f1f5f9\], .bg-\[\#faf9f7\], .bg-\[\#faf6f0\], .bg-\[\#fbf7ed\], .bg-\[\#F5F4F0\], .bg-\[\#F7F1E8\], .bg-\[\#EDE3D3\], .bg-\[\#F0EEE8\], .bg-\[\#ececef\], .bg-\[\#f0e9dc\], .bg-\[\#f2d0b5\], .bg-\[\#f4f1ea\]) {
+  background-color: var(--card-surface) !important;
+}
+.dark .component-theme-scope :is(.border-slate-100, .border-slate-200, .border-gray-100, .border-gray-200, .border-zinc-100, .border-zinc-200, .border-neutral-100, .border-neutral-200, .border-\[\#e2e8f0\], .border-\[\#E2E8F0\], .border-\[\#e5e7eb\]) {
+  border-color: var(--card-border) !important;
+}
+.dark .component-theme-scope :is(.divide-slate-100, .divide-slate-200, .divide-gray-100, .divide-gray-200, .divide-zinc-100, .divide-zinc-200) > :not(:last-child) {
+  border-color: var(--card-border-subtle) !important;
+}
 .dark .component-theme-scope :is(.placeholder\:text-slate-400, .placeholder\:text-slate-500, .placeholder\:text-gray-400)::placeholder { color: #8b8b98 !important; opacity: 1; }
 .dark .component-theme-scope [style*="color: rgba(0, 0, 0"],
 .dark .component-theme-scope [style*="color:rgba(0,0,0"] { color: var(--card-text-muted) !important; }
@@ -72,26 +84,28 @@
 .dark .component-theme-scope :is(button, a, [role="button"]).bg-white.text-black * { color: #09090b !important; }
 
 /* Fixed-dark showcase designs also gain a light presentation. Interactive
-   black CTAs are restored below so their intended contrast is retained. */
-html:not(.dark) .component-theme-scope :is(.bg-black, .bg-zinc-950, .bg-neutral-950, .bg-slate-950, .bg-gray-950),
-html:not(.dark) .component-theme-scope [style*="background: #000"],
-html:not(.dark) .component-theme-scope [style*="background:#000"],
-html:not(.dark) .component-theme-scope [style*="background: #050"],
-html:not(.dark) .component-theme-scope [style*="background: #080"],
-html:not(.dark) .component-theme-scope [style*="background: #090"],
-html:not(.dark) .component-theme-scope [style*="background: #0a0a"],
-html:not(.dark) .component-theme-scope [style*="background:#0a0a"],
-html:not(.dark) .component-theme-scope [style*="background: #0f0f"],
-html:not(.dark) .component-theme-scope [style*="background:#0f0f"],
-html:not(.dark) .component-theme-scope [style*="background: #111"],
-html:not(.dark) .component-theme-scope [style*="background:#111"] {
+   black CTAs retain their intended foreground/background contrast. */
+html:not(.dark) .component-theme-scope :is(.bg-black, .bg-zinc-950, .bg-neutral-950, .bg-slate-950, .bg-gray-950):not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background: #000"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background:#000"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background: #050"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background: #080"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background: #090"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background: #0a0a"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background:#0a0a"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background: #0f0f"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background:#0f0f"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background: #111"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="background:#111"]:not(:is(button, a, [role="button"])) {
   background-color: #ffffff !important;
 }
 
 html:not(.dark) .component-theme-scope :is(.text-white, .text-zinc-100, .text-neutral-100) { color: #0f172a !important; }
 html:not(.dark) .component-theme-scope :is(.text-white\/80, .text-white\/70, .text-white\/60, .text-white\/50, .text-zinc-300, .text-neutral-300) { color: #475569 !important; }
-html:not(.dark) .component-theme-scope [style*="color: #fff"],
-html:not(.dark) .component-theme-scope [style*="color:#fff"] { color: #0f172a !important; }
+html:not(.dark) .component-theme-scope :is(.text-\[\#e2e8f0\], .text-\[\#e6edf3\], .text-\[\#f0e9dc\], .text-\[\#E3E3E3\], .text-\[\#f5f0e6\], .text-\[\#F7F1E8\], .text-\[\#cccccc\]) { color: var(--card-text) !important; }
+html:not(.dark) .component-theme-scope :is(.bg-\[\#21262d\], .bg-\[\#0d1117\], .bg-\[\#0a0a0a\], .bg-\[\#0d0d0d\], .bg-\[\#1a1a1a\], .bg-\[\#18181b\], .bg-\[\#262626\], .bg-\[\#121212\], .bg-\[\#050505\]):not(:is(button, a, [role="button"])) { background-color: var(--card-surface) !important; }
+html:not(.dark) .component-theme-scope [style*="color: #fff"]:not(:is(button, a, [role="button"])),
+html:not(.dark) .component-theme-scope [style*="color:#fff"]:not(:is(button, a, [role="button"])) { color: #0f172a !important; }
 html:not(.dark) .component-theme-scope :is(.border-white\/5, .border-white\/10, .border-white\/15, .border-white\/20) { border-color: rgba(15, 23, 42, 0.12) !important; }
 
 html:not(.dark) .component-theme-scope :is(button, a, [role="button"]).bg-black.text-white,
@@ -101,6 +115,8 @@ html:not(.dark) .component-theme-scope :is(button, a, [role="button"])[style*="b
   color: #ffffff !important;
 }
 html:not(.dark) .component-theme-scope :is(button, a, [role="button"]).bg-black.text-white * { color: #ffffff !important; }
+html:not(.dark) .component-theme-scope :is(button, a, [role="button"]).text-white,
+html:not(.dark) .component-theme-scope :is(button, a, [role="button"]).text-white * { color: #ffffff !important; }
 /* Button showcases use explicit `text-white` on colored actions. The generic
    fixed-dark compatibility mapping above must not turn those labels/icons
    dark in light mode. */

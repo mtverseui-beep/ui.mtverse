@@ -30,5 +30,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" suppressHydrationWarning><body className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${fraunces.variable} ${archivo.variable} ${cormorant.variable} ${instrumentSerif.variable} ${manrope.variable} ${interTight.variable} antialiased bg-background text-foreground`}><ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>{children}</ThemeProvider></body></html>;
+  return <html lang="en" suppressHydrationWarning><body className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${fraunces.variable} ${archivo.variable} ${cormorant.variable} ${instrumentSerif.variable} ${manrope.variable} ${interTight.variable} antialiased bg-background text-foreground`}><ThemeProvider attribute="class" forcedTheme="light" enableSystem={false}>{children}</ThemeProvider></body></html>;
 }

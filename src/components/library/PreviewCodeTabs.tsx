@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { Eye, Code2 } from "lucide-react";
+import { Eye, Code2, LockKeyhole } from "lucide-react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const TAB_SWITCH_DELAY = 150;
@@ -59,7 +59,8 @@ export function PreviewCodeTabs({
               active={tab === "code"}
               onClick={() => handleTabChange("code")}
               icon={<Code2 className="h-3 w-3" strokeWidth={2.4} />}
-              label="Code"
+              label="Raw code"
+              protectedTab
             />
           </div>
         </LayoutGroup>
@@ -121,18 +122,21 @@ function TabButton({
   onClick,
   icon,
   label,
+  protectedTab = false,
 }: {
   id: TabId;
   active: boolean;
   onClick: () => void;
   icon: React.ReactNode;
   label: string;
+  protectedTab?: boolean;
 }) {
   return (
     <button
       type="button"
       role="tab"
       aria-selected={active}
+      aria-label={protectedTab ? `${label} (protected)` : label}
       aria-controls={`panel-${id}`}
       id={`tab-${id}`}
       onClick={onClick}
@@ -152,6 +156,9 @@ function TabButton({
       >
         {icon}
         {label}
+        {protectedTab ? (
+          <LockKeyhole className="h-2.5 w-2.5 opacity-70" strokeWidth={2.2} aria-hidden="true" />
+        ) : null}
       </span>
     </button>
   );

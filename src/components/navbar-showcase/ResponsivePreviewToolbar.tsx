@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, LayoutGroup } from "framer-motion";
-import { Loader2, Eye, Code2, FileText } from "lucide-react";
+import { Loader2, Eye, Code2, FileText, LockKeyhole } from "lucide-react";
 
 type TabId = "preview" | "code" | "docs";
 
@@ -39,6 +39,7 @@ export function ResponsivePreviewToolbar({
             onClick={() => onTabChange("code")}
             icon={<Code2 className="h-3.5 w-3.5" strokeWidth={2.4} />}
             label="Raw code"
+            protectedTab
           />
           <SegmentButton
             id="docs"
@@ -47,6 +48,7 @@ export function ResponsivePreviewToolbar({
             onClick={() => onTabChange("docs")}
             icon={<FileText className="h-3.5 w-3.5" strokeWidth={2.4} />}
             label="Docs"
+            protectedTab
           />
         </div>
       </LayoutGroup>
@@ -61,6 +63,7 @@ function SegmentButton({
   onClick,
   icon,
   label,
+  protectedTab = false,
 }: {
   id: TabId;
   active: boolean;
@@ -68,12 +71,14 @@ function SegmentButton({
   onClick: () => void;
   icon: React.ReactNode;
   label: string;
+  protectedTab?: boolean;
 }) {
   return (
     <button
       type="button"
       role="tab"
       aria-selected={active}
+      aria-label={protectedTab ? `${label} (protected)` : label}
       onClick={onClick}
       className="relative flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[12px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40"
     >
@@ -91,6 +96,9 @@ function SegmentButton({
       >
         {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : icon}
         {label}
+        {protectedTab ? (
+          <LockKeyhole className="h-3 w-3 opacity-70" strokeWidth={2.2} aria-hidden="true" />
+        ) : null}
       </span>
     </button>
   );

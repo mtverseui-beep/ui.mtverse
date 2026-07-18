@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ResponsivePreviewToolbar } from "./ResponsivePreviewToolbar";
 import { CodePanelLoader } from "@/components/library/CodePanelLoader";
-import { ComponentDocs } from "@/components/library/ComponentDocs";
+import { DocsPanelLoader } from "@/components/library/DocsPanelLoader";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -26,7 +26,7 @@ export function PageShowcase({ slug, children }: PageShowcaseProps) {
     [tab],
   );
 
-  const docsPanel = <ComponentDocs slug={slug} />;
+  const docsPanel = <DocsPanelLoader slug={slug} />;
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col">

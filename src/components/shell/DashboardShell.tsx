@@ -5,8 +5,6 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
-import { useSyncExternalStore } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import {
   Layers,
@@ -22,8 +20,6 @@ import {
   Crown,
   LockKeyhole,
   CreditCard,
-  Sun,
-  Moon,
   Search,
   Menu,
   X,
@@ -197,18 +193,10 @@ function sectionForCategory(cat: CardCategory | undefined): SectionId {
 
 const HOME_HREF = premiumRoutes[0]?.href ?? "/components/premium/sticky-agent-cards";
 
-// Client-only mounted flag --- avoids hydration mismatch with next-themes.
-const emptySubscribe = () => () => {};
-function useMounted() {
-  return useSyncExternalStore(emptySubscribe, () => true, () => false);
-}
-
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
-  const mounted = useMounted();
-  const isDark = mounted && theme === "dark";
+  const isDark = false;
 
   const [mainCollapsed, setMainCollapsed] = React.useState(false);
   const [activeSection, setActiveSection] = React.useState<SectionId>("premium");
@@ -216,12 +204,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [mobileCategoryOpen, setMobileCategoryOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const mainNavRef = React.useRef<HTMLElement>(null);
-  const themeTransitionTimerRef = React.useRef<number | null>(null);
-
-  React.useEffect(() => () => {
-    if (themeTransitionTimerRef.current) window.clearTimeout(themeTransitionTimerRef.current);
-    document.documentElement.classList.remove("theme-transition");
-  }, []);
   const [mainNavThumb, setMainNavThumb] = React.useState({
     visible: false,
     top: 8,
@@ -760,7 +742,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
           {/* GitHub */}
           <a
-            href="https://github.com"
+            href="https://github.com/ui-mtverse"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub repository"
@@ -769,35 +751,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <Github className="h-4 w-4" strokeWidth={2} />
           </a>
 
-          {/* Theme toggle */}
-          <button
-            type="button"
-            aria-label="Toggle theme"
-            onClick={() => {
-              const root = document.documentElement;
-              root.classList.add("theme-transition");
-              window.requestAnimationFrame(() => setTheme(isDark ? "light" : "dark"));
-              if (themeTransitionTimerRef.current) window.clearTimeout(themeTransitionTimerRef.current);
-              themeTransitionTimerRef.current = window.setTimeout(() => {
-                root.classList.remove("theme-transition");
-                themeTransitionTimerRef.current = null;
-              }, 320);
-            }}
-            className="flex h-9 w-9 items-center justify-center rounded-xl cs-muted outline-none transition hover:bg-[var(--card-hover)] hover:cs-text focus-visible:ring-2 focus-visible:ring-cyan-400/40"
-          >
-            <motion.span
-              key={mounted ? (isDark ? "moon" : "sun") : "placeholder"}
-              initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
-              animate={{ rotate: 0, opacity: 1, scale: 1 }}
-              transition={{ duration: DUR_BASE, ease: EASE }}
-            >
-              {mounted ? (
-                isDark ? <Moon className="h-4 w-4" strokeWidth={2} /> : <Sun className="h-4 w-4" strokeWidth={2} />
-              ) : (
-                <Moon className="h-4 w-4 opacity-0" strokeWidth={2} aria-hidden />
-              )}
-            </motion.span>
-          </button>
         </header>
 
         {/* Breadcrumb --- mobile */}

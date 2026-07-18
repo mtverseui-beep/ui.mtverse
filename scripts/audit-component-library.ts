@@ -77,6 +77,8 @@ if (!advancedSearch.includes("cardRoutes") || !advancedSearch.includes("useDefer
 }
 if (cardPage.includes("codeRegistry")) failures.push("CardPage eagerly imports the full code registry");
 if (!(rootLayout + siteConfig).includes("360+")) failures.push("Root component-count metadata is stale");
+if (!rootLayout.includes('forcedTheme="light"')) failures.push("The public UI library is not forced to light mode");
+if (dashboardShell.includes("useTheme") || dashboardShell.includes('aria-label="Toggle theme"')) failures.push("Global dark-mode controls are still mounted");
 
 const globals = readFileSync(GLOBALS, "utf-8");
 if (!globals.includes('component-theme.css')) failures.push("Shared component theme CSS is not imported by globals.css");
@@ -98,11 +100,28 @@ for (const shell of previewShells) {
   }
 }
 
-for (const showcase of ["NavbarShowcase.tsx", "HeroShowcase.tsx", "FooterShowcase.tsx"]) {
+for (const showcase of ["NavbarShowcase.tsx", "HeroShowcase.tsx", "FooterShowcase.tsx", "PageShowcase.tsx"]) {
   const source = readFileSync(join(ROOT, "src", "components", "navbar-showcase", showcase), "utf-8");
-  if (!source.includes('key="docs"') || !source.includes("ComponentDocs")) {
-    failures.push(`Documentation tab is not wired: ${showcase}`);
+  if (!source.includes('key="docs"') || !source.includes("DocsPanelLoader") || source.includes("<ComponentDocs")) {
+    failures.push(`Protected documentation tab is not wired: ${showcase}`);
   }
+}
+
+const toolbar = readFileSync(join(ROOT, "src", "components", "navbar-showcase", "ResponsivePreviewToolbar.tsx"), "utf-8");
+if (!toolbar.includes("LockKeyhole") || (toolbar.match(/protectedTab/g)?.length ?? 0) < 3) {
+  failures.push("Raw code and Docs tabs do not expose their protected state.");
+}
+
+const codeLoader = readFileSync(join(ROOT, "src", "components", "library", "CodePanelLoader.tsx"), "utf-8");
+const docsLoader = readFileSync(join(ROOT, "src", "components", "library", "DocsPanelLoader.tsx"), "utf-8");
+const protectedRoute = readFileSync(join(ROOT, "src", "app", "api", "components", "[slug]", "code", "route.ts"), "utf-8");
+for (const [name, source] of [["Raw code", codeLoader], ["Docs", docsLoader]] as const) {
+  if (!source.includes("/api/ui-library/access-token") || !source.includes("LockKeyhole")) {
+    failures.push(`${name} entitlement loader is incomplete.`);
+  }
+}
+if (!protectedRoute.includes("verifyUiLibraryAccessToken") || !protectedRoute.includes("authorization")) {
+  failures.push("Component code API is not protected by the UI Library entitlement token.");
 }
 
 const categoryCounts = [...THEME_CATEGORIES].map((category) => ({

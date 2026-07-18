@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ResponsivePreviewToolbar } from "./ResponsivePreviewToolbar";
 import { CodePanelLoader } from "@/components/library/CodePanelLoader";
-import { ComponentDocs } from "@/components/library/ComponentDocs";
+import { DocsPanelLoader } from "@/components/library/DocsPanelLoader";
 import type { FooterVariant } from "./footer-variants";
 
 // ──────────────────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ export function FooterShowcase({ variant }: FooterShowcaseProps) {
               transition={{ duration: 0.2, ease: EASE }}
             >
               <div className="mx-auto max-w-3xl">
-                <ComponentDocs slug={variant.slug} />
+                <DocsPanelLoader slug={variant.slug} />
               </div>
             </motion.div>
           )}
