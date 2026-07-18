@@ -45,31 +45,20 @@ interface ModernSelectProps {
 export const AI_FOCUS_RESET =
   "outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0";
 
-export function usePreviewTheme() {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const sync = () => setIsDark(root.classList.contains("dark"));
-    sync();
-    const observer = new MutationObserver(sync);
-    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
-    return () => observer.disconnect();
-  }, []);
-
-  return { isDark, setIsDark };
-}
-
-export function getAIPalette(isDark: boolean): AIPalette {
+/**
+ * Light-mode only palette for AI components.
+ * All components render in light mode exclusively.
+ */
+export function getAIPalette(): AIPalette {
   return {
-    background: isDark ? "#09090b" : "#ffffff",
-    panel: isDark ? "#0f0f13" : "#fafafa",
-    surface: isDark ? "#17171c" : "#f4f4f5",
-    elevated: isDark ? "#1d1d23" : "#ffffff",
-    border: isDark ? "#2a2a31" : "#e4e4e7",
-    text: isDark ? "#fafafa" : "#18181b",
-    secondary: isDark ? "#b4b4bc" : "#52525b",
-    muted: isDark ? "#777780" : "#9a9aa3",
+    background: "#ffffff",
+    panel: "#fafafa",
+    surface: "#f4f4f5",
+    elevated: "#ffffff",
+    border: "#e4e4e7",
+    text: "#18181b",
+    secondary: "#52525b",
+    muted: "#9a9aa3",
   };
 }
 
@@ -87,7 +76,7 @@ export function ProfileAvatar({
 
   return (
     <span
-      className={"relative inline-flex shrink-0 items-center justify-center overflow-visible rounded-full border-2 border-white bg-[#f2d0b5] shadow-sm dark:border-[#18181b] " + dimensions}
+      className={"relative inline-flex shrink-0 items-center justify-center overflow-visible rounded-full border-2 border-white bg-[#f2d0b5] shadow-sm " + dimensions}
       title={name}
       aria-label={name + " profile"}
     >
@@ -102,7 +91,7 @@ export function ProfileAvatar({
         <path d="M15.2 28.5c2.8 2.3 6.6 2.3 9.6 0l1.1 2.2c-3.5 2.5-8.3 2.5-11.8 0l1.1-2.2Z" fill="#F5F5F4" />
       </svg>
       {showStatus && (
-        <span className="absolute bottom-[-1px] right-[-1px] h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500 dark:border-[#18181b]" />
+        <span className="absolute bottom-[-1px] right-[-1px] h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500" />
       )}
     </span>
   );
