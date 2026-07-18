@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Waitlist CTA – CTA React Component",
+  title: "Waitlist CTA - CTA React Component",
   description: "Waitlist CTA is a production-ready cta React component featuring Limited spots + email input + countdown. Copy, customize, and use it in Next.js projects.",
   keywords: ["Waitlist CTA","CTA component","CTA React component","CTA Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/cta-waitlist-card" },
+  alternates: { canonical: "/components/cta/cta-waitlist" },
   openGraph: {
     type: "website",
-    url: "/components/cards/cta-waitlist-card",
-    title: "Waitlist CTA – CTA React Component",
+    url: "/components/cta/cta-waitlist",
+    title: "Waitlist CTA - CTA React Component",
     description: "Waitlist CTA is a production-ready cta React component featuring Limited spots + email input + countdown. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Waitlist CTA – CTA React Component",
+    card: "summary",
+    title: "Waitlist CTA - CTA React Component",
     description: "Waitlist CTA is a production-ready cta React component featuring Limited spots + email input + countdown. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Waitlist CTA",
   "description": "Waitlist CTA is a production-ready cta React component featuring Limited spots + email input + countdown. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/cta-waitlist-card",
+  "url": "https://ui.mtverse.dev/components/cta/cta-waitlist",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

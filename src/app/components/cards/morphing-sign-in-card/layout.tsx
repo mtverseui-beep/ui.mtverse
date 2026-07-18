@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Morphing Sign In – Buttons React Component",
+  title: "Morphing Sign In - Buttons React Component",
   description: "Morphing Sign In is a production-ready buttons React component featuring Button-to-modal spring morph. Copy, customize, and use it in Next.js projects.",
   keywords: ["Morphing Sign In","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/morphing-sign-in-card" },
+  alternates: { canonical: "/components/buttons/morphing-sign-in" },
   openGraph: {
     type: "website",
-    url: "/components/cards/morphing-sign-in-card",
-    title: "Morphing Sign In – Buttons React Component",
+    url: "/components/buttons/morphing-sign-in",
+    title: "Morphing Sign In - Buttons React Component",
     description: "Morphing Sign In is a production-ready buttons React component featuring Button-to-modal spring morph. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Morphing Sign In – Buttons React Component",
+    card: "summary",
+    title: "Morphing Sign In - Buttons React Component",
     description: "Morphing Sign In is a production-ready buttons React component featuring Button-to-modal spring morph. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Morphing Sign In",
   "description": "Morphing Sign In is a production-ready buttons React component featuring Button-to-modal spring morph. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/morphing-sign-in-card",
+  "url": "https://ui.mtverse.dev/components/buttons/morphing-sign-in",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

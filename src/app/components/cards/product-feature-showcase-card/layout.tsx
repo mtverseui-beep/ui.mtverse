@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Feature Showcase – Product React Component",
+  title: "Feature Showcase - Product React Component",
   description: "Feature Showcase is a production-ready product React component featuring Accordion + crossfade. Copy, customize, and use it in Next.js projects.",
   keywords: ["Feature Showcase","Product component","Product React component","Product Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/product-feature-showcase-card" },
+  alternates: { canonical: "/components/cards/product-feature-showcase" },
   openGraph: {
     type: "website",
-    url: "/components/cards/product-feature-showcase-card",
-    title: "Feature Showcase – Product React Component",
+    url: "/components/cards/product-feature-showcase",
+    title: "Feature Showcase - Product React Component",
     description: "Feature Showcase is a production-ready product React component featuring Accordion + crossfade. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Feature Showcase – Product React Component",
+    card: "summary",
+    title: "Feature Showcase - Product React Component",
     description: "Feature Showcase is a production-ready product React component featuring Accordion + crossfade. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Feature Showcase",
   "description": "Feature Showcase is a production-ready product React component featuring Accordion + crossfade. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/product-feature-showcase-card",
+  "url": "https://ui.mtverse.dev/components/cards/product-feature-showcase",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

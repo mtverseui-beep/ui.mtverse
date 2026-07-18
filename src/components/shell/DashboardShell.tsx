@@ -26,6 +26,8 @@ import {
   Search,
   Menu,
   X,
+  Check,
+  ChevronDown,
   ChevronRight,
   Home,
   MousePointerClick,
@@ -65,7 +67,7 @@ const AdvancedComponentSearch = dynamic(
   },
 );
 
-// â”€â”€ Motion tokens â”€â”€
+// ------ Motion tokens ------
 const EASE = [0.16, 1, 0.3, 1] as const;
 const DUR_BASE = 0.24;
 
@@ -104,6 +106,9 @@ interface NavGroup {
   label: string;
   items: NavItem[];
 }
+
+const MAIN_SITE_URL = (process.env.NEXT_PUBLIC_MAIN_SITE_URL || "https://www.mtverse.dev").replace(/\/$/, "");
+const PRICING_URL = `${MAIN_SITE_URL}/pricing#ui-library`;
 
 // Data-driven nav config. Target hrefs come straight from the route data, so
 // any change to the URL scheme (see cards.ts) flows through automatically.
@@ -164,7 +169,7 @@ const SECTION_LABELS: Record<SectionId, string> = {
   tables: "Tables",
 };
 
-// Map a route category â†’ the section that owns it.
+// Map a route category --- the section that owns it.
 function sectionForCategory(cat: CardCategory | undefined): SectionId {
   switch (cat) {
     case "Agents": return "premium";
@@ -191,7 +196,7 @@ function sectionForCategory(cat: CardCategory | undefined): SectionId {
 
 const HOME_HREF = cardRoutesOnly[0]?.href ?? "/components/cards/cinematic-folder-card";
 
-// Client-only mounted flag â€” avoids hydration mismatch with next-themes.
+// Client-only mounted flag --- avoids hydration mismatch with next-themes.
 const emptySubscribe = () => () => {};
 function useMounted() {
   return useSyncExternalStore(emptySubscribe, () => true, () => false);
@@ -207,8 +212,15 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [mainCollapsed, setMainCollapsed] = React.useState(false);
   const [activeSection, setActiveSection] = React.useState<SectionId>("cards");
   const [mobileCardsOpen, setMobileCardsOpen] = React.useState(false);
+  const [mobileCategoryOpen, setMobileCategoryOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const mainNavRef = React.useRef<HTMLElement>(null);
+  const themeTransitionTimerRef = React.useRef<number | null>(null);
+
+  React.useEffect(() => () => {
+    if (themeTransitionTimerRef.current) window.clearTimeout(themeTransitionTimerRef.current);
+    document.documentElement.classList.remove("theme-transition");
+  }, []);
   const [mainNavThumb, setMainNavThumb] = React.useState({
     visible: false,
     top: 8,
@@ -261,6 +273,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     () => NAV_GROUPS.flatMap((g) => g.items).find((i) => i.id === activeSection),
     [activeSection],
   );
+  const activeMobileCategory = activeNavItem ?? NAV_GROUPS[0].items[0];
   const sectionRoutes = activeNavItem?.routes ?? cardRoutesOnly;
   const sectionCategories = React.useMemo<CardCategory[]>(() => {
     if (activeSection === "premium") return ["Agents", "Pricing", "Footer"];
@@ -274,6 +287,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   // Close the mobile drawer on route change.
   React.useEffect(() => {
     setMobileCardsOpen(false);
+    setMobileCategoryOpen(false);
   }, [pathname]);
 
   // ESC closes the mobile drawer.
@@ -306,11 +320,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   }, [filtered, sectionCategories]);
 
   // Stabilize isActive so the memoized CardsSidebar doesn't re-render on
-  // every pathname change â€” only the active highlight updates.
+  // every pathname change --- only the active highlight updates.
   const isActive = React.useCallback((href: string) => pathname === href, [pathname]);
 
 
-  // Breadcrumb segments â€” hierarchical: Components > <Group> > <Name>
+  // Breadcrumb segments --- hierarchical: Components > <Group> > <Name>
   const breadcrumb = React.useMemo(() => {
     const segs = pathname.split("/").filter(Boolean);
     const titleCase = (s: string) =>
@@ -326,11 +340,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         label = "Components";
         href = HOME_HREF;
       } else if (card) {
-        // leaf â†’ the component's title
+        // leaf --- the component's title
         label = card.title;
         href = card.href;
       } else {
-        // intermediate group segment â†’ link to its first card
+        // intermediate group segment --- link to its first card
         label = titleCase(seg);
         href = cardRoutes.find((c) => c.href.startsWith(path + "/"))?.href ?? path;
       }
@@ -341,6 +355,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   const onSectionClick = (item: NavItem) => {
+    setMobileCategoryOpen(false);
     setActiveSection(item.id);
     if (activeSection !== item.id) {
       const target = item.routes[0]?.href;
@@ -357,7 +372,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       <div className="pointer-events-none absolute right-10 top-1/3 h-80 w-80 rounded-full blur-3xl" style={{ background: isDark ? "rgba(34,211,238,0.08)" : "rgba(34,211,238,0.10)" }} />
       <div className="pointer-events-none absolute bottom-0 left-1/3 h-72 w-72 rounded-full blur-3xl" style={{ background: isDark ? "rgba(236,72,153,0.08)" : "rgba(236,72,153,0.10)" }} />
 
-      {/* â•â•â•â•â•â•â•â•â•â• MAIN SIDEBAR (1st) â€” Glass Float style â•â•â•â•â•â•â•â•â•â• */}
+      {/* ------------------------------ MAIN SIDEBAR (1st) --- Glass Float style ------------------------------ */}
       <motion.aside
         animate={{ width: mainCollapsed ? 56 : 184 }}
         transition={{ duration: DUR_BASE, ease: EASE }}
@@ -370,12 +385,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           boxShadow: isDark ? "0 8px 32px rgba(0,0,0,0.40)" : "0 8px 32px rgba(31,38,135,0.10)",
         }}
       >
-        {/* Brand â€” modernized: real logo + wordmark */}
+        {/* Brand --- modernized: real logo + wordmark */}
         <div className="flex h-14 shrink-0 items-center gap-2.5 border-b cs-border px-3">
           <Link
             href={HOME_HREF}
             className="flex shrink-0 items-center gap-2.5 overflow-hidden"
-            aria-label="mtverse â€” home"
+            aria-label="mtverse home"
           >
             { }
             <img
@@ -394,7 +409,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
 
-        {/* Nav â€” grouped, data-driven, animated active pill */}
+        {/* Nav --- grouped, data-driven, animated active pill */}
         <LayoutGroup id="sidebar-nav">
           <div className="relative flex min-h-0 flex-1">
             <nav
@@ -529,7 +544,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </div>
       </motion.aside>
 
-      {/* â•â•â•â•â•â•â•â•â•â• SECOND SIDEBAR (2nd) â€” card / component list â•â•â•â•â•â•â•â•â•â• */}
+      {/* ------------------------------ SECOND SIDEBAR (2nd) --- card / component list ------------------------------ */}
       <aside
         className="relative z-20 hidden m-2 w-60 shrink-0 rounded-2xl overflow-hidden lg:flex"
         style={{
@@ -550,7 +565,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         />
       </aside>
 
-      {/* â•â•â•â•â•â•â•â•â•â• MOBILE DRAWER â€” combined section nav + card list â•â•â•â•â•â•â•â•â•â• */}
+      {/* ------------------------------ MOBILE DRAWER --- combined section nav + card list ------------------------------ */}
       <AnimatePresence>
         {mobileCardsOpen && (
           <>
@@ -572,7 +587,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               aria-label="Navigation"
               className="fixed inset-y-0 left-0 z-60 flex w-[300px] max-w-[88vw] flex-col border-r cs-border bg-[var(--card-surface)] lg:hidden"
             >
-              {/* Mobile drawer header â€” branded */}
+              {/* Mobile drawer header --- branded */}
               <div className="flex h-12 shrink-0 items-center gap-2 border-b cs-border px-3">
                 { }
                 <img src="/mtverse-logo.png" alt="mtverse" width={20} height={20} className="h-5 w-5 rounded object-contain" />
@@ -588,36 +603,69 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 </button>
               </div>
 
-              {/* Section navigation â€” horizontal scroll chips (1st sidebar content) */}
-              <div className="shrink-0 border-b cs-border p-2">
-                <div className="flex flex-wrap gap-1">
-                  {NAV_GROUPS.flatMap((g) => g.items).map((item) => {
-                    const active = activeSection === item.id;
-                    const Icon = item.icon;
-                    return (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={() => onSectionClick(item)}
-                        className={`flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[11.5px] font-medium transition ${
-                          active ? "text-white" : "cs-muted hover:cs-text cs-border cs-input"
-                        }`}
-                        style={active ? { background: item.accent } : undefined}
-                      >
-                        <Icon className="h-3 w-3" strokeWidth={2} />
-                        <span>{item.label}</span>
-                        {item.pro && (
-                          <span
-                            className="rounded px-1 py-0.5 text-[7.5px] font-bold uppercase tracking-wider"
-                            style={{ background: "linear-gradient(135deg, #8B5CF6, #6366F1)", color: "#fff" }}
-                          >PRO</span>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              {/* Compact category picker; the component list below remains unchanged. */}
+              <div className="relative shrink-0 border-b cs-border p-3">
+                <p className="mb-2 px-0.5 text-[9px] font-bold uppercase tracking-[0.16em] cs-subtle">Browse categories</p>
+                <button
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded={mobileCategoryOpen}
+                  onClick={() => setMobileCategoryOpen((open) => !open)}
+                  className="flex h-11 w-full items-center gap-3 rounded-xl cs-border cs-input px-3 text-left shadow-sm transition hover:bg-[var(--card-hover)]"
+                >
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white" style={{ background: activeMobileCategory.accent }}>
+                    <activeMobileCategory.icon className="h-3.5 w-3.5" strokeWidth={2.2} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[12px] font-semibold cs-text">{activeMobileCategory.label}</span>
+                    <span className="block text-[9px] cs-subtle">{activeMobileCategory.routes.length} components</span>
+                  </span>
+                  <ChevronDown className={`h-4 w-4 shrink-0 cs-muted transition-transform ${mobileCategoryOpen ? "rotate-180" : ""}`} />
+                </button>
 
+                <AnimatePresence>
+                  {mobileCategoryOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -4, scale: 0.98 }}
+                      transition={{ duration: 0.16, ease: EASE }}
+                      role="listbox"
+                      aria-label="Component categories"
+                      className="absolute inset-x-3 top-[76px] z-20 max-h-[min(58vh,430px)] overflow-y-auto rounded-xl cs-border bg-[var(--card-surface)] p-1.5 shadow-2xl scrollbar-modern"
+                    >
+                      {NAV_GROUPS.map((group) => (
+                        <div key={group.label} className="py-1 first:pt-0 last:pb-0">
+                          <p className="px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.16em] cs-subtle">{group.label}</p>
+                          {group.items.map((item) => {
+                            const active = activeSection === item.id;
+                            const Icon = item.icon;
+                            return (
+                              <button
+                                key={item.id}
+                                type="button"
+                                role="option"
+                                aria-selected={active}
+                                onClick={() => onSectionClick(item)}
+                                className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left transition ${active ? "bg-[var(--card-input-bg)]" : "hover:bg-[var(--card-hover)]"}`}
+                              >
+                                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white" style={{ background: item.accent }}>
+                                  <Icon className="h-3.5 w-3.5" strokeWidth={2.1} />
+                                </span>
+                                <span className="min-w-0 flex-1">
+                                  <span className="block truncate text-[11.5px] font-semibold cs-text">{item.label}</span>
+                                  <span className="block text-[8.5px] cs-subtle">{item.routes.length} components</span>
+                                </span>
+                                {active ? <Check className="h-3.5 w-3.5 text-emerald-500" strokeWidth={2.4} /> : null}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               {/* Card list (2nd sidebar content) */}
               <div className="flex-1 min-h-0">
                 <CardsSidebar
@@ -635,9 +683,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         )}
       </AnimatePresence>
 
-      {/* â•â•â•â•â•â•â•â•â•â• MAIN AREA â•â•â•â•â•â•â•â•â•â• */}
+      {/* ------------------------------ MAIN AREA ------------------------------ */}
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* Top nav â€” modern, compact, subtle blur backdrop */}
+        {/* Top nav --- modern, compact, subtle blur backdrop */}
         <header className="z-40 flex h-14 shrink-0 items-center gap-2.5 m-2 rounded-2xl px-4 backdrop-blur-xl sm:px-4"
           style={{
             background: isDark ? "rgba(20,20,28,0.60)" : "rgba(255,255,255,0.55)",
@@ -667,7 +715,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <span className="text-[13px] font-bold cs-text tracking-tight">mtverse</span>
           </div>
 
-          {/* Breadcrumb â€” desktop */}
+          {/* Breadcrumb --- desktop */}
           <nav aria-label="Breadcrumb" className="hidden items-center gap-1 md:flex">
             <Link
               href={HOME_HREF}
@@ -697,6 +745,15 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
           <div className="flex-1" />
 
+          <a
+            href={PRICING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-9 items-center justify-center rounded-lg bg-[var(--card-text)] px-3 text-[12px] font-bold text-[var(--card-surface)] transition hover:opacity-85"
+          >
+            Get
+          </a>
+
           <AdvancedComponentSearch />
 
           {/* GitHub */}
@@ -715,9 +772,14 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             type="button"
             aria-label="Toggle theme"
             onClick={() => {
-              document.documentElement.classList.add("theme-transition");
-              setTimeout(() => document.documentElement.classList.remove("theme-transition"), 350);
-              setTheme(isDark ? "light" : "dark");
+              const root = document.documentElement;
+              root.classList.add("theme-transition");
+              window.requestAnimationFrame(() => setTheme(isDark ? "light" : "dark"));
+              if (themeTransitionTimerRef.current) window.clearTimeout(themeTransitionTimerRef.current);
+              themeTransitionTimerRef.current = window.setTimeout(() => {
+                root.classList.remove("theme-transition");
+                themeTransitionTimerRef.current = null;
+              }, 320);
             }}
             className="flex h-9 w-9 items-center justify-center rounded-xl cs-muted outline-none transition hover:bg-[var(--card-hover)] hover:cs-text focus-visible:ring-2 focus-visible:ring-cyan-400/40"
           >
@@ -747,7 +809,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </button>
         </header>
 
-        {/* Breadcrumb â€” mobile */}
+        {/* Breadcrumb --- mobile */}
         <div className="flex h-9 shrink-0 items-center gap-1.5 m-2 rounded-xl px-3 md:hidden"
           style={{ background: isDark ? "rgba(20,20,28,0.60)" : "rgba(255,255,255,0.55)", border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(255,255,255,0.6)" }}>
           <Link href={HOME_HREF} className="text-[11px] font-medium cs-subtle">
@@ -785,9 +847,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// FormIcon â€” lucide TextCursorInput-style icon for the Forms nav item
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// FormIcon --- lucide TextCursorInput-style icon for the Forms nav item
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function FormIcon({ className = "h-4 w-4", strokeWidth = 2 }: { className?: string; strokeWidth?: number }) {
   return (
     <svg className={`${className} shrink-0`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
@@ -807,13 +869,13 @@ function FormIcon({ className = "h-4 w-4", strokeWidth = 2 }: { className?: stri
   );
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Tooltip â€” shown in collapsed sidebar mode
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Tooltip --- shown in collapsed sidebar mode
 // Positioned absolutely OUTSIDE the parent's scroll width by using `fixed`-
 // like positioning via `left-full` + `pointer-events-none`. Critically, we
 // wrap the tooltip in a container with `overflow: hidden` so it doesn't
 // expand the parent's scrollWidth when invisible.
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function Tooltip({ label }: { label: string }) {
   const anchorRef = React.useRef<HTMLSpanElement>(null);
   const [visible, setVisible] = React.useState(false);
@@ -870,10 +932,10 @@ function Tooltip({ label }: { label: string }) {
     </>
   );
 }
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Cards sidebar â€” 2nd sidebar with grouped card list + search
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Cards sidebar --- 2nd sidebar with grouped card list + search
 // Memoized so it doesn't re-render on every pathname change.
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const CardsSidebar = React.memo(function CardsSidebar({
   byCategory,
   search,
@@ -937,7 +999,7 @@ const CardsSidebar = React.memo(function CardsSidebar({
 
   return (
     <div className="flex h-full w-full flex-col">
-      {/* Header â€” modernized: slimmer, accent dot, refined typography */}
+      {/* Header --- modernized: slimmer, accent dot, refined typography */}
       {!hideHeader && (
         <div className="flex h-14 shrink-0 items-center gap-2 border-b cs-border px-3">
           <span
@@ -975,7 +1037,7 @@ const CardsSidebar = React.memo(function CardsSidebar({
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Searchâ€¦"
+            placeholder="Search..."
             aria-label="Search components"
             className="w-full rounded-xl border cs-border cs-input py-2 pl-8 pr-3 text-[12.5px] cs-text placeholder:cs-subtle outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/40"
           />

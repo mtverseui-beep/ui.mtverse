@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Glass Atmosphere – Backgrounds React Component",
-  description: "Glass Atmosphere is a production-ready backgrounds React component featuring Atmospheric color · refined glass facets · premium software hero. Copy,…",
+  title: "Glass Atmosphere - Backgrounds React Component",
+  description: "Glass Atmosphere is a production-ready backgrounds React component featuring Atmospheric color · refined glass facets · premium software hero. Copy,...",
   keywords: ["Glass Atmosphere","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/glassmorphism-blur-bg-card" },
+  alternates: { canonical: "/components/backgrounds/glassmorphism-blur-bg" },
   openGraph: {
     type: "website",
-    url: "/components/cards/glassmorphism-blur-bg-card",
-    title: "Glass Atmosphere – Backgrounds React Component",
-    description: "Glass Atmosphere is a production-ready backgrounds React component featuring Atmospheric color · refined glass facets · premium software hero. Copy,…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/backgrounds/glassmorphism-blur-bg",
+    title: "Glass Atmosphere - Backgrounds React Component",
+    description: "Glass Atmosphere is a production-ready backgrounds React component featuring Atmospheric color · refined glass facets · premium software hero. Copy,...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Glass Atmosphere – Backgrounds React Component",
-    description: "Glass Atmosphere is a production-ready backgrounds React component featuring Atmospheric color · refined glass facets · premium software hero. Copy,…",
+    card: "summary",
+    title: "Glass Atmosphere - Backgrounds React Component",
+    description: "Glass Atmosphere is a production-ready backgrounds React component featuring Atmospheric color · refined glass facets · premium software hero. Copy,...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Glass Atmosphere",
-  "description": "Glass Atmosphere is a production-ready backgrounds React component featuring Atmospheric color · refined glass facets · premium software hero. Copy,…",
-  "url": "https://www.mtverse.dev/components/cards/glassmorphism-blur-bg-card",
+  "description": "Glass Atmosphere is a production-ready backgrounds React component featuring Atmospheric color · refined glass facets · premium software hero. Copy,...",
+  "url": "https://ui.mtverse.dev/components/backgrounds/glassmorphism-blur-bg",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

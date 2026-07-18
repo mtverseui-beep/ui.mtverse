@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Glass Mesh Tilt Auth – Auth React Component",
-  description: "Glass Mesh Tilt Auth is a production-ready auth React component featuring Glassmorphism mesh gradient + 3D tilt-on-hover card + backdrop blur + violet/cyan.…",
+  title: "Glass Mesh Tilt Auth - Auth React Component",
+  description: "Glass Mesh Tilt Auth is a production-ready auth React component featuring Glassmorphism mesh gradient + 3D tilt-on-hover card + backdrop blur + violet/cyan....",
   keywords: ["Glass Mesh Tilt Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/auth014-card" },
+  alternates: { canonical: "/components/auth/auth014" },
   openGraph: {
     type: "website",
-    url: "/components/cards/auth014-card",
-    title: "Glass Mesh Tilt Auth – Auth React Component",
-    description: "Glass Mesh Tilt Auth is a production-ready auth React component featuring Glassmorphism mesh gradient + 3D tilt-on-hover card + backdrop blur + violet/cyan.…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/auth/auth014",
+    title: "Glass Mesh Tilt Auth - Auth React Component",
+    description: "Glass Mesh Tilt Auth is a production-ready auth React component featuring Glassmorphism mesh gradient + 3D tilt-on-hover card + backdrop blur + violet/cyan....",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Glass Mesh Tilt Auth – Auth React Component",
-    description: "Glass Mesh Tilt Auth is a production-ready auth React component featuring Glassmorphism mesh gradient + 3D tilt-on-hover card + backdrop blur + violet/cyan.…",
+    card: "summary",
+    title: "Glass Mesh Tilt Auth - Auth React Component",
+    description: "Glass Mesh Tilt Auth is a production-ready auth React component featuring Glassmorphism mesh gradient + 3D tilt-on-hover card + backdrop blur + violet/cyan....",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Glass Mesh Tilt Auth",
-  "description": "Glass Mesh Tilt Auth is a production-ready auth React component featuring Glassmorphism mesh gradient + 3D tilt-on-hover card + backdrop blur + violet/cyan.…",
-  "url": "https://www.mtverse.dev/components/cards/auth014-card",
+  "description": "Glass Mesh Tilt Auth is a production-ready auth React component featuring Glassmorphism mesh gradient + 3D tilt-on-hover card + backdrop blur + violet/cyan....",
+  "url": "https://ui.mtverse.dev/components/auth/auth014",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

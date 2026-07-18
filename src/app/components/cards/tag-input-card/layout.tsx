@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tag Input – Forms React Component",
+  title: "Tag Input - Forms React Component",
   description: "Tag Input is a production-ready forms React component featuring Chips + autocomplete + drag reorder. Copy, customize, and use it in Next.js projects.",
   keywords: ["Tag Input","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/tag-input-card" },
+  alternates: { canonical: "/components/forms/tag-input" },
   openGraph: {
     type: "website",
-    url: "/components/cards/tag-input-card",
-    title: "Tag Input – Forms React Component",
+    url: "/components/forms/tag-input",
+    title: "Tag Input - Forms React Component",
     description: "Tag Input is a production-ready forms React component featuring Chips + autocomplete + drag reorder. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Tag Input – Forms React Component",
+    card: "summary",
+    title: "Tag Input - Forms React Component",
     description: "Tag Input is a production-ready forms React component featuring Chips + autocomplete + drag reorder. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Tag Input",
   "description": "Tag Input is a production-ready forms React component featuring Chips + autocomplete + drag reorder. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/tag-input-card",
+  "url": "https://ui.mtverse.dev/components/forms/tag-input",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

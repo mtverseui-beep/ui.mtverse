@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Pricing Plan – Core React Component",
+  title: "Pricing Plan - Core React Component",
   description: "Pricing Plan is a production-ready core React component featuring Border pulse + CTA glow. Copy, customize, and use it in Next.js projects.",
   keywords: ["Pricing Plan","Core component","Core React component","Core Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/pricing-plan-card" },
+  alternates: { canonical: "/components/cards/pricing-plan" },
   openGraph: {
     type: "website",
-    url: "/components/cards/pricing-plan-card",
-    title: "Pricing Plan – Core React Component",
+    url: "/components/cards/pricing-plan",
+    title: "Pricing Plan - Core React Component",
     description: "Pricing Plan is a production-ready core React component featuring Border pulse + CTA glow. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Pricing Plan – Core React Component",
+    card: "summary",
+    title: "Pricing Plan - Core React Component",
     description: "Pricing Plan is a production-ready core React component featuring Border pulse + CTA glow. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Pricing Plan",
   "description": "Pricing Plan is a production-ready core React component featuring Border pulse + CTA glow. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/pricing-plan-card",
+  "url": "https://ui.mtverse.dev/components/cards/pricing-plan",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

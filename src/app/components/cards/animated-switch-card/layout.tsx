@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Animated Switches – Buttons React Component",
+  title: "Animated Switches - Buttons React Component",
   description: "Animated Switches is a production-ready buttons React component featuring Spring toggle + icon rotate. Copy, customize, and use it in Next.js projects.",
   keywords: ["Animated Switches","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/animated-switch-card" },
+  alternates: { canonical: "/components/buttons/animated-switch" },
   openGraph: {
     type: "website",
-    url: "/components/cards/animated-switch-card",
-    title: "Animated Switches – Buttons React Component",
+    url: "/components/buttons/animated-switch",
+    title: "Animated Switches - Buttons React Component",
     description: "Animated Switches is a production-ready buttons React component featuring Spring toggle + icon rotate. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Animated Switches – Buttons React Component",
+    card: "summary",
+    title: "Animated Switches - Buttons React Component",
     description: "Animated Switches is a production-ready buttons React component featuring Spring toggle + icon rotate. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Animated Switches",
   "description": "Animated Switches is a production-ready buttons React component featuring Spring toggle + icon rotate. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/animated-switch-card",
+  "url": "https://ui.mtverse.dev/components/buttons/animated-switch",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

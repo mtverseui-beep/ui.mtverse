@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tooltip – Forms React Component",
+  title: "Tooltip - Forms React Component",
   description: "Tooltip is a production-ready forms React component featuring Portal tooltips on hover and keyboard focus. Copy, customize, and use it in Next.js projects.",
   keywords: ["Tooltip","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/tooltip-card" },
+  alternates: { canonical: "/components/forms/tooltip" },
   openGraph: {
     type: "website",
-    url: "/components/cards/tooltip-card",
-    title: "Tooltip – Forms React Component",
+    url: "/components/forms/tooltip",
+    title: "Tooltip - Forms React Component",
     description: "Tooltip is a production-ready forms React component featuring Portal tooltips on hover and keyboard focus. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Tooltip – Forms React Component",
+    card: "summary",
+    title: "Tooltip - Forms React Component",
     description: "Tooltip is a production-ready forms React component featuring Portal tooltips on hover and keyboard focus. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Tooltip",
   "description": "Tooltip is a production-ready forms React component featuring Portal tooltips on hover and keyboard focus. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/tooltip-card",
+  "url": "https://ui.mtverse.dev/components/forms/tooltip",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

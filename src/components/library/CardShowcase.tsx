@@ -86,7 +86,7 @@ export function CardShowcase({ codeMetadata, slug, children }: CardShowcaseProps
             <motion.div
               key="code"
               role="tabpanel"
-              aria-label="Code"
+              aria-label="Raw code"
               className="absolute inset-0 overflow-y-auto scrollbar-modern p-4 sm:p-6 lg:p-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

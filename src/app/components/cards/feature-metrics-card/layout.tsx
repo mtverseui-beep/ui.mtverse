@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Metrics Features – Features React Component",
-  description: "Metrics Features is a production-ready features React component featuring Big animated counters + feature cards + gradient stat blocks. Copy, customize, and…",
+  title: "Metrics Features - Features React Component",
+  description: "Metrics Features is a production-ready features React component featuring Big animated counters + feature cards + gradient stat blocks. Copy, customize, and...",
   keywords: ["Metrics Features","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/feature-metrics-card" },
+  alternates: { canonical: "/components/features/feature-metrics" },
   openGraph: {
     type: "website",
-    url: "/components/cards/feature-metrics-card",
-    title: "Metrics Features – Features React Component",
-    description: "Metrics Features is a production-ready features React component featuring Big animated counters + feature cards + gradient stat blocks. Copy, customize, and…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/features/feature-metrics",
+    title: "Metrics Features - Features React Component",
+    description: "Metrics Features is a production-ready features React component featuring Big animated counters + feature cards + gradient stat blocks. Copy, customize, and...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Metrics Features – Features React Component",
-    description: "Metrics Features is a production-ready features React component featuring Big animated counters + feature cards + gradient stat blocks. Copy, customize, and…",
+    card: "summary",
+    title: "Metrics Features - Features React Component",
+    description: "Metrics Features is a production-ready features React component featuring Big animated counters + feature cards + gradient stat blocks. Copy, customize, and...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Metrics Features",
-  "description": "Metrics Features is a production-ready features React component featuring Big animated counters + feature cards + gradient stat blocks. Copy, customize, and…",
-  "url": "https://www.mtverse.dev/components/cards/feature-metrics-card",
+  "description": "Metrics Features is a production-ready features React component featuring Big animated counters + feature cards + gradient stat blocks. Copy, customize, and...",
+  "url": "https://ui.mtverse.dev/components/features/feature-metrics",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

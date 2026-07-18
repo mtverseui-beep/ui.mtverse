@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Agency Marquee Brutalist Blob – Footer React Component",
-  description: "Agency Marquee Brutalist Blob is a production-ready footer React component featuring Creative agency — oversized heading + floating blobs + marquee…",
+  title: "Agency Marquee Brutalist Blob - Footer React Component",
+  description: "Agency Marquee Brutalist Blob is a production-ready footer React component featuring Creative agency — oversized heading + floating blobs + marquee...",
   keywords: ["Agency Marquee Brutalist Blob","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/footer010-card" },
+  alternates: { canonical: "/components/footers/footer010" },
   openGraph: {
     type: "website",
-    url: "/components/cards/footer010-card",
-    title: "Agency Marquee Brutalist Blob – Footer React Component",
-    description: "Agency Marquee Brutalist Blob is a production-ready footer React component featuring Creative agency — oversized heading + floating blobs + marquee…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/footers/footer010",
+    title: "Agency Marquee Brutalist Blob - Footer React Component",
+    description: "Agency Marquee Brutalist Blob is a production-ready footer React component featuring Creative agency — oversized heading + floating blobs + marquee...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Agency Marquee Brutalist Blob – Footer React Component",
-    description: "Agency Marquee Brutalist Blob is a production-ready footer React component featuring Creative agency — oversized heading + floating blobs + marquee…",
+    card: "summary",
+    title: "Agency Marquee Brutalist Blob - Footer React Component",
+    description: "Agency Marquee Brutalist Blob is a production-ready footer React component featuring Creative agency — oversized heading + floating blobs + marquee...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Agency Marquee Brutalist Blob",
-  "description": "Agency Marquee Brutalist Blob is a production-ready footer React component featuring Creative agency — oversized heading + floating blobs + marquee…",
-  "url": "https://www.mtverse.dev/components/cards/footer010-card",
+  "description": "Agency Marquee Brutalist Blob is a production-ready footer React component featuring Creative agency — oversized heading + floating blobs + marquee...",
+  "url": "https://ui.mtverse.dev/components/footers/footer010",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

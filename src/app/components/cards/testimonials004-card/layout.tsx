@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Hover Lift Gradient Avatar Stars – Testimonials React Component",
-  description: "Hover Lift Gradient Avatar Stars is a production-ready testimonials React component featuring Hover lift cards + gradient avatars + star ratings (Glow).…",
+  title: "Hover Lift Gradient Avatar Stars - Testimonials React Component",
+  description: "Hover Lift Gradient Avatar Stars is a production-ready testimonials React component featuring Hover lift cards + gradient avatars + star ratings (Glow)....",
   keywords: ["Hover Lift Gradient Avatar Stars","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/testimonials004-card" },
+  alternates: { canonical: "/components/testimonials/testimonials004" },
   openGraph: {
     type: "website",
-    url: "/components/cards/testimonials004-card",
-    title: "Hover Lift Gradient Avatar Stars – Testimonials React Component",
-    description: "Hover Lift Gradient Avatar Stars is a production-ready testimonials React component featuring Hover lift cards + gradient avatars + star ratings (Glow).…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/testimonials/testimonials004",
+    title: "Hover Lift Gradient Avatar Stars - Testimonials React Component",
+    description: "Hover Lift Gradient Avatar Stars is a production-ready testimonials React component featuring Hover lift cards + gradient avatars + star ratings (Glow)....",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Hover Lift Gradient Avatar Stars – Testimonials React Component",
-    description: "Hover Lift Gradient Avatar Stars is a production-ready testimonials React component featuring Hover lift cards + gradient avatars + star ratings (Glow).…",
+    card: "summary",
+    title: "Hover Lift Gradient Avatar Stars - Testimonials React Component",
+    description: "Hover Lift Gradient Avatar Stars is a production-ready testimonials React component featuring Hover lift cards + gradient avatars + star ratings (Glow)....",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Hover Lift Gradient Avatar Stars",
-  "description": "Hover Lift Gradient Avatar Stars is a production-ready testimonials React component featuring Hover lift cards + gradient avatars + star ratings (Glow).…",
-  "url": "https://www.mtverse.dev/components/cards/testimonials004-card",
+  "description": "Hover Lift Gradient Avatar Stars is a production-ready testimonials React component featuring Hover lift cards + gradient avatars + star ratings (Glow)....",
+  "url": "https://ui.mtverse.dev/components/testimonials/testimonials004",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

@@ -1,40 +1,5 @@
-User-agent: Googlebot
-Allow: /
-Allow: /components/
-Allow: /components/cards/
-Allow: /components/navbars/
-Allow: /components/footers/
-Allow: /components/heroes/
-Allow: /components/pricing/
-Allow: /components/auth/
-Allow: /components/testimonials/
-Allow: /components/features/
-Allow: /components/cta/
-Allow: /components/charts/
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
-
-User-agent: Slackbot
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: Applebot
-Allow: /
-
 User-agent: *
 Allow: /
+Disallow: /api/
 
-# Sitemap
-Sitemap: https://www.mtverse.dev/sitemap.xml
+Sitemap: https://ui.mtverse.dev/sitemap.xml

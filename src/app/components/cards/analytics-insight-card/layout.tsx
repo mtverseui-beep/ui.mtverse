@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Analytics Insight – Data React Component",
+  title: "Analytics Insight - Data React Component",
   description: "Analytics Insight is a production-ready data React component featuring Count-up + sparkline. Copy, customize, and use it in Next.js projects.",
   keywords: ["Analytics Insight","Data component","Data React component","Data Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/analytics-insight-card" },
+  alternates: { canonical: "/components/cards/analytics-insight" },
   openGraph: {
     type: "website",
-    url: "/components/cards/analytics-insight-card",
-    title: "Analytics Insight – Data React Component",
+    url: "/components/cards/analytics-insight",
+    title: "Analytics Insight - Data React Component",
     description: "Analytics Insight is a production-ready data React component featuring Count-up + sparkline. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Analytics Insight – Data React Component",
+    card: "summary",
+    title: "Analytics Insight - Data React Component",
     description: "Analytics Insight is a production-ready data React component featuring Count-up + sparkline. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Analytics Insight",
   "description": "Analytics Insight is a production-ready data React component featuring Count-up + sparkline. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/analytics-insight-card",
+  "url": "https://ui.mtverse.dev/components/cards/analytics-insight",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

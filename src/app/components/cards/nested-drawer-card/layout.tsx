@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Nested Drawer – Modals React Component",
-  description: "Nested Drawer is a production-ready modals React component featuring Drawer within drawer with breadcrumb + back navigation + slide transitions. Copy,…",
+  title: "Nested Drawer - Modals React Component",
+  description: "Nested Drawer is a production-ready modals React component featuring Drawer within drawer with breadcrumb + back navigation + slide transitions. Copy,...",
   keywords: ["Nested Drawer","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/nested-drawer-card" },
+  alternates: { canonical: "/components/modals/nested-drawer" },
   openGraph: {
     type: "website",
-    url: "/components/cards/nested-drawer-card",
-    title: "Nested Drawer – Modals React Component",
-    description: "Nested Drawer is a production-ready modals React component featuring Drawer within drawer with breadcrumb + back navigation + slide transitions. Copy,…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/modals/nested-drawer",
+    title: "Nested Drawer - Modals React Component",
+    description: "Nested Drawer is a production-ready modals React component featuring Drawer within drawer with breadcrumb + back navigation + slide transitions. Copy,...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Nested Drawer – Modals React Component",
-    description: "Nested Drawer is a production-ready modals React component featuring Drawer within drawer with breadcrumb + back navigation + slide transitions. Copy,…",
+    card: "summary",
+    title: "Nested Drawer - Modals React Component",
+    description: "Nested Drawer is a production-ready modals React component featuring Drawer within drawer with breadcrumb + back navigation + slide transitions. Copy,...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Nested Drawer",
-  "description": "Nested Drawer is a production-ready modals React component featuring Drawer within drawer with breadcrumb + back navigation + slide transitions. Copy,…",
-  "url": "https://www.mtverse.dev/components/cards/nested-drawer-card",
+  "description": "Nested Drawer is a production-ready modals React component featuring Drawer within drawer with breadcrumb + back navigation + slide transitions. Copy,...",
+  "url": "https://ui.mtverse.dev/components/modals/nested-drawer",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

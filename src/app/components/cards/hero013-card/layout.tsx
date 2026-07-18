@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Split Interactive Demo Tabbed – Hero React Component",
-  description: "Split Interactive Demo Tabbed is a production-ready hero React component featuring Split interactive demo + tabbed panel (Inbox/Analytics/Settings) + social…",
+  title: "Split Interactive Demo Tabbed - Hero React Component",
+  description: "Split Interactive Demo Tabbed is a production-ready hero React component featuring Split interactive demo + tabbed panel (Inbox/Analytics/Settings) + social...",
   keywords: ["Split Interactive Demo Tabbed","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/hero013-card" },
+  alternates: { canonical: "/components/heroes/hero013" },
   openGraph: {
     type: "website",
-    url: "/components/cards/hero013-card",
-    title: "Split Interactive Demo Tabbed – Hero React Component",
-    description: "Split Interactive Demo Tabbed is a production-ready hero React component featuring Split interactive demo + tabbed panel (Inbox/Analytics/Settings) + social…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/heroes/hero013",
+    title: "Split Interactive Demo Tabbed - Hero React Component",
+    description: "Split Interactive Demo Tabbed is a production-ready hero React component featuring Split interactive demo + tabbed panel (Inbox/Analytics/Settings) + social...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Split Interactive Demo Tabbed – Hero React Component",
-    description: "Split Interactive Demo Tabbed is a production-ready hero React component featuring Split interactive demo + tabbed panel (Inbox/Analytics/Settings) + social…",
+    card: "summary",
+    title: "Split Interactive Demo Tabbed - Hero React Component",
+    description: "Split Interactive Demo Tabbed is a production-ready hero React component featuring Split interactive demo + tabbed panel (Inbox/Analytics/Settings) + social...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Split Interactive Demo Tabbed",
-  "description": "Split Interactive Demo Tabbed is a production-ready hero React component featuring Split interactive demo + tabbed panel (Inbox/Analytics/Settings) + social…",
-  "url": "https://www.mtverse.dev/components/cards/hero013-card",
+  "description": "Split Interactive Demo Tabbed is a production-ready hero React component featuring Split interactive demo + tabbed panel (Inbox/Analytics/Settings) + social...",
+  "url": "https://ui.mtverse.dev/components/heroes/hero013",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Orbital Halo – Backgrounds React Component",
-  description: "Orbital Halo is a production-ready backgrounds React component featuring Measured orbital rings · fintech focal system · replaces particle tornado. Copy,…",
+  title: "Orbital Halo - Backgrounds React Component",
+  description: "Orbital Halo is a production-ready backgrounds React component featuring Measured orbital rings · fintech focal system · replaces particle tornado. Copy,...",
   keywords: ["Orbital Halo","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/particle-vortex-bg-card" },
+  alternates: { canonical: "/components/backgrounds/particle-vortex-bg" },
   openGraph: {
     type: "website",
-    url: "/components/cards/particle-vortex-bg-card",
-    title: "Orbital Halo – Backgrounds React Component",
-    description: "Orbital Halo is a production-ready backgrounds React component featuring Measured orbital rings · fintech focal system · replaces particle tornado. Copy,…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/backgrounds/particle-vortex-bg",
+    title: "Orbital Halo - Backgrounds React Component",
+    description: "Orbital Halo is a production-ready backgrounds React component featuring Measured orbital rings · fintech focal system · replaces particle tornado. Copy,...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Orbital Halo – Backgrounds React Component",
-    description: "Orbital Halo is a production-ready backgrounds React component featuring Measured orbital rings · fintech focal system · replaces particle tornado. Copy,…",
+    card: "summary",
+    title: "Orbital Halo - Backgrounds React Component",
+    description: "Orbital Halo is a production-ready backgrounds React component featuring Measured orbital rings · fintech focal system · replaces particle tornado. Copy,...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Orbital Halo",
-  "description": "Orbital Halo is a production-ready backgrounds React component featuring Measured orbital rings · fintech focal system · replaces particle tornado. Copy,…",
-  "url": "https://www.mtverse.dev/components/cards/particle-vortex-bg-card",
+  "description": "Orbital Halo is a production-ready backgrounds React component featuring Measured orbital rings · fintech focal system · replaces particle tornado. Copy,...",
+  "url": "https://ui.mtverse.dev/components/backgrounds/particle-vortex-bg",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

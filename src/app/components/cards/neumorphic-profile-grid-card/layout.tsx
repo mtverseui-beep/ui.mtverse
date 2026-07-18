@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Neumorphic Team Grid – Profile React Component",
+  title: "Neumorphic Team Grid - Profile React Component",
   description: "Neumorphic Team Grid is a production-ready profile React component featuring Neumorphic shadows + filter. Copy, customize, and use it in Next.js projects.",
   keywords: ["Neumorphic Team Grid","Profile component","Profile React component","Profile Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/neumorphic-profile-grid-card" },
+  alternates: { canonical: "/components/cards/neumorphic-profile-grid" },
   openGraph: {
     type: "website",
-    url: "/components/cards/neumorphic-profile-grid-card",
-    title: "Neumorphic Team Grid – Profile React Component",
+    url: "/components/cards/neumorphic-profile-grid",
+    title: "Neumorphic Team Grid - Profile React Component",
     description: "Neumorphic Team Grid is a production-ready profile React component featuring Neumorphic shadows + filter. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Neumorphic Team Grid – Profile React Component",
+    card: "summary",
+    title: "Neumorphic Team Grid - Profile React Component",
     description: "Neumorphic Team Grid is a production-ready profile React component featuring Neumorphic shadows + filter. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Neumorphic Team Grid",
   "description": "Neumorphic Team Grid is a production-ready profile React component featuring Neumorphic shadows + filter. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/neumorphic-profile-grid-card",
+  "url": "https://ui.mtverse.dev/components/cards/neumorphic-profile-grid",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

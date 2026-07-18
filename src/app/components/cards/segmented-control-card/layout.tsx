@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Segmented Controls – Buttons React Component",
-  description: "Segmented Controls is a production-ready buttons React component featuring Glassmorphic sliding pill + 3D depth. Copy, customize, and use it in Next.js…",
+  title: "Segmented Controls - Buttons React Component",
+  description: "Segmented Controls is a production-ready buttons React component featuring Glassmorphic sliding pill + 3D depth. Copy, customize, and use it in Next.js...",
   keywords: ["Segmented Controls","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/segmented-control-card" },
+  alternates: { canonical: "/components/buttons/segmented-control" },
   openGraph: {
     type: "website",
-    url: "/components/cards/segmented-control-card",
-    title: "Segmented Controls – Buttons React Component",
-    description: "Segmented Controls is a production-ready buttons React component featuring Glassmorphic sliding pill + 3D depth. Copy, customize, and use it in Next.js…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/buttons/segmented-control",
+    title: "Segmented Controls - Buttons React Component",
+    description: "Segmented Controls is a production-ready buttons React component featuring Glassmorphic sliding pill + 3D depth. Copy, customize, and use it in Next.js...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Segmented Controls – Buttons React Component",
-    description: "Segmented Controls is a production-ready buttons React component featuring Glassmorphic sliding pill + 3D depth. Copy, customize, and use it in Next.js…",
+    card: "summary",
+    title: "Segmented Controls - Buttons React Component",
+    description: "Segmented Controls is a production-ready buttons React component featuring Glassmorphic sliding pill + 3D depth. Copy, customize, and use it in Next.js...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Segmented Controls",
-  "description": "Segmented Controls is a production-ready buttons React component featuring Glassmorphic sliding pill + 3D depth. Copy, customize, and use it in Next.js…",
-  "url": "https://www.mtverse.dev/components/cards/segmented-control-card",
+  "description": "Segmented Controls is a production-ready buttons React component featuring Glassmorphic sliding pill + 3D depth. Copy, customize, and use it in Next.js...",
+  "url": "https://ui.mtverse.dev/components/buttons/segmented-control",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

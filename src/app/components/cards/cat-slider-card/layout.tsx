@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cat Slider – Agents React Component",
+  title: "Cat Slider - Agents React Component",
   description: "Cat Slider is a production-ready agents React component featuring 5 expandable cat cards (Docked). Copy, customize, and use it in Next.js projects.",
   keywords: ["Cat Slider","Agents component","Agents React component","Agents Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/cat-slider-card" },
+  alternates: { canonical: "/components/premium/cat-slider" },
   openGraph: {
     type: "website",
-    url: "/components/cards/cat-slider-card",
-    title: "Cat Slider – Agents React Component",
+    url: "/components/premium/cat-slider",
+    title: "Cat Slider - Agents React Component",
     description: "Cat Slider is a production-ready agents React component featuring 5 expandable cat cards (Docked). Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Cat Slider – Agents React Component",
+    card: "summary",
+    title: "Cat Slider - Agents React Component",
     description: "Cat Slider is a production-ready agents React component featuring 5 expandable cat cards (Docked). Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Cat Slider",
   "description": "Cat Slider is a production-ready agents React component featuring 5 expandable cat cards (Docked). Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/cat-slider-card",
+  "url": "https://ui.mtverse.dev/components/premium/cat-slider",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

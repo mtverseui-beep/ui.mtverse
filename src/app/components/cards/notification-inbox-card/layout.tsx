@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Notification Inbox – Data React Component",
+  title: "Notification Inbox - Data React Component",
   description: "Notification Inbox is a production-ready data React component featuring Swipe + slide actions. Copy, customize, and use it in Next.js projects.",
   keywords: ["Notification Inbox","Data component","Data React component","Data Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/notification-inbox-card" },
+  alternates: { canonical: "/components/cards/notification-inbox" },
   openGraph: {
     type: "website",
-    url: "/components/cards/notification-inbox-card",
-    title: "Notification Inbox – Data React Component",
+    url: "/components/cards/notification-inbox",
+    title: "Notification Inbox - Data React Component",
     description: "Notification Inbox is a production-ready data React component featuring Swipe + slide actions. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Notification Inbox – Data React Component",
+    card: "summary",
+    title: "Notification Inbox - Data React Component",
     description: "Notification Inbox is a production-ready data React component featuring Swipe + slide actions. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Notification Inbox",
   "description": "Notification Inbox is a production-ready data React component featuring Swipe + slide actions. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/notification-inbox-card",
+  "url": "https://ui.mtverse.dev/components/cards/notification-inbox",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

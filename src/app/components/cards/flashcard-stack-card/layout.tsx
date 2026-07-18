@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Flashcard Deck – Content React Component",
+  title: "Flashcard Deck - Content React Component",
   description: "Flashcard Deck is a production-ready content React component featuring Peek-out fan + flip. Copy, customize, and use it in Next.js projects.",
   keywords: ["Flashcard Deck","Content component","Content React component","Content Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/flashcard-stack-card" },
+  alternates: { canonical: "/components/cards/flashcard-stack" },
   openGraph: {
     type: "website",
-    url: "/components/cards/flashcard-stack-card",
-    title: "Flashcard Deck – Content React Component",
+    url: "/components/cards/flashcard-stack",
+    title: "Flashcard Deck - Content React Component",
     description: "Flashcard Deck is a production-ready content React component featuring Peek-out fan + flip. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Flashcard Deck – Content React Component",
+    card: "summary",
+    title: "Flashcard Deck - Content React Component",
     description: "Flashcard Deck is a production-ready content React component featuring Peek-out fan + flip. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Flashcard Deck",
   "description": "Flashcard Deck is a production-ready content React component featuring Peek-out fan + flip. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/flashcard-stack-card",
+  "url": "https://ui.mtverse.dev/components/cards/flashcard-stack",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

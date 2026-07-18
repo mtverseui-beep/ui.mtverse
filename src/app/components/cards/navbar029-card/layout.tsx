@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Marketplace Category Search – Navbar React Component",
-  description: "Marketplace Category Search is a production-ready navbar React component featuring Marketplace — category-prefixed search + category bar + cart/wishlist…",
+  title: "Marketplace Category Search - Navbar React Component",
+  description: "Marketplace Category Search is a production-ready navbar React component featuring Marketplace — category-prefixed search + category bar + cart/wishlist...",
   keywords: ["Marketplace Category Search","Navbar component","Navbar React component","Navbar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/navbar029-card" },
+  alternates: { canonical: "/components/navbars/navbar029" },
   openGraph: {
     type: "website",
-    url: "/components/cards/navbar029-card",
-    title: "Marketplace Category Search – Navbar React Component",
-    description: "Marketplace Category Search is a production-ready navbar React component featuring Marketplace — category-prefixed search + category bar + cart/wishlist…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/navbars/navbar029",
+    title: "Marketplace Category Search - Navbar React Component",
+    description: "Marketplace Category Search is a production-ready navbar React component featuring Marketplace — category-prefixed search + category bar + cart/wishlist...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Marketplace Category Search – Navbar React Component",
-    description: "Marketplace Category Search is a production-ready navbar React component featuring Marketplace — category-prefixed search + category bar + cart/wishlist…",
+    card: "summary",
+    title: "Marketplace Category Search - Navbar React Component",
+    description: "Marketplace Category Search is a production-ready navbar React component featuring Marketplace — category-prefixed search + category bar + cart/wishlist...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Marketplace Category Search",
-  "description": "Marketplace Category Search is a production-ready navbar React component featuring Marketplace — category-prefixed search + category bar + cart/wishlist…",
-  "url": "https://www.mtverse.dev/components/cards/navbar029-card",
+  "description": "Marketplace Category Search is a production-ready navbar React component featuring Marketplace — category-prefixed search + category bar + cart/wishlist...",
+  "url": "https://ui.mtverse.dev/components/navbars/navbar029",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "App Download CTA – CTA React Component",
-  description: "App Download CTA is a production-ready cta React component featuring Phone mockup + app store badges + QR code. Copy, customize, and use it in Next.js…",
+  title: "App Download CTA - CTA React Component",
+  description: "App Download CTA is a production-ready cta React component featuring Phone mockup + app store badges + QR code. Copy, customize, and use it in Next.js...",
   keywords: ["App Download CTA","CTA component","CTA React component","CTA Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/cta-app-download-card" },
+  alternates: { canonical: "/components/cta/cta-app-download" },
   openGraph: {
     type: "website",
-    url: "/components/cards/cta-app-download-card",
-    title: "App Download CTA – CTA React Component",
-    description: "App Download CTA is a production-ready cta React component featuring Phone mockup + app store badges + QR code. Copy, customize, and use it in Next.js…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/cta/cta-app-download",
+    title: "App Download CTA - CTA React Component",
+    description: "App Download CTA is a production-ready cta React component featuring Phone mockup + app store badges + QR code. Copy, customize, and use it in Next.js...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "App Download CTA – CTA React Component",
-    description: "App Download CTA is a production-ready cta React component featuring Phone mockup + app store badges + QR code. Copy, customize, and use it in Next.js…",
+    card: "summary",
+    title: "App Download CTA - CTA React Component",
+    description: "App Download CTA is a production-ready cta React component featuring Phone mockup + app store badges + QR code. Copy, customize, and use it in Next.js...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "App Download CTA",
-  "description": "App Download CTA is a production-ready cta React component featuring Phone mockup + app store badges + QR code. Copy, customize, and use it in Next.js…",
-  "url": "https://www.mtverse.dev/components/cards/cta-app-download-card",
+  "description": "App Download CTA is a production-ready cta React component featuring Phone mockup + app store badges + QR code. Copy, customize, and use it in Next.js...",
+  "url": "https://ui.mtverse.dev/components/cta/cta-app-download",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

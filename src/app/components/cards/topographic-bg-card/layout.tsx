@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Topographic Lines – Backgrounds React Component",
-  description: "Topographic Lines is a production-ready backgrounds React component featuring Measured contour rhythm · static-first CSS lines · outdoor and finance heroes.…",
+  title: "Topographic Lines - Backgrounds React Component",
+  description: "Topographic Lines is a production-ready backgrounds React component featuring Measured contour rhythm · static-first CSS lines · outdoor and finance heroes....",
   keywords: ["Topographic Lines","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/topographic-bg-card" },
+  alternates: { canonical: "/components/backgrounds/topographic-bg" },
   openGraph: {
     type: "website",
-    url: "/components/cards/topographic-bg-card",
-    title: "Topographic Lines – Backgrounds React Component",
-    description: "Topographic Lines is a production-ready backgrounds React component featuring Measured contour rhythm · static-first CSS lines · outdoor and finance heroes.…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/backgrounds/topographic-bg",
+    title: "Topographic Lines - Backgrounds React Component",
+    description: "Topographic Lines is a production-ready backgrounds React component featuring Measured contour rhythm · static-first CSS lines · outdoor and finance heroes....",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Topographic Lines – Backgrounds React Component",
-    description: "Topographic Lines is a production-ready backgrounds React component featuring Measured contour rhythm · static-first CSS lines · outdoor and finance heroes.…",
+    card: "summary",
+    title: "Topographic Lines - Backgrounds React Component",
+    description: "Topographic Lines is a production-ready backgrounds React component featuring Measured contour rhythm · static-first CSS lines · outdoor and finance heroes....",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Topographic Lines",
-  "description": "Topographic Lines is a production-ready backgrounds React component featuring Measured contour rhythm · static-first CSS lines · outdoor and finance heroes.…",
-  "url": "https://www.mtverse.dev/components/cards/topographic-bg-card",
+  "description": "Topographic Lines is a production-ready backgrounds React component featuring Measured contour rhythm · static-first CSS lines · outdoor and finance heroes....",
+  "url": "https://ui.mtverse.dev/components/backgrounds/topographic-bg",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

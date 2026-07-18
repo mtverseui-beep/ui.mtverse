@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tabs – Forms React Component",
+  title: "Tabs - Forms React Component",
   description: "Tabs is a production-ready forms React component featuring Underline + pill + vertical. Copy, customize, and use it in Next.js projects.",
   keywords: ["Tabs","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/tabs-card" },
+  alternates: { canonical: "/components/forms/tabs" },
   openGraph: {
     type: "website",
-    url: "/components/cards/tabs-card",
-    title: "Tabs – Forms React Component",
+    url: "/components/forms/tabs",
+    title: "Tabs - Forms React Component",
     description: "Tabs is a production-ready forms React component featuring Underline + pill + vertical. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Tabs – Forms React Component",
+    card: "summary",
+    title: "Tabs - Forms React Component",
     description: "Tabs is a production-ready forms React component featuring Underline + pill + vertical. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Tabs",
   "description": "Tabs is a production-ready forms React component featuring Underline + pill + vertical. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/tabs-card",
+  "url": "https://ui.mtverse.dev/components/forms/tabs",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

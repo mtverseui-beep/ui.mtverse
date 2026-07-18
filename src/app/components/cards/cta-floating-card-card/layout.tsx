@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Floating Card CTA – CTA React Component",
-  description: "Floating Card CTA is a production-ready cta React component featuring Glassmorphism floating card + gradient bg + glow. Copy, customize, and use it in…",
+  title: "Floating Card CTA - CTA React Component",
+  description: "Floating Card CTA is a production-ready cta React component featuring Glassmorphism floating card + gradient bg + glow. Copy, customize, and use it in...",
   keywords: ["Floating Card CTA","CTA component","CTA React component","CTA Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/cta-floating-card-card" },
+  alternates: { canonical: "/components/cta/cta-floating-card" },
   openGraph: {
     type: "website",
-    url: "/components/cards/cta-floating-card-card",
-    title: "Floating Card CTA – CTA React Component",
-    description: "Floating Card CTA is a production-ready cta React component featuring Glassmorphism floating card + gradient bg + glow. Copy, customize, and use it in…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/cta/cta-floating-card",
+    title: "Floating Card CTA - CTA React Component",
+    description: "Floating Card CTA is a production-ready cta React component featuring Glassmorphism floating card + gradient bg + glow. Copy, customize, and use it in...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Floating Card CTA – CTA React Component",
-    description: "Floating Card CTA is a production-ready cta React component featuring Glassmorphism floating card + gradient bg + glow. Copy, customize, and use it in…",
+    card: "summary",
+    title: "Floating Card CTA - CTA React Component",
+    description: "Floating Card CTA is a production-ready cta React component featuring Glassmorphism floating card + gradient bg + glow. Copy, customize, and use it in...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Floating Card CTA",
-  "description": "Floating Card CTA is a production-ready cta React component featuring Glassmorphism floating card + gradient bg + glow. Copy, customize, and use it in…",
-  "url": "https://www.mtverse.dev/components/cards/cta-floating-card-card",
+  "description": "Floating Card CTA is a production-ready cta React component featuring Glassmorphism floating card + gradient bg + glow. Copy, customize, and use it in...",
+  "url": "https://ui.mtverse.dev/components/cta/cta-floating-card",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

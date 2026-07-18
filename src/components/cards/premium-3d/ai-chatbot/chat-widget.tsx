@@ -129,7 +129,7 @@ export function ChatWidget() {
         <AnimatedOrb size={64} />
       </div>
 
-      {/* Suggestion bubble â€” appears next to the orb prompting the user to click */}
+      {/* Suggestion bubble --- appears next to the orb prompting the user to click */}
       <AnimatePresence>
         {showSuggestion && !isOpen && (
           <motion.div

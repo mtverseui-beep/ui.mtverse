@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Portfolio Magnetic Typewriter – Footer React Component",
-  description: "Portfolio Magnetic Typewriter is a production-ready footer React component featuring Brand + pages + newsletter + social glow (AI Portfolio). Copy,…",
+  title: "Portfolio Magnetic Typewriter - Footer React Component",
+  description: "Portfolio Magnetic Typewriter is a production-ready footer React component featuring Brand + pages + newsletter + social glow (AI Portfolio). Copy,...",
   keywords: ["Portfolio Magnetic Typewriter","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/footer002-card" },
+  alternates: { canonical: "/components/footers/footer002" },
   openGraph: {
     type: "website",
-    url: "/components/cards/footer002-card",
-    title: "Portfolio Magnetic Typewriter – Footer React Component",
-    description: "Portfolio Magnetic Typewriter is a production-ready footer React component featuring Brand + pages + newsletter + social glow (AI Portfolio). Copy,…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/footers/footer002",
+    title: "Portfolio Magnetic Typewriter - Footer React Component",
+    description: "Portfolio Magnetic Typewriter is a production-ready footer React component featuring Brand + pages + newsletter + social glow (AI Portfolio). Copy,...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Portfolio Magnetic Typewriter – Footer React Component",
-    description: "Portfolio Magnetic Typewriter is a production-ready footer React component featuring Brand + pages + newsletter + social glow (AI Portfolio). Copy,…",
+    card: "summary",
+    title: "Portfolio Magnetic Typewriter - Footer React Component",
+    description: "Portfolio Magnetic Typewriter is a production-ready footer React component featuring Brand + pages + newsletter + social glow (AI Portfolio). Copy,...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Portfolio Magnetic Typewriter",
-  "description": "Portfolio Magnetic Typewriter is a production-ready footer React component featuring Brand + pages + newsletter + social glow (AI Portfolio). Copy,…",
-  "url": "https://www.mtverse.dev/components/cards/footer002-card",
+  "description": "Portfolio Magnetic Typewriter is a production-ready footer React component featuring Brand + pages + newsletter + social glow (AI Portfolio). Copy,...",
+  "url": "https://ui.mtverse.dev/components/footers/footer002",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

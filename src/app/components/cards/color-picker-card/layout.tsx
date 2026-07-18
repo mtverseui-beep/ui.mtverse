@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Color Picker – Forms React Component",
+  title: "Color Picker - Forms React Component",
   description: "Color Picker is a production-ready forms React component featuring Swatch grid + hue slider + hex input. Copy, customize, and use it in Next.js projects.",
   keywords: ["Color Picker","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/color-picker-card" },
+  alternates: { canonical: "/components/forms/color-picker" },
   openGraph: {
     type: "website",
-    url: "/components/cards/color-picker-card",
-    title: "Color Picker – Forms React Component",
+    url: "/components/forms/color-picker",
+    title: "Color Picker - Forms React Component",
     description: "Color Picker is a production-ready forms React component featuring Swatch grid + hue slider + hex input. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Color Picker – Forms React Component",
+    card: "summary",
+    title: "Color Picker - Forms React Component",
     description: "Color Picker is a production-ready forms React component featuring Swatch grid + hue slider + hex input. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Color Picker",
   "description": "Color Picker is a production-ready forms React component featuring Swatch grid + hue slider + hex input. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/color-picker-card",
+  "url": "https://ui.mtverse.dev/components/forms/color-picker",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

@@ -1,19 +1,12 @@
 {
-  "name": "mtverse — Premium UI Component Library",
-  "short_name": "mtverse",
-  "description": "250+ production-ready animated React components built with Next.js, TypeScript, Tailwind CSS, and Framer Motion.",
-  "start_url": "/",
+  "name": "mtverse UI Component Library",
+  "short_name": "mtverse UI",
+  "description": "Explore 360+ production-ready React, Next.js, TypeScript, and Tailwind CSS components.",
+  "start_url": "/components/navbars/navbar001",
   "display": "standalone",
   "background_color": "#0a0a12",
   "theme_color": "#2563eb",
   "orientation": "any",
-  "categories": ["productivity", "developer", "design"],
-  "icons": [
-    {
-      "src": "/mtverse-logo.png",
-      "sizes": "64x64",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "categories": ["developer", "design", "productivity"],
+  "icons": [{ "src": "/mtverse-logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }]
 }

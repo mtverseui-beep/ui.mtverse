@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Particle Constellation Polygon – Hero React Component",
-  description: "Particle Constellation Polygon is a production-ready hero React component featuring Particle constellation + polygon pill + serif headline (SKAL). Copy,…",
+  title: "Particle Constellation Polygon - Hero React Component",
+  description: "Particle Constellation Polygon is a production-ready hero React component featuring Particle constellation + polygon pill + serif headline (SKAL). Copy,...",
   keywords: ["Particle Constellation Polygon","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/hero003-card" },
+  alternates: { canonical: "/components/heroes/hero003" },
   openGraph: {
     type: "website",
-    url: "/components/cards/hero003-card",
-    title: "Particle Constellation Polygon – Hero React Component",
-    description: "Particle Constellation Polygon is a production-ready hero React component featuring Particle constellation + polygon pill + serif headline (SKAL). Copy,…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/heroes/hero003",
+    title: "Particle Constellation Polygon - Hero React Component",
+    description: "Particle Constellation Polygon is a production-ready hero React component featuring Particle constellation + polygon pill + serif headline (SKAL). Copy,...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Particle Constellation Polygon – Hero React Component",
-    description: "Particle Constellation Polygon is a production-ready hero React component featuring Particle constellation + polygon pill + serif headline (SKAL). Copy,…",
+    card: "summary",
+    title: "Particle Constellation Polygon - Hero React Component",
+    description: "Particle Constellation Polygon is a production-ready hero React component featuring Particle constellation + polygon pill + serif headline (SKAL). Copy,...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Particle Constellation Polygon",
-  "description": "Particle Constellation Polygon is a production-ready hero React component featuring Particle constellation + polygon pill + serif headline (SKAL). Copy,…",
-  "url": "https://www.mtverse.dev/components/cards/hero003-card",
+  "description": "Particle Constellation Polygon is a production-ready hero React component featuring Particle constellation + polygon pill + serif headline (SKAL). Copy,...",
+  "url": "https://ui.mtverse.dev/components/heroes/hero003",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

@@ -135,7 +135,7 @@ export default function Example() {
         <p className="mb-2 text-[12px] leading-relaxed cs-muted">
           Wrap the component with <code className="font-mono cs-text">component-theme-scope</code>.
           Add <code className="font-mono cs-text">dark</code> to an ancestor (usually the
-          document element) to switch themes. The shared CSS in the Code tab provides
+          document element) to switch themes. The shared CSS in the Raw code tab provides
           semantic colors and compatibility styles for legacy utility classes.
         </p>
         <CodeBlock
@@ -183,7 +183,7 @@ export default function Example() {
       {/* Copy component */}
       <Section icon={Copy} title="Copy Component" accent={accent}>
         <p className="mb-2 text-[12px] cs-muted">
-          Copy the source code from the Code tab, or use the import path above to integrate this component into your project.
+          Copy the source code from the Raw code tab, or use the import path above to integrate this component into your project.
         </p>
         <div className="flex gap-2">
           <button

@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Calendar & Date Picker – Core React Component",
-  description: "Calendar & Date Picker is a production-ready core React component featuring Single + range mode · month navigation · time picker · quick actions ·…",
+  title: "Calendar & Date Picker - Core React Component",
+  description: "Calendar & Date Picker is a production-ready core React component featuring Single + range mode · month navigation · time picker · quick actions ·...",
   keywords: ["Calendar & Date Picker","Core component","Core React component","Core Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/calendar-date-picker-card" },
+  alternates: { canonical: "/components/cards/calendar-date-picker" },
   openGraph: {
     type: "website",
-    url: "/components/cards/calendar-date-picker-card",
-    title: "Calendar & Date Picker – Core React Component",
-    description: "Calendar & Date Picker is a production-ready core React component featuring Single + range mode · month navigation · time picker · quick actions ·…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/cards/calendar-date-picker",
+    title: "Calendar & Date Picker - Core React Component",
+    description: "Calendar & Date Picker is a production-ready core React component featuring Single + range mode · month navigation · time picker · quick actions ·...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Calendar & Date Picker – Core React Component",
-    description: "Calendar & Date Picker is a production-ready core React component featuring Single + range mode · month navigation · time picker · quick actions ·…",
+    card: "summary",
+    title: "Calendar & Date Picker - Core React Component",
+    description: "Calendar & Date Picker is a production-ready core React component featuring Single + range mode · month navigation · time picker · quick actions ·...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Calendar & Date Picker",
-  "description": "Calendar & Date Picker is a production-ready core React component featuring Single + range mode · month navigation · time picker · quick actions ·…",
-  "url": "https://www.mtverse.dev/components/cards/calendar-date-picker-card",
+  "description": "Calendar & Date Picker is a production-ready core React component featuring Single + range mode · month navigation · time picker · quick actions ·...",
+  "url": "https://ui.mtverse.dev/components/cards/calendar-date-picker",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

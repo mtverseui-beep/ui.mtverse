@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terminal CLI Auth – Auth React Component",
-  description: "Terminal CLI Auth is a production-ready auth React component featuring Terminal/CLI green phosphor CRT + typing prompt + JetBrains Mono + scanlines. Copy,…",
+  title: "Terminal CLI Auth - Auth React Component",
+  description: "Terminal CLI Auth is a production-ready auth React component featuring Terminal/CLI green phosphor CRT + typing prompt + JetBrains Mono + scanlines. Copy,...",
   keywords: ["Terminal CLI Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/auth009-card" },
+  alternates: { canonical: "/components/auth/auth009" },
   openGraph: {
     type: "website",
-    url: "/components/cards/auth009-card",
-    title: "Terminal CLI Auth – Auth React Component",
-    description: "Terminal CLI Auth is a production-ready auth React component featuring Terminal/CLI green phosphor CRT + typing prompt + JetBrains Mono + scanlines. Copy,…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/auth/auth009",
+    title: "Terminal CLI Auth - Auth React Component",
+    description: "Terminal CLI Auth is a production-ready auth React component featuring Terminal/CLI green phosphor CRT + typing prompt + JetBrains Mono + scanlines. Copy,...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Terminal CLI Auth – Auth React Component",
-    description: "Terminal CLI Auth is a production-ready auth React component featuring Terminal/CLI green phosphor CRT + typing prompt + JetBrains Mono + scanlines. Copy,…",
+    card: "summary",
+    title: "Terminal CLI Auth - Auth React Component",
+    description: "Terminal CLI Auth is a production-ready auth React component featuring Terminal/CLI green phosphor CRT + typing prompt + JetBrains Mono + scanlines. Copy,...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Terminal CLI Auth",
-  "description": "Terminal CLI Auth is a production-ready auth React component featuring Terminal/CLI green phosphor CRT + typing prompt + JetBrains Mono + scanlines. Copy,…",
-  "url": "https://www.mtverse.dev/components/cards/auth009-card",
+  "description": "Terminal CLI Auth is a production-ready auth React component featuring Terminal/CLI green phosphor CRT + typing prompt + JetBrains Mono + scanlines. Copy,...",
+  "url": "https://ui.mtverse.dev/components/auth/auth009",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

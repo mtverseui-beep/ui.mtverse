@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Aurora Glow Tilt Cards – Footer React Component",
-  description: "Aurora Glow Tilt Cards is a production-ready footer React component featuring Dark gradient + pink blur + 4 columns + social hover scale (Glow). Copy,…",
+  title: "Aurora Glow Tilt Cards - Footer React Component",
+  description: "Aurora Glow Tilt Cards is a production-ready footer React component featuring Dark gradient + pink blur + 4 columns + social hover scale (Glow). Copy,...",
   keywords: ["Aurora Glow Tilt Cards","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/footer004-card" },
+  alternates: { canonical: "/components/footers/footer004" },
   openGraph: {
     type: "website",
-    url: "/components/cards/footer004-card",
-    title: "Aurora Glow Tilt Cards – Footer React Component",
-    description: "Aurora Glow Tilt Cards is a production-ready footer React component featuring Dark gradient + pink blur + 4 columns + social hover scale (Glow). Copy,…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/footers/footer004",
+    title: "Aurora Glow Tilt Cards - Footer React Component",
+    description: "Aurora Glow Tilt Cards is a production-ready footer React component featuring Dark gradient + pink blur + 4 columns + social hover scale (Glow). Copy,...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Aurora Glow Tilt Cards – Footer React Component",
-    description: "Aurora Glow Tilt Cards is a production-ready footer React component featuring Dark gradient + pink blur + 4 columns + social hover scale (Glow). Copy,…",
+    card: "summary",
+    title: "Aurora Glow Tilt Cards - Footer React Component",
+    description: "Aurora Glow Tilt Cards is a production-ready footer React component featuring Dark gradient + pink blur + 4 columns + social hover scale (Glow). Copy,...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Aurora Glow Tilt Cards",
-  "description": "Aurora Glow Tilt Cards is a production-ready footer React component featuring Dark gradient + pink blur + 4 columns + social hover scale (Glow). Copy,…",
-  "url": "https://www.mtverse.dev/components/cards/footer004-card",
+  "description": "Aurora Glow Tilt Cards is a production-ready footer React component featuring Dark gradient + pink blur + 4 columns + social hover scale (Glow). Copy,...",
+  "url": "https://ui.mtverse.dev/components/footers/footer004",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

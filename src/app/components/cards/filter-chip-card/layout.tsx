@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Filter Chips – Buttons React Component",
+  title: "Filter Chips - Buttons React Component",
   description: "Filter Chips is a production-ready buttons React component featuring Removable + toggle + add input. Copy, customize, and use it in Next.js projects.",
   keywords: ["Filter Chips","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/filter-chip-card" },
+  alternates: { canonical: "/components/buttons/filter-chip" },
   openGraph: {
     type: "website",
-    url: "/components/cards/filter-chip-card",
-    title: "Filter Chips – Buttons React Component",
+    url: "/components/buttons/filter-chip",
+    title: "Filter Chips - Buttons React Component",
     description: "Filter Chips is a production-ready buttons React component featuring Removable + toggle + add input. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Filter Chips – Buttons React Component",
+    card: "summary",
+    title: "Filter Chips - Buttons React Component",
     description: "Filter Chips is a production-ready buttons React component featuring Removable + toggle + add input. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Filter Chips",
   "description": "Filter Chips is a production-ready buttons React component featuring Removable + toggle + add input. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/filter-chip-card",
+  "url": "https://ui.mtverse.dev/components/buttons/filter-chip",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

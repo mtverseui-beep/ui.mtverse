@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Social Share – Buttons React Component",
+  title: "Social Share - Buttons React Component",
   description: "Social Share is a production-ready buttons React component featuring Brand color wipe + copy link feedback. Copy, customize, and use it in Next.js projects.",
   keywords: ["Social Share","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/social-share-card" },
+  alternates: { canonical: "/components/buttons/social-share" },
   openGraph: {
     type: "website",
-    url: "/components/cards/social-share-card",
-    title: "Social Share – Buttons React Component",
+    url: "/components/buttons/social-share",
+    title: "Social Share - Buttons React Component",
     description: "Social Share is a production-ready buttons React component featuring Brand color wipe + copy link feedback. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Social Share – Buttons React Component",
+    card: "summary",
+    title: "Social Share - Buttons React Component",
     description: "Social Share is a production-ready buttons React component featuring Brand color wipe + copy link feedback. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Social Share",
   "description": "Social Share is a production-ready buttons React component featuring Brand color wipe + copy link feedback. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/social-share-card",
+  "url": "https://ui.mtverse.dev/components/buttons/social-share",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

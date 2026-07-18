@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Interactive Hotspot – Features React Component",
-  description: "Interactive Hotspot is a production-ready features React component featuring Product image + clickable hotspots + tooltip popovers + pulse dots. Copy,…",
+  title: "Interactive Hotspot - Features React Component",
+  description: "Interactive Hotspot is a production-ready features React component featuring Product image + clickable hotspots + tooltip popovers + pulse dots. Copy,...",
   keywords: ["Interactive Hotspot","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/feature-hotspot-card" },
+  alternates: { canonical: "/components/features/feature-hotspot" },
   openGraph: {
     type: "website",
-    url: "/components/cards/feature-hotspot-card",
-    title: "Interactive Hotspot – Features React Component",
-    description: "Interactive Hotspot is a production-ready features React component featuring Product image + clickable hotspots + tooltip popovers + pulse dots. Copy,…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/features/feature-hotspot",
+    title: "Interactive Hotspot - Features React Component",
+    description: "Interactive Hotspot is a production-ready features React component featuring Product image + clickable hotspots + tooltip popovers + pulse dots. Copy,...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Interactive Hotspot – Features React Component",
-    description: "Interactive Hotspot is a production-ready features React component featuring Product image + clickable hotspots + tooltip popovers + pulse dots. Copy,…",
+    card: "summary",
+    title: "Interactive Hotspot - Features React Component",
+    description: "Interactive Hotspot is a production-ready features React component featuring Product image + clickable hotspots + tooltip popovers + pulse dots. Copy,...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Interactive Hotspot",
-  "description": "Interactive Hotspot is a production-ready features React component featuring Product image + clickable hotspots + tooltip popovers + pulse dots. Copy,…",
-  "url": "https://www.mtverse.dev/components/cards/feature-hotspot-card",
+  "description": "Interactive Hotspot is a production-ready features React component featuring Product image + clickable hotspots + tooltip popovers + pulse dots. Copy,...",
+  "url": "https://ui.mtverse.dev/components/features/feature-hotspot",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

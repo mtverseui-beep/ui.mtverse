@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Bento Features – Features React Component",
-  description: "Bento Features is a production-ready features React component featuring Mixed-size bento grid + hover glow + staggered entrance + icon cards. Copy,…",
+  title: "Bento Features - Features React Component",
+  description: "Bento Features is a production-ready features React component featuring Mixed-size bento grid + hover glow + staggered entrance + icon cards. Copy,...",
   keywords: ["Bento Features","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/feature-bento-card" },
+  alternates: { canonical: "/components/features/feature-bento" },
   openGraph: {
     type: "website",
-    url: "/components/cards/feature-bento-card",
-    title: "Bento Features – Features React Component",
-    description: "Bento Features is a production-ready features React component featuring Mixed-size bento grid + hover glow + staggered entrance + icon cards. Copy,…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/features/feature-bento",
+    title: "Bento Features - Features React Component",
+    description: "Bento Features is a production-ready features React component featuring Mixed-size bento grid + hover glow + staggered entrance + icon cards. Copy,...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Bento Features – Features React Component",
-    description: "Bento Features is a production-ready features React component featuring Mixed-size bento grid + hover glow + staggered entrance + icon cards. Copy,…",
+    card: "summary",
+    title: "Bento Features - Features React Component",
+    description: "Bento Features is a production-ready features React component featuring Mixed-size bento grid + hover glow + staggered entrance + icon cards. Copy,...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Bento Features",
-  "description": "Bento Features is a production-ready features React component featuring Mixed-size bento grid + hover glow + staggered entrance + icon cards. Copy,…",
-  "url": "https://www.mtverse.dev/components/cards/feature-bento-card",
+  "description": "Bento Features is a production-ready features React component featuring Mixed-size bento grid + hover glow + staggered entrance + icon cards. Copy,...",
+  "url": "https://ui.mtverse.dev/components/features/feature-bento",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

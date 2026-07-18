@@ -69,13 +69,14 @@ const dashboardShell = readFileSync(join(ROOT, "src", "components", "shell", "Da
 const advancedSearch = readFileSync(join(ROOT, "src", "components", "shell", "AdvancedComponentSearch.tsx"), "utf-8");
 const cardPage = readFileSync(join(ROOT, "src", "components", "library", "CardPage.tsx"), "utf-8");
 const rootLayout = readFileSync(join(ROOT, "src", "app", "layout.tsx"), "utf-8");
+const siteConfig = readFileSync(join(ROOT, "src", "lib", "site-config.ts"), "utf-8");
 if (dashboardShell.includes("toggleFavorite") || dashboardShell.includes("mtverse:favorites")) failures.push("Second-sidebar favorite control is still present");
 if (!dashboardShell.includes("AdvancedComponentSearch")) failures.push("Advanced header search is not mounted");
 if (!advancedSearch.includes("cardRoutes") || !advancedSearch.includes("useDeferredValue") || !advancedSearch.includes("MAX_VISIBLE_RESULTS")) {
   failures.push("Advanced global search is not indexed or performance-capped");
 }
 if (cardPage.includes("codeRegistry")) failures.push("CardPage eagerly imports the full code registry");
-if (!rootLayout.includes("360+")) failures.push("Root component-count metadata is stale");
+if (!(rootLayout + siteConfig).includes("360+")) failures.push("Root component-count metadata is stale");
 
 const globals = readFileSync(GLOBALS, "utf-8");
 if (!globals.includes('component-theme.css')) failures.push("Shared component theme CSS is not imported by globals.css");

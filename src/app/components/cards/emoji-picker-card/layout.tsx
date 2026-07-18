@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Emoji Picker – Forms React Component",
+  title: "Emoji Picker - Forms React Component",
   description: "Emoji Picker is a production-ready forms React component featuring Category grid + search + recent. Copy, customize, and use it in Next.js projects.",
   keywords: ["Emoji Picker","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/emoji-picker-card" },
+  alternates: { canonical: "/components/forms/emoji-picker" },
   openGraph: {
     type: "website",
-    url: "/components/cards/emoji-picker-card",
-    title: "Emoji Picker – Forms React Component",
+    url: "/components/forms/emoji-picker",
+    title: "Emoji Picker - Forms React Component",
     description: "Emoji Picker is a production-ready forms React component featuring Category grid + search + recent. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Emoji Picker – Forms React Component",
+    card: "summary",
+    title: "Emoji Picker - Forms React Component",
     description: "Emoji Picker is a production-ready forms React component featuring Category grid + search + recent. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Emoji Picker",
   "description": "Emoji Picker is a production-ready forms React component featuring Category grid + search + recent. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/emoji-picker-card",
+  "url": "https://ui.mtverse.dev/components/forms/emoji-picker",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

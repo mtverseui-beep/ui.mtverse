@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Profile Flip – Profile React Component",
+  title: "Profile Flip - Profile React Component",
   description: "Profile Flip is a production-ready profile React component featuring 3D flip + edit. Copy, customize, and use it in Next.js projects.",
   keywords: ["Profile Flip","Profile component","Profile React component","Profile Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/profile-flip-card" },
+  alternates: { canonical: "/components/cards/profile-flip" },
   openGraph: {
     type: "website",
-    url: "/components/cards/profile-flip-card",
-    title: "Profile Flip – Profile React Component",
+    url: "/components/cards/profile-flip",
+    title: "Profile Flip - Profile React Component",
     description: "Profile Flip is a production-ready profile React component featuring 3D flip + edit. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Profile Flip – Profile React Component",
+    card: "summary",
+    title: "Profile Flip - Profile React Component",
     description: "Profile Flip is a production-ready profile React component featuring 3D flip + edit. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Profile Flip",
   "description": "Profile Flip is a production-ready profile React component featuring 3D flip + edit. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/profile-flip-card",
+  "url": "https://ui.mtverse.dev/components/cards/profile-flip",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

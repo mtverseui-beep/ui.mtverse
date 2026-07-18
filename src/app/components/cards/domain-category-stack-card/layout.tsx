@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Domain Intelligence – Stack React Component",
+  title: "Domain Intelligence - Stack React Component",
   description: "Domain Intelligence is a production-ready stack React component featuring Swipe stack + score. Copy, customize, and use it in Next.js projects.",
   keywords: ["Domain Intelligence","Stack component","Stack React component","Stack Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/domain-category-stack-card" },
+  alternates: { canonical: "/components/cards/domain-category-stack" },
   openGraph: {
     type: "website",
-    url: "/components/cards/domain-category-stack-card",
-    title: "Domain Intelligence – Stack React Component",
+    url: "/components/cards/domain-category-stack",
+    title: "Domain Intelligence - Stack React Component",
     description: "Domain Intelligence is a production-ready stack React component featuring Swipe stack + score. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Domain Intelligence – Stack React Component",
+    card: "summary",
+    title: "Domain Intelligence - Stack React Component",
     description: "Domain Intelligence is a production-ready stack React component featuring Swipe stack + score. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Domain Intelligence",
   "description": "Domain Intelligence is a production-ready stack React component featuring Swipe stack + score. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/domain-category-stack-card",
+  "url": "https://ui.mtverse.dev/components/cards/domain-category-stack",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

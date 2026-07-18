@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "OTP Verification – Buttons React Component",
+  title: "OTP Verification - Buttons React Component",
   description: "OTP Verification is a production-ready buttons React component featuring Send code + countdown ring + resend. Copy, customize, and use it in Next.js projects.",
   keywords: ["OTP Verification","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/otp-verification-card" },
+  alternates: { canonical: "/components/buttons/otp-verification" },
   openGraph: {
     type: "website",
-    url: "/components/cards/otp-verification-card",
-    title: "OTP Verification – Buttons React Component",
+    url: "/components/buttons/otp-verification",
+    title: "OTP Verification - Buttons React Component",
     description: "OTP Verification is a production-ready buttons React component featuring Send code + countdown ring + resend. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "OTP Verification – Buttons React Component",
+    card: "summary",
+    title: "OTP Verification - Buttons React Component",
     description: "OTP Verification is a production-ready buttons React component featuring Send code + countdown ring + resend. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "OTP Verification",
   "description": "OTP Verification is a production-ready buttons React component featuring Send code + countdown ring + resend. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/otp-verification-card",
+  "url": "https://ui.mtverse.dev/components/buttons/otp-verification",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

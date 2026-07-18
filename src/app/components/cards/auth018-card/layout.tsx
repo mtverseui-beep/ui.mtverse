@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Floating Shapes Illustration Auth – Auth React Component",
-  description: "Floating Shapes Illustration Auth is a production-ready auth React component featuring Side-by-side + animated floating SVG shapes illustration + playful…",
+  title: "Floating Shapes Illustration Auth - Auth React Component",
+  description: "Floating Shapes Illustration Auth is a production-ready auth React component featuring Side-by-side + animated floating SVG shapes illustration + playful...",
   keywords: ["Floating Shapes Illustration Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/auth018-card" },
+  alternates: { canonical: "/components/auth/auth018" },
   openGraph: {
     type: "website",
-    url: "/components/cards/auth018-card",
-    title: "Floating Shapes Illustration Auth – Auth React Component",
-    description: "Floating Shapes Illustration Auth is a production-ready auth React component featuring Side-by-side + animated floating SVG shapes illustration + playful…",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    url: "/components/auth/auth018",
+    title: "Floating Shapes Illustration Auth - Auth React Component",
+    description: "Floating Shapes Illustration Auth is a production-ready auth React component featuring Side-by-side + animated floating SVG shapes illustration + playful...",
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Floating Shapes Illustration Auth – Auth React Component",
-    description: "Floating Shapes Illustration Auth is a production-ready auth React component featuring Side-by-side + animated floating SVG shapes illustration + playful…",
+    card: "summary",
+    title: "Floating Shapes Illustration Auth - Auth React Component",
+    description: "Floating Shapes Illustration Auth is a production-ready auth React component featuring Side-by-side + animated floating SVG shapes illustration + playful...",
     images: ["/mtverse-logo.png"],
   },
   robots: { index: true, follow: true },
@@ -25,15 +25,14 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
   "name": "Floating Shapes Illustration Auth",
-  "description": "Floating Shapes Illustration Auth is a production-ready auth React component featuring Side-by-side + animated floating SVG shapes illustration + playful…",
-  "url": "https://www.mtverse.dev/components/cards/auth018-card",
+  "description": "Floating Shapes Illustration Auth is a production-ready auth React component featuring Side-by-side + animated floating SVG shapes illustration + playful...",
+  "url": "https://ui.mtverse.dev/components/auth/auth018",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

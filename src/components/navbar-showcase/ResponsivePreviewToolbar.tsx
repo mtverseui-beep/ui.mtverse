@@ -38,7 +38,7 @@ export function ResponsivePreviewToolbar({
             loading={loadingTab === "code"}
             onClick={() => onTabChange("code")}
             icon={<Code2 className="h-3.5 w-3.5" strokeWidth={2.4} />}
-            label="Code"
+            label="Raw code"
           />
           <SegmentButton
             id="docs"

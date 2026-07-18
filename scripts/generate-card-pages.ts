@@ -15,6 +15,7 @@ const ROOT = join(import.meta.dir, "..");
 const CARDS_DATA = join(ROOT, "src", "components", "cards-data", "cards.ts");
 const REGISTRY = join(ROOT, "src", "components", "library", "code-registry.ts");
 const PAGES_DIR = join(ROOT, "src", "app", "components", "cards");
+const GENERATED_ROUTES = join(ROOT, "src", "lib", "generated-component-routes.ts");
 
 interface CardEntry {
   slug: string;
@@ -26,6 +27,20 @@ interface CardEntry {
   source: "original" | "more";
 }
 
+const CATEGORY_URL_SEGMENT: Record<string, string> = {
+  Premium: "premium", Agents: "premium", Buttons: "buttons", Forms: "forms",
+  Navbar: "navbars", Footer: "footers", Hero: "heroes", Pricing: "pricing",
+  SignIn: "sign-in", SignUp: "sign-up", ForgotPassword: "forgot-password",
+  ResetPassword: "reset-password", Error404: "error-404", Error500: "error-500",
+  Offline: "offline", Testimonials: "testimonials", Auth: "auth", ErrorPages: "errors",
+  Features: "features", CTA: "cta", Charts: "charts", Modals: "modals",
+  Sidebar: "sidebars", AI: "ai", Backgrounds: "backgrounds", Tables: "tables",
+};
+
+function publicHref(card: CardEntry): string {
+  const group = CATEGORY_URL_SEGMENT[card.category] ?? "cards";
+  return `/components/${group}/${card.slug.replace(/-card$/, "")}`;
+}
 function parseCards(): CardEntry[] {
   const cardsTs = readFileSync(CARDS_DATA, "utf-8");
   const entries: CardEntry[] = [];
@@ -71,11 +86,12 @@ function clipDescription(value: string, maxLength = 158): string {
   if (value.length <= maxLength) return value;
   const clipped = value.slice(0, maxLength - 1);
   const lastSpace = clipped.lastIndexOf(" ");
-  return `${clipped.slice(0, lastSpace > 110 ? lastSpace : clipped.length).trimEnd()}…`;
+  return `${clipped.slice(0, lastSpace > 110 ? lastSpace : clipped.length).trimEnd()}...`;
 }
 
 function writeSeoLayout(card: CardEntry, pageDir: string) {
-  const title = `${card.title} – ${card.category} React Component`;
+  const canonicalPath = publicHref(card);
+  const title = `${card.title} - ${card.category} React Component`;
   const description = clipDescription(
     `${card.title} is a production-ready ${card.category.toLowerCase()} React component featuring ${card.animation}. Copy, customize, and use it in Next.js projects.`,
   );
@@ -98,10 +114,9 @@ function writeSeoLayout(card: CardEntry, pageDir: string) {
     "@type": "SoftwareSourceCode",
     name: card.title,
     description,
-    url: `https://www.mtverse.dev${card.href}`,
+    url: `https://ui.mtverse.dev${canonicalPath}`,
     programmingLanguage: ["TypeScript", "React", "CSS"],
     runtimePlatform: "Next.js",
-    codeRepository: "https://github.com/mtverse",
     author: { "@type": "Organization", name: "mtverse", url: "https://www.mtverse.dev" },
   };
 
@@ -111,16 +126,16 @@ export const metadata: Metadata = {
   title: ${JSON.stringify(title)},
   description: ${JSON.stringify(description)},
   keywords: ${JSON.stringify(keywords)},
-  alternates: { canonical: ${JSON.stringify(card.href)} },
+  alternates: { canonical: ${JSON.stringify(canonicalPath)} },
   openGraph: {
     type: "website",
-    url: ${JSON.stringify(card.href)},
+    url: ${JSON.stringify(canonicalPath)},
     title: ${JSON.stringify(title)},
     description: ${JSON.stringify(description)},
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: ${JSON.stringify(title)},
     description: ${JSON.stringify(description)},
     images: ["/mtverse-logo.png"],
@@ -149,6 +164,13 @@ export default function ComponentLayout({ children }: Readonly<{ children: React
 const cards = parseCards();
 const componentNames = getComponentNames();
 const mainFilePaths = getMainFilePaths();
+
+const generatedRoutes = cards.map((card) => ({ slug: card.slug, href: publicHref(card), category: card.category }));
+writeFileSync(
+  GENERATED_ROUTES,
+  "export const generatedComponentRoutes = " + JSON.stringify(generatedRoutes, null, 2) + " as const;\n",
+  "utf-8",
+);
 
 // Slugs that have CUSTOM showcase pages (not the default CardPage wrapper).
 // These are skipped by this generator so their hand-written pages survive.
@@ -345,7 +367,7 @@ const CUSTOM_SHOWCASE_SLUGS = new Set([
   "hero006-card",
 ]);
 
-console.log(`Generating ${cards.length} card pages…\n`);
+console.log(`Generating ${cards.length} component pages...\n`);
 
 for (const card of cards) {
   const pageDir = join(PAGES_DIR, card.slug);
@@ -353,18 +375,18 @@ for (const card of cards) {
   writeSeoLayout(card, pageDir);
 
   if (CUSTOM_SHOWCASE_SLUGS.has(card.slug)) {
-    console.log(`  ⊘ ${card.slug} → skipped (custom showcase)`);
+    console.log(`  SKIP ${card.slug} (custom showcase)`);
     continue;
   }
   card.componentName = componentNames[card.slug] ?? "";
   if (!card.componentName) {
-    console.warn(`⚠ Could not find component name for ${card.slug}`);
+    console.warn(`WARN Missing component name for ${card.slug}`);
     continue;
   }
 
   const mainFilePath = mainFilePaths[card.slug];
   if (!mainFilePath) {
-    console.warn(`âš  Could not find source path for ${card.slug}`);
+    console.warn(`WARN Missing source path for ${card.slug}`);
     continue;
   }
 
@@ -385,7 +407,7 @@ export default function Page() {
 `;
 
   writeFileSync(join(pageDir, "page.tsx"), fileContent, "utf-8");
-  console.log(`  ✓ ${card.slug} → ${card.componentName}`);
+  console.log(`  OK ${card.slug} -> ${card.componentName}`);
 }
 
-console.log(`\n✓ Generated ${cards.length} card pages.`);
+console.log(`\nGenerated ${cards.length} component pages.`);

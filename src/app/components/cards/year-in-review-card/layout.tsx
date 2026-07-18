@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Year in Review – Data React Component",
+  title: "Year in Review - Data React Component",
   description: "Year in Review is a production-ready data React component featuring KPI ring + timeline. Copy, customize, and use it in Next.js projects.",
   keywords: ["Year in Review","Data component","Data React component","Data Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/year-in-review-card" },
+  alternates: { canonical: "/components/cards/year-in-review" },
   openGraph: {
     type: "website",
-    url: "/components/cards/year-in-review-card",
-    title: "Year in Review – Data React Component",
+    url: "/components/cards/year-in-review",
+    title: "Year in Review - Data React Component",
     description: "Year in Review is a production-ready data React component featuring KPI ring + timeline. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Year in Review – Data React Component",
+    card: "summary",
+    title: "Year in Review - Data React Component",
     description: "Year in Review is a production-ready data React component featuring KPI ring + timeline. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Year in Review",
   "description": "Year in Review is a production-ready data React component featuring KPI ring + timeline. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/year-in-review-card",
+  "url": "https://ui.mtverse.dev/components/cards/year-in-review",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

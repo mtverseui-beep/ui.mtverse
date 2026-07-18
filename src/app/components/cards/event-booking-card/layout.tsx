@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Event Booking – Product React Component",
+  title: "Event Booking - Product React Component",
   description: "Event Booking is a production-ready product React component featuring Ticket stub + RSVP. Copy, customize, and use it in Next.js projects.",
   keywords: ["Event Booking","Product component","Product React component","Product Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/event-booking-card" },
+  alternates: { canonical: "/components/cards/event-booking" },
   openGraph: {
     type: "website",
-    url: "/components/cards/event-booking-card",
-    title: "Event Booking – Product React Component",
+    url: "/components/cards/event-booking",
+    title: "Event Booking - Product React Component",
     description: "Event Booking is a production-ready product React component featuring Ticket stub + RSVP. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Event Booking – Product React Component",
+    card: "summary",
+    title: "Event Booking - Product React Component",
     description: "Event Booking is a production-ready product React component featuring Ticket stub + RSVP. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Event Booking",
   "description": "Event Booking is a production-ready product React component featuring Ticket stub + RSVP. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/event-booking-card",
+  "url": "https://ui.mtverse.dev/components/cards/event-booking",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",

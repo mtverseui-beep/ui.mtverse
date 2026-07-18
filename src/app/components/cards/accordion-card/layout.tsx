@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Accordion – Forms React Component",
+  title: "Accordion - Forms React Component",
   description: "Accordion is a production-ready forms React component featuring Chevron + plus/minus + card. Copy, customize, and use it in Next.js projects.",
   keywords: ["Accordion","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
-  alternates: { canonical: "/components/cards/accordion-card" },
+  alternates: { canonical: "/components/forms/accordion" },
   openGraph: {
     type: "website",
-    url: "/components/cards/accordion-card",
-    title: "Accordion – Forms React Component",
+    url: "/components/forms/accordion",
+    title: "Accordion - Forms React Component",
     description: "Accordion is a production-ready forms React component featuring Chevron + plus/minus + card. Copy, customize, and use it in Next.js projects.",
-    images: [{ url: "/mtverse-logo.png", width: 64, height: 64, alt: "mtverse UI component library" }],
+    images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI component library" }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Accordion – Forms React Component",
+    card: "summary",
+    title: "Accordion - Forms React Component",
     description: "Accordion is a production-ready forms React component featuring Chevron + plus/minus + card. Copy, customize, and use it in Next.js projects.",
     images: ["/mtverse-logo.png"],
   },
@@ -26,14 +26,13 @@ const structuredData = {
   "@type": "SoftwareSourceCode",
   "name": "Accordion",
   "description": "Accordion is a production-ready forms React component featuring Chevron + plus/minus + card. Copy, customize, and use it in Next.js projects.",
-  "url": "https://www.mtverse.dev/components/cards/accordion-card",
+  "url": "https://ui.mtverse.dev/components/forms/accordion",
   "programmingLanguage": [
     "TypeScript",
     "React",
     "CSS"
   ],
   "runtimePlatform": "Next.js",
-  "codeRepository": "https://github.com/mtverse",
   "author": {
     "@type": "Organization",
     "name": "mtverse",
