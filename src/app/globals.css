@@ -47,19 +47,19 @@
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --foreground: oklch(0.25 0.05 240);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.25 0.05 240);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
+  --popover-foreground: oklch(0.25 0.05 240);
+  --primary: oklch(0.4 0.15 250);
+  --primary-foreground: oklch(0.95 0 0);
+  --secondary: oklch(0.92 0.02 60);
+  --secondary-foreground: oklch(0.25 0.05 240);
+  --muted: oklch(0.92 0.02 60);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --accent: oklch(0.92 0.02 60);
+  --accent-foreground: oklch(0.25 0.05 240);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
@@ -69,12 +69,12 @@
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar: oklch(0.95 0 0);
+  --sidebar-foreground: oklch(0.25 0.05 240);
+  --sidebar-primary: oklch(0.4 0.15 250);
+  --sidebar-primary-foreground: oklch(0.95 0 0);
+  --sidebar-accent: oklch(0.92 0.02 60);
+  --sidebar-accent-foreground: oklch(0.25 0.05 240);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
@@ -104,20 +104,20 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+  --background: oklch(0.15 0.02 250);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.25 0.05 250);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.25 0.05 250);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.70 0.20 250);
+  --primary-foreground: oklch(0.15 0.02 250);
+  --secondary: oklch(0.35 0.08 240);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.35 0.08 240);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --accent: oklch(0.35 0.08 240);
+  --accent-foreground: oklch(0.95 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
@@ -127,12 +127,12 @@
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar: oklch(0.20 0.03 250);
+  --sidebar-foreground: oklch(0.95 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-primary-foreground: oklch(0.95 0 0);
+  --sidebar-accent: oklch(0.35 0.08 240);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
@@ -199,12 +199,12 @@
   }
 }
 
-/* ──────────────────────────────────────────────────────────────────────────
+/* ────────────────────────────────────────────────────────────────[...]
    Global modern scrollbars — applied to EVERY scrollable element.
    Theme-aware: reads --scrollbar-thumb / --scrollbar-thumb-hover which flip
    in .dark. Thin (8px), rounded, semi-transparent, NO arrows/buttons.
    Matches macOS / Linear / Vercel dashboard style everywhere.
-   ────────────────────────────────────────────────────────────────────────── */
+   ────────────────────────────────────────────────────────────────[...]
 
 /* Firefox — thin scrollbar with custom colors */
 * {
@@ -271,7 +271,7 @@
   background-color: var(--page-bg);
 }
 
-/* ──────────────────────────────────────────────────────────────────────────
+/* ────────────────────────────────────────────────────────────────[...]
    Card semantic utility classes — every card uses these so the card surface,
    text, and borders all flip with the theme automatically. This is cleaner
    than adding dark: variants to 100+ individual class strings.
@@ -279,7 +279,7 @@
    .cs-border sets border-width + border-color together so it's self-contained
    and doesn't rely on Tailwind's `border` class (which would override the
    color with the default --border variable).
-   ────────────────────────────────────────────────────────────────────────── */
+   ────────────────────────────────────────────────────────────────[...]
 .cs-surface { background-color: var(--card-surface); color: var(--card-text); }
 .cs-surface-2 { background-color: var(--card-surface-2); }
 .cs-surface-3 { background-color: var(--card-surface-3); }
@@ -340,9 +340,9 @@
   animation: shimmer 2s linear infinite;
 }
 
-/* ════════════════════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════════[...]
    INSIGHT BENTO DASHBOARD — design tokens + masonry
-   ════════════════════════════════════════════════════════════════════════════
+   ════════════════════════════════════════════════════════════════[...]
    Used by InsightBentoDashboard. Tailwind v4 doesn't ship a JS config by
    default; we declare the tokens as CSS variables + utility classes here so
    the dashboard's `bg-canvas`, `text-ink-900`, `shadow-card`, `rounded-card`
@@ -428,9 +428,9 @@
 .insight-dashboard .no-scrollbar::-webkit-scrollbar { display: none; }
 .insight-dashboard .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ════════════════════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════════[...]
    INSIGHT DASHBOARD — dark mode + CSS animations
-   ════════════════════════════════════════════════════════════════════════════ */
+   ════════════════════════════════════════════════════════════════[...]
 
 /* Dark mode tokens — applied when a `.dark` ancestor is present */
 .dark .insight-dashboard {
@@ -498,491 +498,6 @@
 
 /* Rank bar fill: width grows from 0 — set final width via inline style */
 @keyframes rank-bar-fill {
-  from { width: 0; }
+  from { width: 0%; }
 }
-.insight-dashboard .rank-bar-fill {
-  animation: rank-bar-fill 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* Contribution grid cell entrance */
-@keyframes contrib-cell-enter {
-  from { opacity: 0; transform: scale(0.4); }
-  to { opacity: 1; transform: scale(1); }
-}
-.insight-dashboard .contrib-cell {
-  animation: contrib-cell-enter 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* Reduced motion — honor user preference */
-@media (prefers-reduced-motion: reduce) {
-  .insight-dashboard .card-enter,
-  .insight-dashboard .rank-bar-fill,
-  .insight-dashboard .contrib-cell {
-    animation: none !important;
-  }
-}
-
-/* ── Insight dashboard: dark mode bg aliases on the dashboard root itself ── */
-.insight-dashboard.bg-canvas { background-color: var(--canvas) !important; }
-.insight-dashboard .bg-canvas { background-color: var(--canvas); }
-.dark .insight-dashboard.bg-canvas { background-color: var(--canvas) !important; }
-.dark .insight-dashboard .bg-canvas { background-color: var(--canvas); }
-.dark .insight-dashboard.dark\:bg-ink-950,
-.dark .insight-dashboard .dark\:bg-ink-950 { background-color: #0a0a12; }
-.dark .insight-dashboard.dark\:bg-ink-800,
-.dark .insight-dashboard .dark\:bg-ink-800 { background-color: #1a1a26; }
-.dark .insight-dashboard.dark\:bg-white,
-.dark .insight-dashboard .dark\:bg-white { background-color: #1a1a26; }
-.dark .insight-dashboard.dark\:bg-gradient-to-br { background-image: linear-gradient(to bottom right, #1a1a26, #0a0a12); }
-
-/* Light mode: bg-white on cards */
-.insight-dashboard .bg-white { background-color: #ffffff; }
-
-/* Recharts axis ticks adapt to dark mode */
-.dark .insight-dashboard .recharts-cartesian-axis-tick-value { fill: #8e8ea3 !important; }
-
-/* ════════════════════════════════════════════════════════════════════════════
-   INSIGHT DASHBOARD — MONOCHROME BLUE variant
-   ════════════════════════════════════════════════════════════════════════════
-   Same component structure as the default insight-dashboard, but the page
-   background uses a deeper navy and the chart palette is monochrome blue
-   (navy → dark-blue → royal → sky → cyan → sky-blue → light-blue → light-cyan).
-   The chart colors themselves come from data-blue.ts; this block just
-   overrides the page-level background tokens for the blue variant. */
-
-/* Light mode: subtle blue-tinted canvas */
-.insight-dashboard-blue {
-  --canvas: #f0f5ff;
-}
-
-/* Dark mode: deep navy page background (reference image style) */
-.dark .insight-dashboard-blue {
-  --canvas: #0a1428;
-  --ink-800: #111d36;
-  --ink-950: #0a1428;
-}
-
-/* Dark mode cards: slightly blue-tinted dark slate */
-.dark .insight-dashboard-blue .bg-white,
-.dark .insight-dashboard-blue.dark\:bg-white { background-color: #111d36 !important; }
-.dark .insight-dashboard-blue .bg-ink-900,
-.dark .insight-dashboard-blue.dark\:bg-ink-900 { background-color: #0f1a30 !important; }
-.dark .insight-dashboard-blue.dark\:bg-ink-800 { background-color: #111d36 !important; }
-.dark .insight-dashboard-blue.dark\:bg-gradient-to-br { background-image: linear-gradient(to bottom right, #111d36, #0a1428) !important; }
-
-/* Recharts tooltip in blue variant — blue-tinted */
-.insight-dashboard-blue .recharts-tooltip-wrapper .recharts-default-tooltip {
-  background-color: #111d36 !important;
-  border: 1px solid #1e3a8a !important;
-}
-
-
-/* ════════════════════════════════════════════════════════════════════════════
-   CONTENT LOADER — dual-ring spinner animations
-   ════════════════════════════════════════════════════════════════════════════ */
-@keyframes content-spinner-spin-cw {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-@keyframes content-spinner-spin-ccw {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
-}
-.content-spinner-outer {
-  animation: content-spinner-spin-cw 0.9s linear infinite;
-  transform-origin: center;
-}
-.content-spinner-inner {
-  animation: content-spinner-spin-ccw 0.7s linear infinite;
-  transform-origin: center;
-}
-@media (prefers-reduced-motion: reduce) {
-  .content-spinner-outer,
-  .content-spinner-inner {
-    animation-duration: 2s !important;
-  }
-}
-
-/* ════════════════════════════════════════════════════════════════════════════
-   AI CHATBOT — animated orb keyframes (from premium3.zip)
-   ════════════════════════════════════════════════════════════════════════════ */
-@keyframes orb-hue-rotate {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
-}
-@keyframes orb-hue-rotate-blur {
-  0% { filter: blur(var(--orb-blur)) hue-rotate(0deg); }
-  100% { filter: blur(var(--orb-blur)) hue-rotate(360deg); }
-}
-@keyframes orb-circle-1 {
-  0%, 100% { transform: translate(20%, -30%); }
-  25% { transform: translate(-25%, 15%); }
-  50% { transform: translate(15%, 25%); }
-  75% { transform: translate(-20%, -15%); }
-}
-@keyframes orb-circle-2 {
-  0%, 100% { transform: translate(-30%, 20%); }
-  25% { transform: translate(20%, -25%); }
-  50% { transform: translate(-15%, 30%); }
-  75% { transform: translate(25%, -10%); }
-}
-@keyframes orb-circle-3 {
-  0%, 100% { transform: translate(10%, 25%); }
-  25% { transform: translate(-20%, -20%); }
-  50% { transform: translate(25%, -15%); }
-  75% { transform: translate(-15%, 20%); }
-}
-@keyframes orb-circle-4 {
-  0%, 100% { transform: translate(-25%, -25%); }
-  25% { transform: translate(30%, 10%); }
-  50% { transform: translate(-10%, 30%); }
-  75% { transform: translate(20%, -20%); }
-}
-@keyframes orb-circle-5 {
-  0%, 100% { transform: translate(15%, 15%); }
-  25% { transform: translate(-25%, -10%); }
-  50% { transform: translate(20%, -25%); }
-  75% { transform: translate(-15%, 25%); }
-}
-.orb-circle-1 { animation: orb-circle-1 6s ease-in-out infinite; }
-.orb-circle-2 { animation: orb-circle-2 7s ease-in-out infinite; }
-.orb-circle-3 { animation: orb-circle-3 8s ease-in-out infinite; }
-.orb-circle-4 { animation: orb-circle-4 5s ease-in-out infinite; }
-.orb-circle-5 { animation: orb-circle-5 9s ease-in-out infinite; }
-
-/* Hide scrollbar utility (used by chat widget) */
-.scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
-.scrollbar-none::-webkit-scrollbar { display: none; }
-
-/* ════════════════════════════════════════════════════════════════════════════
-   MODAL KIT — premium animations (from provided ModalKit code)
-   ════════════════════════════════════════════════════════════════════════════ */
-@keyframes backdropIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes backdropOut { from { opacity: 1; } to { opacity: 0; } }
-@keyframes fadeScaleIn { from { opacity: 0; transform: scale(.94) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-@keyframes fadeScaleOut { from { opacity: 1; transform: scale(1) translateY(0); } to { opacity: 0; transform: scale(.94) translateY(10px); } }
-@keyframes panelIn { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: translateX(0); } }
-@keyframes slideUpIn { from { opacity: 0; transform: translateY(36px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-@keyframes slideUpOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(24px) scale(.98); } }
-@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-@keyframes centerPopIn { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
-@keyframes centerPopOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(.92); } }
-@keyframes underlineIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes crossfade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes drawerIn { from { opacity: 0; transform: translateX(26px) scale(.98); } to { opacity: 1; transform: translateX(0) scale(1); } }
-@keyframes drawerOut { from { opacity: 1; transform: translateX(0) scale(1); } to { opacity: 0; transform: translateX(20px) scale(.98); } }
-@keyframes dropIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
-
-/* ════════════════════════════════════════════════════════════════════════════
-   Global dark mode overrides for legacy components
-   These rules automatically convert common light-mode Tailwind classes
-   to dark equivalents when .dark is on <html>. This avoids editing 200+
-   individual component files.
-   ════════════════════════════════════════════════════════════════════════════ */
-
-/* Backgrounds */
-.dark .bg-white { background-color: #0f0f17 !important; }
-.dark .bg-slate-50 { background-color: #0d0d14 !important; }
-.dark .bg-slate-100 { background-color: #14141c !important; }
-.dark .bg-slate-200 { background-color: #1a1a24 !important; }
-.dark .bg-gray-50 { background-color: #0d0d14 !important; }
-.dark .bg-gray-100 { background-color: #14141c !important; }
-.dark .bg-gray-200 { background-color: #1a1a24 !important; }
-.dark .bg-zinc-50 { background-color: #0d0d14 !important; }
-.dark .bg-zinc-100 { background-color: #14141c !important; }
-.dark .bg-neutral-50 { background-color: #0d0d14 !important; }
-.dark .bg-neutral-100 { background-color: #14141c !important; }
-
-/* Text colors */
-.dark .text-slate-900 { color: #fafafa !important; }
-.dark .text-slate-800 { color: #e4e4e7 !important; }
-.dark .text-slate-700 { color: #a1a1aa !important; }
-.dark .text-slate-600 { color: #71717a !important; }
-.dark .text-slate-500 { color: #71717a !important; }
-.dark .text-slate-400 { color: #52525b !important; }
-.dark .text-slate-300 { color: #3f3f46 !important; }
-.dark .text-gray-900 { color: #fafafa !important; }
-.dark .text-gray-800 { color: #e4e4e7 !important; }
-.dark .text-gray-700 { color: #a1a1aa !important; }
-.dark .text-gray-600 { color: #71717a !important; }
-.dark .text-gray-500 { color: #71717a !important; }
-.dark .text-gray-400 { color: #52525b !important; }
-.dark .text-zinc-900 { color: #fafafa !important; }
-.dark .text-zinc-800 { color: #e4e4e7 !important; }
-.dark .text-zinc-700 { color: #a1a1aa !important; }
-.dark .text-neutral-900 { color: #fafafa !important; }
-.dark .text-neutral-800 { color: #e4e4e7 !important; }
-.dark .text-neutral-700 { color: #a1a1aa !important; }
-.dark .text-black { color: #fafafa !important; }
-
-/* Borders */
-.dark .border-slate-200 { border-color: rgba(255,255,255,0.10) !important; }
-.dark .border-slate-300 { border-color: rgba(255,255,255,0.12) !important; }
-.dark .border-gray-200 { border-color: rgba(255,255,255,0.10) !important; }
-.dark .border-gray-300 { border-color: rgba(255,255,255,0.12) !important; }
-.dark .border-zinc-200 { border-color: rgba(255,255,255,0.10) !important; }
-.dark .border-neutral-200 { border-color: rgba(255,255,255,0.10) !important; }
-.dark .border-black\/10 { border-color: rgba(255,255,255,0.10) !important; }
-.dark .border-black\/5 { border-color: rgba(255,255,255,0.06) !important; }
-
-/* Divide */
-.dark .divide-slate-200 > * { border-color: rgba(255,255,255,0.10) !important; }
-.dark .divide-gray-200 > * { border-color: rgba(255,255,255,0.10) !important; }
-
-/* Ring */
-.dark .ring-slate-200 { --tw-ring-color: rgba(255,255,255,0.10) !important; }
-.dark .ring-gray-200 { --tw-ring-color: rgba(255,255,255,0.10) !important; }
-
-/* Placeholder text */
-.dark .placeholder\:text-slate-400::placeholder { color: #52525b !important; }
-.dark .placeholder\:text-gray-400::placeholder { color: #52525b !important; }
-.dark .placeholder\:text-slate-500::placeholder { color: #3f3f46 !important; }
-
-/* Hover backgrounds */
-.dark .hover\:bg-slate-50:hover { background-color: rgba(255,255,255,0.04) !important; }
-.dark .hover\:bg-slate-100:hover { background-color: rgba(255,255,255,0.06) !important; }
-.dark .hover\:bg-gray-50:hover { background-color: rgba(255,255,255,0.04) !important; }
-.dark .hover\:bg-gray-100:hover { background-color: rgba(255,255,255,0.06) !important; }
-.dark .hover\:bg-gray-200:hover { background-color: rgba(255,255,255,0.08) !important; }
-
-/* Hover text */
-.dark .hover\:text-slate-900:hover { color: #fafafa !important; }
-.dark .hover\:text-slate-700:hover { color: #a1a1aa !important; }
-.dark .hover\:text-gray-900:hover { color: #fafafa !important; }
-.dark .hover\:text-gray-700:hover { color: #a1a1aa !important; }
-
-/* From/to gradients */
-.dark .from-white { --tw-gradient-from: #0f0f17 !important; }
-.dark .to-slate-50 { --tw-gradient-to: #0d0d14 !important; }
-.dark .from-slate-50 { --tw-gradient-from: #0d0d14 !important; }
-.dark .from-gray-50 { --tw-gradient-from: #0d0d14 !important; }
-.dark .to-white { --tw-gradient-to: #0f0f17 !important; }
-
-/* Shadow adjustments for dark mode */
-.dark .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.3) !important; }
-.dark .shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3) !important; }
-.dark .shadow-md { box-shadow: 0 4px 6px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3) !important; }
-.dark .shadow-lg { box-shadow: 0 10px 15px rgba(0,0,0,0.4), 0 4px 6px rgba(0,0,0,0.3) !important; }
-.dark .shadow-xl { box-shadow: 0 20px 25px rgba(0,0,0,0.5), 0 10px 10px rgba(0,0,0,0.3) !important; }
-
-/* ════════════════════════════════════════════════════════════════════════════
-   Global accessibility: focus-visible ring on all interactive elements
-   ════════════════════════════════════════════════════════════════════════════ */
-*:focus-visible {
-  outline: 2px solid #6366f1;
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-/* Form fields use their own border/caret state. Prevent the global blue focus
-   box and utility focus rings from changing inputs across component previews. */
-:where(input, textarea, select, [contenteditable="true"]):focus,
-:where(input, textarea, select, [contenteditable="true"]):focus-visible {
-  outline: none !important;
-  outline-offset: 0 !important;
-  border-color: var(--card-text-muted) !important;
-  box-shadow: none !important;
-  caret-color: var(--card-text);
-  --tw-ring-color: transparent !important;
-  --tw-ring-offset-shadow: 0 0 #0000 !important;
-  --tw-ring-shadow: 0 0 #0000 !important;
-}
-
-/* Remove default outline only when focus-visible is supported */
-*:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* Ensure buttons have cursor pointer */
-button:not(:disabled) {
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-/* Ensure links have underline by default in content areas */
-a {
-  text-decoration: none;
-}
-
-/* Screen reader only text */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* ════════════════════════════════════════════════════════════════════════════
-   Dark mode overrides for inline-styled components
-   These target common hardcoded light backgrounds/colors used in older
-   components that use style={{ background: "#ffffff" }} instead of classes.
-   ════════════════════════════════════════════════════════════════════════════ */
-
-/* Override inline background styles in dark mode */
-.dark [style*="background:#ffffff"],
-.dark [style*="background: #ffffff"],
-.dark [style*="background:#fff"],
-.dark [style*="background: #fff"],
-.dark [style*="background:#fafafa"],
-.dark [style*="background: #fafafa"],
-.dark [style*="background:#f5f0e6"],
-.dark [style*="background: #f5f0e6"],
-.dark [style*="background:#e6e7ee"],
-.dark [style*="background: #e6e7ee"],
-.dark [style*="background:#f8fafc"],
-.dark [style*="background: #f8fafc"] {
-  background-color: #0f0f17 !important;
-}
-
-/* Override inline text colors that are dark (meant for light bg) */
-.dark [style*="color:#0a0a0a"],
-.dark [style*="color: #0a0a0a"],
-.dark [style*="color:#0f172a"],
-.dark [style*="color: #0f172a"],
-.dark [style*="color:#1a1612"],
-.dark [style*="color: #1a1612"],
-.dark [style*="color:#0a2540"],
-.dark [style*="color: #0a2540"],
-.dark [style*="color:#5c4a32"],
-.dark [style*="color: #5c4a32"],
-.dark [style*="color:#1e293b"],
-.dark [style*="color: #1e293b"],
-.dark [style*="color:#334155"],
-.dark [style*="color: #334155"] {
-  color: #fafafa !important;
-}
-
-/* Muted dark text colors → lighter in dark mode */
-.dark [style*="color:#7c6f5a"],
-.dark [style*="color: #7c6f5a"],
-.dark [style*="color:#92400e"],
-.dark [style*="color: #92400e"],
-.dark [style*="color:#64748b"],
-.dark [style*="color: #64748b"] {
-  color: #a1a1aa !important;
-}
-
-/* Border overrides for inline-styled light borders */
-.dark [style*="border-color:#e2e8f0"],
-.dark [style*="border-color: #e2e8f0"],
-.dark [style*="border-color:#e5e7eb"],
-.dark [style*="border-color: #e5e7eb"],
-.dark [style*="border-color:#f1f5f9"],
-.dark [style*="border-color: #f1f5f9"] {
-  border-color: rgba(255,255,255,0.10) !important;
-}
-
-/* Components with hardcoded light border via 1px solid */
-.dark [style*="1px solid #e"],
-.dark [style*="1px solid #f"] {
-  border-color: rgba(255,255,255,0.10) !important;
-}
-
-/* Insight chart runtime surfaces and monochrome theme corrections. */
-.insight-dashboard {
-  --chart-tooltip-bg: #ffffff;
-  --chart-tooltip-border: rgba(18, 18, 26, 0.10);
-  --chart-tooltip-text: #12121a;
-  --chart-track: #eef0f6;
-}
-.insight-dashboard .bg-canvas\/60 { background-color: color-mix(in srgb, var(--canvas) 60%, transparent); }
-.insight-dashboard .recharts-tooltip-wrapper .recharts-default-tooltip {
-  background-color: var(--chart-tooltip-bg) !important;
-  border: 1px solid var(--chart-tooltip-border) !important;
-  color: var(--chart-tooltip-text) !important;
-}
-.insight-dashboard .recharts-tooltip-label { color: var(--chart-tooltip-text) !important; }
-.dark .insight-dashboard {
-  --ink-300: #a8a8ba;
-  --chart-tooltip-bg: #1a1a26;
-  --chart-tooltip-border: rgba(255, 255, 255, 0.12);
-  --chart-tooltip-text: #f5f5fa;
-  --chart-track: rgba(255, 255, 255, 0.10);
-}
-.insight-dashboard-blue {
-  --brand-pink: #2563eb;
-  --brand-magenta: #1d4ed8;
-  --brand-violet: #1e40af;
-  --brand-indigo: #1e3a8a;
-  --brand-navy: #172554;
-  --brand-teal: #0891b2;
-  --brand-cyan: #06b6d4;
-  --brand-blue: #2563eb;
-  --brand-amber: #38bdf8;
-  --brand-gold: #7dd3fc;
-  --brand-lime: #67e8f9;
-  --chart-tooltip-bg: #f8fbff;
-  --chart-tooltip-border: #bfdbfe;
-  --chart-tooltip-text: #172554;
-  --chart-track: #dbeafe;
-}
-.insight-dashboard-blue .bg-brand-pink\/15 { background-color: rgba(37, 99, 235, 0.15); }
-.insight-dashboard-blue .bg-brand-pink\/10 { background-color: rgba(37, 99, 235, 0.10); }
-.dark .insight-dashboard-blue {
-  --ink-300: #a9b9d6;
-  --chart-tooltip-bg: #111d36;
-  --chart-tooltip-border: #1e3a8a;
-  --chart-tooltip-text: #eff6ff;
-  --chart-track: rgba(147, 197, 253, 0.14);
-}
-.dark .insight-dashboard-blue.dark\:bg-ink-950,
-.dark .insight-dashboard-blue .dark\:bg-ink-950 { background-color: var(--ink-950) !important; }
-
-/* Premium overlay demos: semantic light/dark surfaces and preview-safe controls. */
-.overlay-demo {
-  --overlay-stage: #eef2f7;
-  --overlay-surface: #ffffff;
-  --overlay-surface-2: #f8fafc;
-  --overlay-input: #f8fafc;
-  --overlay-control: rgba(255, 255, 255, 0.82);
-  --overlay-text: #172033;
-  --overlay-muted: #64748b;
-  --overlay-subtle: #94a3b8;
-  --overlay-border: #e2e8f0;
-  color: var(--overlay-text);
-  color-scheme: light;
-}
-.dark .overlay-demo {
-  --overlay-stage: #080b13;
-  --overlay-surface: #121722;
-  --overlay-surface-2: #181f2d;
-  --overlay-input: #0d121c;
-  --overlay-control: rgba(255, 255, 255, 0.07);
-  --overlay-text: #f8fafc;
-  --overlay-muted: #a8b3c5;
-  --overlay-subtle: #78859a;
-  --overlay-border: rgba(255, 255, 255, 0.11);
-  color-scheme: dark;
-}
-.dark .overlay-demo .bg-white,
-.dark .overlay-demo .bg-\[\#ffffff\] { background-color: var(--overlay-surface) !important; }
-.dark .overlay-demo .bg-slate-50,
-.dark .overlay-demo .bg-\[\#f8fafc\],
-.dark .overlay-demo .hover\:bg-\[\#f1f5f9\]:hover { background-color: var(--overlay-surface-2) !important; }
-.dark .overlay-demo .bg-white\/10 { background-color: rgba(255, 255, 255, 0.035) !important; }
-.dark .overlay-demo .text-\[\#1e293b\],
-.dark .overlay-demo .text-slate-900,
-.dark .overlay-demo .text-slate-800,
-.dark .overlay-demo .text-slate-700 { color: var(--overlay-text) !important; }
-.dark .overlay-demo .text-\[\#64748b\],
-.dark .overlay-demo .text-slate-600,
-.dark .overlay-demo .text-slate-500,
-.dark .overlay-demo .text-slate-400 { color: var(--overlay-muted) !important; }
-.dark .overlay-demo .text-\[\#94a3b8\],
-.dark .overlay-demo .text-slate-300 { color: var(--overlay-subtle) !important; }
-.dark .overlay-demo .border-slate-100,
-.dark .overlay-demo .border-slate-200,
-.dark .overlay-demo .border-\[\#e2e8f0\],
-.dark .overlay-demo .border { border-color: var(--overlay-border) !important; }
-.dark .overlay-demo input,
-.dark .overlay-demo textarea { caret-color: #93c5fd; }
-.overlay-demo [data-modal-content] { scrollbar-gutter: stable; }
+.insight-dashboard .rank-bar { animation: rank-bar-fill 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
