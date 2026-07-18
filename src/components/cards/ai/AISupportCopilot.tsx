@@ -19,7 +19,6 @@ import {
   Mail,
   Menu,
   MessageCircle,
-  Moon,
   MoreHorizontal,
   Paperclip,
   PanelRightClose,
@@ -29,7 +28,6 @@ import {
   Send,
   ShieldCheck,
   Sparkles,
-  Sun,
   Tag,
   ThumbsDown,
   ThumbsUp,
@@ -45,7 +43,6 @@ import {
   ModernSelect,
   type ModernSelectOption,
   ProfileAvatar,
-  usePreviewTheme,
 } from "./ai-ui";
 
 type TicketStatus = "open" | "pending" | "resolved";
@@ -121,8 +118,7 @@ function TicketAvatar({ initials, active = false }: { initials: string; active?:
 }
 
 export function AISupportCopilot() {
-  const { isDark, setIsDark } = usePreviewTheme();
-  const palette = getAIPalette(isDark);
+  const palette = getAIPalette();
   const accent = MODEL.color;
   const [tickets, setTickets] = useState(INITIAL_TICKETS);
   const [activeTicketId, setActiveTicketId] = useState("t1");
@@ -206,7 +202,7 @@ export function AISupportCopilot() {
           {!listOpen && <button onClick={() => setListOpen(true)} className={`flex h-8 w-8 items-center justify-center rounded-lg border ${AI_FOCUS_RESET}`} style={{ borderColor: palette.border, color: palette.muted }}><Menu className="h-4 w-4" /></button>}
           <TicketAvatar initials={activeTicket.initials} active />
           <div className="min-w-0"><div className="flex items-center gap-1.5"><p className="truncate text-[11px] font-bold">{activeTicket.subject}</p><span className="hidden rounded-md px-1.5 py-0.5 text-[7px] font-bold sm:inline" style={{ background: activeTicket.priority === "High" ? "rgba(239,68,68,0.12)" : palette.surface, color: activeTicket.priority === "High" ? "#ef4444" : palette.muted }}>{activeTicket.priority}</span></div><p className="text-[8.5px]" style={{ color: palette.muted }}>#{activeTicket.id.toUpperCase()} · {activeTicket.customer} · {activeTicket.channel}</p></div>
-          <div className="ml-auto flex items-center gap-1.5"><button onClick={() => setTicketStatus("pending")} className={`hidden items-center gap-1.5 rounded-lg border px-2.5 py-2 text-[8.5px] font-semibold sm:flex ${AI_FOCUS_RESET}`} style={{ borderColor: palette.border, color: palette.secondary }}><BellOff className="h-3.5 w-3.5" />Snooze</button><button onClick={() => setTicketStatus(activeTicket.status === "resolved" ? "open" : "resolved")} className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-2 text-[8.5px] font-semibold ${AI_FOCUS_RESET}`} style={{ borderColor: activeTicket.status === "resolved" ? "rgba(16,185,129,0.45)" : palette.border, color: activeTicket.status === "resolved" ? "#10b981" : palette.secondary }}><CheckCircle2 className="h-3.5 w-3.5" />{activeTicket.status === "resolved" ? "Reopen" : "Resolve"}</button><button onClick={() => setIsDark(!isDark)} className={`flex h-8 w-8 items-center justify-center rounded-lg border ${AI_FOCUS_RESET}`} style={{ borderColor: palette.border, color: palette.muted }}>{isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}</button><ProfileAvatar /></div>
+          <div className="ml-auto flex items-center gap-1.5"><button onClick={() => setTicketStatus("pending")} className={`hidden items-center gap-1.5 rounded-lg border px-2.5 py-2 text-[8.5px] font-semibold sm:flex ${AI_FOCUS_RESET}`} style={{ borderColor: palette.border, color: palette.secondary }}><BellOff className="h-3.5 w-3.5" />Snooze</button><button onClick={() => setTicketStatus(activeTicket.status === "resolved" ? "open" : "resolved")} className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-2 text-[8.5px] font-semibold ${AI_FOCUS_RESET}`} style={{ borderColor: activeTicket.status === "resolved" ? "rgba(16,185,129,0.45)" : palette.border, color: activeTicket.status === "resolved" ? "#10b981" : palette.secondary }}><CheckCircle2 className="h-3.5 w-3.5" />{activeTicket.status === "resolved" ? "Reopen" : "Resolve"}</button><ProfileAvatar /></div>
         </header>
 
         <div className="flex min-h-0 flex-1">

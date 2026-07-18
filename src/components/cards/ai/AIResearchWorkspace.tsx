@@ -17,7 +17,6 @@ import {
   Link2,
   LoaderCircle,
   Menu,
-  Moon,
   MoreHorizontal,
   PanelLeftClose,
   PanelLeftOpen,
@@ -25,7 +24,6 @@ import {
   Search,
   Send,
   Sparkles,
-  Sun,
   Trash2,
   X,
 } from "lucide-react";
@@ -36,7 +34,6 @@ import {
   ModernSelect,
   type ModernSelectOption,
   ProfileAvatar,
-  usePreviewTheme,
 } from "./ai-ui";
 
 type SourceKind = "Web" | "Paper" | "Document";
@@ -99,8 +96,7 @@ const REPORT = [
 let sourceCounter = 20;
 
 export function AIResearchWorkspace() {
-  const { isDark, setIsDark } = usePreviewTheme();
-  const palette = getAIPalette(isDark);
+  const palette = getAIPalette();
   const [sources, setSources] = useState(INITIAL_SOURCES);
   const [sourceSearch, setSourceSearch] = useState("");
   const [query, setQuery] = useState("What makes a production RAG system reliable and how should a team evaluate it?");
@@ -268,7 +264,6 @@ export function AIResearchWorkspace() {
           <div className="ml-auto flex items-center gap-2">
             <div className="hidden w-[190px] sm:block"><ModernSelect value={selectedModelId} options={MODEL_OPTIONS} onChange={setSelectedModelId} palette={palette} accent={accent} compact align="right" /></div>
             <button onClick={() => setSaved((current) => !current)} className={`hidden items-center gap-1.5 rounded-lg border px-2.5 py-2 text-[9px] font-semibold sm:flex ${AI_FOCUS_RESET}`} style={{ borderColor: palette.border, color: saved ? "#10b981" : palette.secondary }}><CheckCircle2 className="h-3.5 w-3.5" />{saved ? "Saved" : "Save"}</button>
-            <button onClick={() => setIsDark(!isDark)} className={`flex h-8 w-8 items-center justify-center rounded-lg border ${AI_FOCUS_RESET}`} style={{ borderColor: palette.border, color: palette.muted }} aria-label="Toggle theme">{isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}</button>
             <ProfileAvatar />
           </div>
         </header>
