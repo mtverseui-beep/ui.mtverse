@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo, Cormorant_Garamond, Fraunces, Geist, Geist_Mono, Instrument_Serif, Inter_Tight, JetBrains_Mono, Manrope, Playfair_Display, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { MAIN_SITE_URL, UI_SITE_DESCRIPTION, UI_SITE_NAME, UI_SITE_URL } from "@/lib/site-config";
 
@@ -30,5 +31,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" suppressHydrationWarning><body className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${fraunces.variable} ${archivo.variable} ${cormorant.variable} ${instrumentSerif.variable} ${manrope.variable} ${interTight.variable} antialiased bg-background text-foreground`}><ThemeProvider attribute="class" forcedTheme="light" enableSystem={false}>{children}</ThemeProvider></body></html>;
+  return <html lang="en" suppressHydrationWarning><body className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${fraunces.variable} ${archivo.variable} ${cormorant.variable} ${instrumentSerif.variable} ${manrope.variable} ${interTight.variable} antialiased bg-background text-foreground`}><ThemeProvider attribute="class" forcedTheme="light" enableSystem={false}>{children}</ThemeProvider><Analytics /></body></html>;
 }
