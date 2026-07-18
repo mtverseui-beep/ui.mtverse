@@ -21,15 +21,44 @@ export const metadata: Metadata = {
   metadataBase: new URL(UI_SITE_URL),
   title: { default: "mtverse UI - React and Next.js Component Library", template: "%s | mtverse UI" },
   description: UI_SITE_DESCRIPTION,
-  keywords: ["React component library", "Next.js components", "TypeScript components", "Tailwind CSS components", "animated UI components", "responsive React components", "dashboard UI components", "SaaS UI components", "Framer Motion components", "mtverse UI"],
-  authors: [{ name: "mtverse", url: MAIN_SITE_URL }], creator: "mtverse", publisher: "mtverse",
-  applicationName: UI_SITE_NAME, category: "Web Development", alternates: { canonical: UI_SITE_URL },
-  openGraph: { type: "website", locale: "en_US", url: UI_SITE_URL, siteName: UI_SITE_NAME, title: "mtverse UI - React and Next.js Component Library", description: UI_SITE_DESCRIPTION, images: [{ url: "/mtverse-logo.png", width: 512, height: 512, alt: "mtverse UI logo" }] },
+  keywords: ["React component library", "Next.js components", "TypeScript components", "Tailwind CSS components", "animated UI components", "responsive React components", "dashboard UI components"],
+  authors: [{ name: "mtverse", url: MAIN_SITE_URL }],
+  creator: "mtverse",
+  publisher: "mtverse",
+  applicationName: UI_SITE_NAME,
+  category: "Web Development",
+  alternates: { canonical: UI_SITE_URL },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: UI_SITE_URL,
+    siteName: UI_SITE_NAME,
+    title: "mtverse UI - React and Next.js Component Library",
+    description: UI_SITE_DESCRIPTION,
+    images: [{ url: "/mtverse-logo.png", width: 1200, height: 630, alt: "mtverse UI" }],
+  },
   twitter: { card: "summary", title: "mtverse UI - React and Next.js Component Library", description: UI_SITE_DESCRIPTION, images: ["/mtverse-logo.png"] },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
-  icons: { icon: "/mtverse-logo.png", shortcut: "/mtverse-logo.png", apple: "/mtverse-logo.png" }, manifest: "/manifest.webmanifest",
+  icons: { icon: "/mtverse-logo.png", shortcut: "/mtverse-logo.png", apple: "/mtverse-logo.png" },
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" suppressHydrationWarning><body className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${fraunces.variable} ${archivo.variable} ${cormorant.variable} ${instrumentSerif.variable} ${manrope.variable} ${interTight.variable} antialiased bg-background text-foreground`}><ThemeProvider attribute="class" forcedTheme="light" enableSystem={false}>{children}</ThemeProvider><Analytics /></body></html>;
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${fraunces.variable} ${archivo.variable} ${cormorant.variable} ${instrumentSerif.variable} ${manrope.variable} ${interTight.variable}`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+        <Analytics />
+      </body>
+    </html>
+  );
 }
