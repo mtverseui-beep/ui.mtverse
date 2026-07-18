@@ -4,9 +4,9 @@ import { useCallback, useState } from "react";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { ResponsivePreviewToolbar } from "@/components/navbar-showcase/ResponsivePreviewToolbar";
 import { CodePanelLoader } from "./CodePanelLoader";
-import { ComponentDocs } from "./ComponentDocs";
+import { DocsPanelLoader } from "./DocsPanelLoader";
 import { cardRoutes } from "@/components/cards-data/cards";
-import type { CodeEntryMetadata } from "./code-types";
+
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const FULL_CANVAS_CATEGORIES = new Set([
@@ -30,12 +30,12 @@ const FULL_CANVAS_CATEGORIES = new Set([
 type TabId = "preview" | "code" | "docs";
 
 interface CardShowcaseProps {
-  codeMetadata?: CodeEntryMetadata;
+
   slug: string;
   children: React.ReactNode;
 }
 
-export function CardShowcase({ codeMetadata, slug, children }: CardShowcaseProps) {
+export function CardShowcase({ slug, children }: CardShowcaseProps) {
   const [tab, setTab] = useState<TabId>("preview");
 
   const handleTabChange = useCallback(
@@ -50,7 +50,7 @@ export function CardShowcase({ codeMetadata, slug, children }: CardShowcaseProps
   const fullCanvas = cardMeta
     ? FULL_CANVAS_CATEGORIES.has(cardMeta.category)
     : false;
-  const docsPanel = <ComponentDocs slug={slug} initialMetadata={codeMetadata} />;
+  const docsPanel = <DocsPanelLoader slug={slug} />;
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col">

@@ -20,6 +20,7 @@ import {
   Fingerprint,
   MessageSquareQuote,
   Crown,
+  LockKeyhole,
   CreditCard,
   Sun,
   Moon,
@@ -194,7 +195,7 @@ function sectionForCategory(cat: CardCategory | undefined): SectionId {
   }
 }
 
-const HOME_HREF = cardRoutesOnly[0]?.href ?? "/components/cards/cinematic-folder-card";
+const HOME_HREF = premiumRoutes[0]?.href ?? "/components/premium/sticky-agent-cards";
 
 // Client-only mounted flag --- avoids hydration mismatch with next-themes.
 const emptySubscribe = () => () => {};
@@ -210,7 +211,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const isDark = mounted && theme === "dark";
 
   const [mainCollapsed, setMainCollapsed] = React.useState(false);
-  const [activeSection, setActiveSection] = React.useState<SectionId>("cards");
+  const [activeSection, setActiveSection] = React.useState<SectionId>("premium");
   const [mobileCardsOpen, setMobileCardsOpen] = React.useState(false);
   const [mobileCategoryOpen, setMobileCategoryOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
@@ -749,9 +750,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             href={PRICING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-9 items-center justify-center rounded-lg bg-[var(--card-text)] px-3 text-[12px] font-bold text-[var(--card-surface)] transition hover:opacity-85"
+            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-3 text-[12px] font-bold text-white transition hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50"
           >
-            Get
+            <LockKeyhole className="h-3.5 w-3.5" strokeWidth={2.2} aria-hidden="true" />
+            Unlock
           </a>
 
           <AdvancedComponentSearch />
@@ -795,17 +797,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 <Moon className="h-4 w-4 opacity-0" strokeWidth={2} aria-hidden />
               )}
             </motion.span>
-          </button>
-
-          {/* User avatar */}
-          <button
-            type="button"
-            aria-label="Account menu"
-            className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full overflow-hidden outline-none ring-2 ring-transparent transition hover:opacity-90 focus-visible:ring-violet-400/40"
-          >
-            { }
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" alt="Account" className="h-full w-full object-cover" />
-            <span className="absolute -bottom-0 -right-0 h-2.5 w-2.5 rounded-full bg-emerald-500" style={{ border: `2px solid ${isDark ? "#14141c" : "#ffffff"}` }} />
           </button>
         </header>
 

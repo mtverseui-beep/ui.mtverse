@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Search, X } from "lucide-react";
+import { Check, ChevronDown, Search, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cardRoutes } from "@/components/cards-data/cards";
 
@@ -39,6 +39,7 @@ export function AdvancedComponentSearch() {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [category, setCategory] = React.useState(ALL_CATEGORIES);
+  const [categoryOpen, setCategoryOpen] = React.useState(false);
   const [activeIndex, setActiveIndex] = React.useState(0);
   const deferredQuery = React.useDeferredValue(query);
 
@@ -70,7 +71,10 @@ export function AdvancedComponentSearch() {
       }
     };
     const onPointerDown = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+        setCategoryOpen(false);
+      }
     };
 
     window.addEventListener("keydown", onShortcut);
@@ -157,16 +161,47 @@ export function AdvancedComponentSearch() {
           className="absolute right-0 top-10 z-80 w-[min(40rem,calc(100vw-1.5rem))] overflow-hidden rounded-2xl border cs-border bg-[var(--card-surface)] shadow-2xl backdrop-blur-xl"
         >
           <div className="flex items-center gap-2 border-b cs-border p-2.5">
-            <select
-              aria-label="Filter search by category"
-              value={category}
-              onChange={(event) => setCategory(event.target.value)}
-              className="min-w-0 flex-1 rounded-lg border cs-border cs-input px-2.5 py-2 text-xs font-medium cs-text outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40"
-            >
-              {categories.map((option) => (
-                <option key={option} value={option}>{option}</option>
-              ))}
-            </select>
+            <div className="relative min-w-0 flex-1">
+              <button
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded={categoryOpen}
+                onClick={() => setCategoryOpen((value) => !value)}
+                className="flex h-9 w-full items-center justify-between gap-2 rounded-lg border cs-border cs-input px-3 text-left text-xs font-semibold cs-text outline-none transition hover:bg-[var(--card-hover)] focus-visible:ring-2 focus-visible:ring-cyan-400/40"
+              >
+                <span className="truncate">{category}</span>
+                <ChevronDown className={`h-3.5 w-3.5 shrink-0 cs-subtle transition-transform ${categoryOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+              </button>
+
+              {categoryOpen ? (
+                <div
+                  role="listbox"
+                  aria-label="Filter search by category"
+                  className="absolute left-0 top-11 z-20 max-h-64 w-full min-w-56 overflow-y-auto rounded-xl border cs-border bg-[var(--card-surface)] p-1.5 shadow-2xl scrollbar-modern"
+                >
+                  {categories.map((option) => {
+                    const selected = category === option;
+                    return (
+                      <button
+                        key={option}
+                        type="button"
+                        role="option"
+                        aria-selected={selected}
+                        onClick={() => {
+                          setCategory(option);
+                          setCategoryOpen(false);
+                          inputRef.current?.focus();
+                        }}
+                        className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[11.5px] font-medium transition ${selected ? "bg-[var(--card-input-bg)] cs-text" : "cs-muted hover:bg-[var(--card-hover)] hover:cs-text"}`}
+                      >
+                        <span className="min-w-0 flex-1 truncate">{option}</span>
+                        {selected ? <Check className="h-3.5 w-3.5 shrink-0 text-emerald-500" aria-hidden="true" /> : null}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </div>
             <span className="shrink-0 text-[11px] tabular-nums cs-subtle">
               {matches.length} result{matches.length === 1 ? "" : "s"}
             </span>
