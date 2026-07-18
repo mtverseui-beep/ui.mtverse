@@ -103,57 +103,6 @@
   --card-input-bg: #f1f5f9;
 }
 
-.dark {
-  --background: oklch(0.15 0.02 250);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.25 0.05 250);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.25 0.05 250);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.70 0.20 250);
-  --primary-foreground: oklch(0.15 0.02 250);
-  --secondary: oklch(0.35 0.08 240);
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.35 0.08 240);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.35 0.08 240);
-  --accent-foreground: oklch(0.95 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.20 0.03 250);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.95 0 0);
-  --sidebar-accent: oklch(0.35 0.08 240);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-
-  --page-bg: #08090d;
-  --scrollbar-thumb: rgba(255, 255, 255, 0.14);
-  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.26);
-
-  /* Card semantic tokens — dark mode. */
-  --card-surface: #131218;
-  --card-surface-2: #0f1015;
-  --card-surface-3: #1a1c24;
-  --card-text: #fafafa;
-  --card-text-muted: #a1a1aa;
-  --card-text-subtle: #8b8b98;
-  --card-border: rgba(255, 255, 255, 0.12);
-  --card-border-subtle: rgba(255, 255, 255, 0.07);
-  --card-hover: rgba(255, 255, 255, 0.07);
-  --card-overlay: rgba(0, 0, 0, 0.5);
-  --card-input-bg: rgba(255, 255, 255, 0.055);
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -429,75 +378,153 @@
 .insight-dashboard .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* ════════════════════════════════════════════════════════════════[...]
-   INSIGHT DASHBOARD — dark mode + CSS animations
+   CONTENT LOADER — dual-ring spinner animations
    ════════════════════════════════════════════════════════════════[...]
-
-/* Dark mode tokens — applied when a `.dark` ancestor is present */
-.dark .insight-dashboard {
-  --canvas: #0a0a12;
-  --ink-900: #f5f5fa;
-  --ink-700: #d1d1de;
-  --ink-500: #8e8ea3;
-  --ink-300: #4a4a5e;
-  --ink-800: #1a1a26;
-  --ink-950: #0a0a12;
-  --shadow-card: 0 1px 2px rgba(0,0,0,0.30), 0 12px 24px -12px rgba(0,0,0,0.50);
-  --shadow-card-hover: 0 4px 10px rgba(0,0,0,0.40), 0 20px 40px -16px rgba(0,0,0,0.70);
+@keyframes content-spinner-spin-cw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes content-spinner-spin-ccw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.content-spinner-outer {
+  animation: content-spinner-spin-cw 0.9s linear infinite;
+  transform-origin: center;
+}
+.content-spinner-inner {
+  animation: content-spinner-spin-ccw 0.7s linear infinite;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .content-spinner-outer,
+  .content-spinner-inner {
+    animation-duration: 2s !important;
+  }
 }
 
-/* dark mode utility aliases */
-.dark .insight-dashboard .bg-white { background-color: var(--ink-800); }
-.dark .insight-dashboard .bg-ink-800 { background-color: #1a1a26; }
-.dark .insight-dashboard .bg-ink-950 { background-color: #0a0a12; }
-.dark .insight-dashboard .bg-canvas { background-color: var(--canvas); }
-.dark .insight-dashboard .bg-canvas\/80 { background-color: rgba(10,10,18,0.80); }
-.dark .insight-dashboard .bg-canvas\/60 { background-color: rgba(10,10,18,0.60); }
-.dark .insight-dashboard .bg-white\/5 { background-color: rgba(255,255,255,0.05); }
-.dark .insight-dashboard .bg-white\/\[0\.03\] { background-color: rgba(255,255,255,0.03); }
-.dark .insight-dashboard .bg-white\/10 { background-color: rgba(255,255,255,0.10); }
-.dark .insight-dashboard .bg-emerald-50 { background-color: rgba(16,185,129,0.10); }
-.dark .insight-dashboard .bg-emerald-500\/15 { background-color: rgba(16,185,129,0.15); }
-.dark .insight-dashboard .bg-rose-500\/10 { background-color: rgba(244,63,94,0.10); }
-.dark .insight-dashboard .bg-amber-400 { background-color: #f59e0b; }
-.dark .insight-dashboard .bg-brand-violet { background-color: var(--brand-violet); }
-.dark .insight-dashboard .bg-ink-900 { background-color: #1a1a26; }
-.dark .insight-dashboard .text-ink-900 { color: var(--ink-900); }
-.dark .insight-dashboard .text-ink-700 { color: var(--ink-700); }
-.dark .insight-dashboard .text-ink-500 { color: var(--ink-500); }
-.dark .insight-dashboard .text-ink-300 { color: var(--ink-300); }
-.dark .insight-dashboard .text-ink-200 { color: #b8b8c8; }
-.dark .insight-dashboard .text-white { color: #ffffff; }
-.dark .insight-dashboard .text-white\/50 { color: rgba(255,255,255,0.50); }
-.dark .insight-dashboard .text-white\/60 { color: rgba(255,255,255,0.60); }
-.dark .insight-dashboard .text-emerald-400 { color: #34d399; }
-.dark .insight-dashboard .text-emerald-500 { color: #10b981; }
-.dark .insight-dashboard .text-emerald-600 { color: #34d399; }
-.dark .insight-dashboard .text-rose-400 { color: #fb7185; }
-.dark .insight-dashboard .text-rose-600 { color: #fb7185; }
-.dark .insight-dashboard .border-black\/5 { border-color: rgba(255,255,255,0.08); }
-.dark .insight-dashboard .border-white\/10 { border-color: rgba(255,255,255,0.10); }
-.dark .insight-dashboard .border-white\/15 { border-color: rgba(255,255,255,0.15); }
-.dark .insight-dashboard .border-ink-300 { border-color: rgba(255,255,255,0.10); }
-.dark .insight-dashboard .border-dashed { border-style: dashed; }
-.dark .insight-dashboard .ring-white { --tw-ring-color: var(--ink-800); }
-.dark .insight-dashboard .ring-ink-800 { --tw-ring-color: #1a1a26; }
-.dark .insight-dashboard .from-ink-800 { --tw-gradient-from: #1a1a26; }
-.dark .insight-dashboard .to-ink-900 { --tw-gradient-to: #0a0a12; }
-.dark .insight-dashboard .bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-to)); }
-
-/* ── CSS keyframe animations (replace Framer Motion for scroll perf) ── */
-
-/* Card entrance: fade + slide up — triggers on mount, no scroll listener */
-@keyframes card-enter {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ════════════════════════════════════════════════════════════════[...]
+   AI CHATBOT — animated orb keyframes
+   ════════════════════════════════════════════════════════════════[...]
+@keyframes orb-hue-rotate {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
 }
-.insight-dashboard .card-enter {
-  animation: card-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+@keyframes orb-hue-rotate-blur {
+  0% { filter: blur(var(--orb-blur)) hue-rotate(0deg); }
+  100% { filter: blur(var(--orb-blur)) hue-rotate(360deg); }
+}
+@keyframes orb-circle-1 {
+  0%, 100% { transform: translate(20%, -30%); }
+  25% { transform: translate(-25%, 15%); }
+  50% { transform: translate(15%, 25%); }
+  75% { transform: translate(-20%, -15%); }
+}
+@keyframes orb-circle-2 {
+  0%, 100% { transform: translate(-30%, 20%); }
+  25% { transform: translate(20%, -25%); }
+  50% { transform: translate(-15%, 30%); }
+  75% { transform: translate(25%, -10%); }
+}
+@keyframes orb-circle-3 {
+  0%, 100% { transform: translate(10%, 25%); }
+  25% { transform: translate(-20%, -20%); }
+  50% { transform: translate(25%, -15%); }
+  75% { transform: translate(-15%, 20%); }
+}
+@keyframes orb-circle-4 {
+  0%, 100% { transform: translate(-25%, -25%); }
+  25% { transform: translate(30%, 10%); }
+  50% { transform: translate(-10%, 30%); }
+  75% { transform: translate(20%, -20%); }
+}
+@keyframes orb-circle-5 {
+  0%, 100% { transform: translate(15%, 15%); }
+  25% { transform: translate(-25%, -10%); }
+  50% { transform: translate(20%, -25%); }
+  75% { transform: translate(-15%, 25%); }
+}
+.orb-circle-1 { animation: orb-circle-1 6s ease-in-out infinite; }
+.orb-circle-2 { animation: orb-circle-2 7s ease-in-out infinite; }
+.orb-circle-3 { animation: orb-circle-3 8s ease-in-out infinite; }
+.orb-circle-4 { animation: orb-circle-4 5s ease-in-out infinite; }
+.orb-circle-5 { animation: orb-circle-5 9s ease-in-out infinite; }
+
+/* Hide scrollbar utility */
+.scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+/* ════════════════════════════════════════════════════════════════[...]
+   MODAL KIT — premium animations
+   ════════════════════════════════════════════════════════════════[...]
+@keyframes backdropIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes backdropOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes fadeScaleIn { from { opacity: 0; transform: scale(.94) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+@keyframes fadeScaleOut { from { opacity: 1; transform: scale(1) translateY(0); } to { opacity: 0; transform: scale(.94) translateY(10px); } }
+@keyframes panelIn { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideUpIn { from { opacity: 0; transform: translateY(36px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes slideUpOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(24px) scale(.98); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes centerPopIn { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+@keyframes centerPopOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(.92); } }
+@keyframes underlineIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes crossfade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes drawerIn { from { opacity: 0; transform: translateX(26px) scale(.98); } to { opacity: 1; transform: translateX(0) scale(1); } }
+@keyframes drawerOut { from { opacity: 1; transform: translateX(0) scale(1); } to { opacity: 0; transform: translateX(20px) scale(.98); } }
+@keyframes dropIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ════════════════════════════════════════════════════════════════[...]
+   Global accessibility: focus-visible ring on all interactive elements
+   ════════════════════════════════════════════════════════════════[...]
+*:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
-/* Rank bar fill: width grows from 0 — set final width via inline style */
-@keyframes rank-bar-fill {
-  from { width: 0%; }
+/* Form fields use their own border/caret state. Prevent the global blue focus
+   box and utility focus rings from changing inputs across component previews. */
+:where(input, textarea, select, [contenteditable="true"]):focus,
+:where(input, textarea, select, [contenteditable="true"]):focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+  border-color: var(--card-text-muted) !important;
+  box-shadow: none !important;
+  caret-color: var(--card-text);
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
 }
-.insight-dashboard .rank-bar { animation: rank-bar-fill 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* Remove default outline only when focus-visible is supported */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Ensure buttons have cursor pointer */
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Ensure links have underline by default in content areas */
+a {
+  text-decoration: none;
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
