@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Fullscreen Editor - Modals React Component",
   description: "Fullscreen Editor is a production-ready modals React component featuring Immersive code editor with toolbar + word count + save/exit. Copy, customize, and...",
-  keywords: ["Fullscreen Editor","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Fullscreen Editor","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/modals/fullscreen-editor" },
   openGraph: {
     type: "website",

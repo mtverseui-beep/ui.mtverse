@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Stripe Minimal Sliding Feature Rows - Pricing React Component",
   description: "Stripe Minimal Sliding Feature Rows is a production-ready pricing React component featuring Stripe-style minimal + sliding feature rows + gradient pill...",
-  keywords: ["Stripe Minimal Sliding Feature Rows","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Stripe Minimal Sliding Feature Rows","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/pricing/pricing011" },
   openGraph: {
     type: "website",

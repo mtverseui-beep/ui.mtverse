@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Split Interactive Demo Tabs - Hero React Component",
   description: "Split Interactive Demo Tabs is a production-ready hero React component featuring Bg image + word blur reveal + CTAs (Skydda). Copy, customize, and use it in...",
-  keywords: ["Split Interactive Demo Tabs","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Split Interactive Demo Tabs","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/heroes/hero008" },
   openGraph: {
     type: "website",

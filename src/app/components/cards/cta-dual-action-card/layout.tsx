@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dual Action CTA - CTA React Component",
   description: "Dual Action CTA is a production-ready cta React component featuring Two side-by-side CTA buttons + comparison. Copy, customize, and use it in Next.js...",
-  keywords: ["Dual Action CTA","CTA component","CTA React component","CTA Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Dual Action CTA","CTA component","CTA React component","CTA Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/cta/cta-dual-action" },
   openGraph: {
     type: "website",

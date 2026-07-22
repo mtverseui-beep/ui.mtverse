@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Brutalist Offset Shadow Grid - Testimonials React Component",
   description: "Brutalist Offset Shadow Grid is a production-ready testimonials React component featuring Brutalist black/yellow offset shadow grid + Archivo Black + dashed...",
-  keywords: ["Brutalist Offset Shadow Grid","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Brutalist Offset Shadow Grid","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/testimonials/testimonials007" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Insight Bento Monochrome Blue - Charts React Component",
   description: "Insight Bento Monochrome Blue is a production-ready charts React component featuring Monochrome blue palette · navy → royal → sky → cyan · 35 animated bento...",
-  keywords: ["Insight Bento Monochrome Blue","Charts component","Charts React component","Charts Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Insight Bento Monochrome Blue","Charts component","Charts React component","Charts Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/charts/insight-bento-monochrome-blue" },
   openGraph: {
     type: "website",

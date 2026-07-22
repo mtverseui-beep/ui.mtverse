@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dot Grid Minimal Auth - Auth React Component",
   description: "Dot Grid Minimal Auth is a production-ready auth React component featuring Minimal dot grid + ultra-narrow centered form + emerald accent + clean focused....",
-  keywords: ["Dot Grid Minimal Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Dot Grid Minimal Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/auth/auth020" },
   openGraph: {
     type: "website",

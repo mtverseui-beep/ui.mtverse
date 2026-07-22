@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "AI Chat Interface - AI React Component",
   description: "AI Chat Interface is a production-ready ai React component featuring Full ChatGPT-style chat · streaming typewriter · model selector · token/cost ·...",
-  keywords: ["AI Chat Interface","AI component","AI React component","AI Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["AI Chat Interface","AI component","AI React component","AI Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/ai/ai-chat-interface" },
   openGraph: {
     type: "website",

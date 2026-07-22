@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Staggered Text Reveal Isometric - Hero React Component",
   description: "Staggered Text Reveal Isometric is a production-ready hero React component featuring Staggered text reveal + char-by-char blur + static isometric SVG. Copy,...",
-  keywords: ["Staggered Text Reveal Isometric","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Staggered Text Reveal Isometric","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/heroes/hero001" },
   openGraph: {
     type: "website",

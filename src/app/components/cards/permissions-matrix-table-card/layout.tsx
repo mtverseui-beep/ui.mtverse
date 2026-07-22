@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Permissions Matrix Table - Tables React Component",
   description: "Permissions Matrix Table is a production-ready tables React component featuring Role access matrix · protected admin policy · keyboard-ready permission...",
-  keywords: ["Permissions Matrix Table","Tables component","Tables React component","Tables Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Permissions Matrix Table","Tables component","Tables React component","Tables Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/tables/permissions-matrix-table" },
   openGraph: {
     type: "website",

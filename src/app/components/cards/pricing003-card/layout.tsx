@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Nexus Border Beam Shimmer - Pricing React Component",
   description: "Nexus Border Beam Shimmer is a production-ready pricing React component featuring Border beam + shimmer CTA + monthly/yearly toggle (Nexus). Copy,...",
-  keywords: ["Nexus Border Beam Shimmer","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Nexus Border Beam Shimmer","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/pricing/pricing003" },
   openGraph: {
     type: "website",

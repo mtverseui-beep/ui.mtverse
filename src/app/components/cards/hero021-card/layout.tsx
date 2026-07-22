@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Minimal Split Headline Cards - Hero React Component",
   description: "Minimal Split Headline Cards is a production-ready hero React component featuring Synthwave retro — perspective grid + neon sun + palm silhouettes + neon...",
-  keywords: ["Minimal Split Headline Cards","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Minimal Split Headline Cards","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/heroes/hero021" },
   openGraph: {
     type: "website",

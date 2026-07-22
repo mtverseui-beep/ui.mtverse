@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Mobile Bottom Sheet - Modals React Component",
   description: "Mobile Bottom Sheet is a production-ready modals React component featuring Bottom slide-up sheet with drag handle + snap points + swipe to dismiss. Copy,...",
-  keywords: ["Mobile Bottom Sheet","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Mobile Bottom Sheet","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/modals/mobile-bottom-sheet" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Search Overlay - Modals React Component",
   description: "Search Overlay is a production-ready modals React component featuring Fullscreen blurred search with recent + suggestions + ESC to close. Copy, customize,...",
-  keywords: ["Search Overlay","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Search Overlay","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/modals/search-overlay" },
   openGraph: {
     type: "website",

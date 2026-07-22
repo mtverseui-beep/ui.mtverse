@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dashboard Uptime Grid Metrics - Footer React Component",
   description: "Dashboard Uptime Grid Metrics is a production-ready footer React component featuring Dashboard product — uptime indicator + animated grid bg (Pinpoint)....",
-  keywords: ["Dashboard Uptime Grid Metrics","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Dashboard Uptime Grid Metrics","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer013" },
   openGraph: {
     type: "website",

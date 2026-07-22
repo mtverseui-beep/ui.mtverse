@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Neumorphic Soft UI Auth - Auth React Component",
   description: "Neumorphic Soft UI Auth is a production-ready auth React component featuring Neumorphic soft UI embossed card + sunken inputs + raised CTA + dual shadows....",
-  keywords: ["Neumorphic Soft UI Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Neumorphic Soft UI Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/auth/auth007" },
   openGraph: {
     type: "website",

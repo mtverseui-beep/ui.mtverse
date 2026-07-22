@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Infinite Scroll Columns Marquee - Testimonials React Component",
   description: "Infinite Scroll Columns Marquee is a production-ready testimonials React component featuring 3-column infinite scroll + logo marquee. Copy, customize, and...",
-  keywords: ["Infinite Scroll Columns Marquee","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Infinite Scroll Columns Marquee","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/testimonials/testimonials" },
   openGraph: {
     type: "website",

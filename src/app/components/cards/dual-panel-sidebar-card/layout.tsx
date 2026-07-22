@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dual Panel Sidebar - Sidebar React Component",
   description: "Dual Panel Sidebar is a production-ready sidebar React component featuring Two-level expandable · searchable parent groups · smooth height animation ·...",
-  keywords: ["Dual Panel Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Dual Panel Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/sidebars/dual-panel-sidebar" },
   openGraph: {
     type: "website",

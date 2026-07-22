@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dual-Row Scroll Blur Reveal Glow - Testimonials React Component",
   description: "Dual-Row Scroll Blur Reveal Glow is a production-ready testimonials React component featuring Dual-row scroll + blur reveal title + colored glow cards....",
-  keywords: ["Dual-Row Scroll Blur Reveal Glow","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Dual-Row Scroll Blur Reveal Glow","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/testimonials/testimonials002" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dropdown Menu - Forms React Component",
   description: "Dropdown Menu is a production-ready forms React component featuring Action, preference, and nested portal menus. Copy, customize, and use it in Next.js...",
-  keywords: ["Dropdown Menu","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Dropdown Menu","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/forms/dropdown-menu" },
   openGraph: {
     type: "website",

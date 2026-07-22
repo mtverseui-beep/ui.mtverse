@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Developer Terminal ASCII CRT - Footer React Component",
   description: "Developer Terminal ASCII CRT is a production-ready footer React component featuring Developer tools — dark terminal aesthetic + GitHub stars + status...",
-  keywords: ["Developer Terminal ASCII CRT","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Developer Terminal ASCII CRT","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer009" },
   openGraph: {
     type: "website",

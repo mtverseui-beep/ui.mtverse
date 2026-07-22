@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Commerce Operations Grid - Tables React Component",
   description: "Commerce Operations Grid is a production-ready tables React component featuring Saved operational views · KPI summary · advanced filters · column controls ·...",
-  keywords: ["Commerce Operations Grid","Tables component","Tables React component","Tables Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Commerce Operations Grid","Tables component","Tables React component","Tables Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/tables/enterprise-data-grid" },
   openGraph: {
     type: "website",

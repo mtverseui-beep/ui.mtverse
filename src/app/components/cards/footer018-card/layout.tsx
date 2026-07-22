@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Community Particle Discord Stats - Footer React Component",
   description: "Community Particle Discord Stats is a production-ready footer React component featuring Community platform — stats + Discord CTA + floating particles...",
-  keywords: ["Community Particle Discord Stats","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Community Particle Discord Stats","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer018" },
   openGraph: {
     type: "website",

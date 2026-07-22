@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Cyberpunk Neon Auth - Auth React Component",
   description: "Cyberpunk Neon Auth is a production-ready auth React component featuring Cyberpunk neon grid floor + scanlines + neon glowing border + magenta/cyan. Copy,...",
-  keywords: ["Cyberpunk Neon Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Cyberpunk Neon Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/auth/auth010" },
   openGraph: {
     type: "website",

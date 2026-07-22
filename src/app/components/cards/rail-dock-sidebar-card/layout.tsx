@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Rail Dock Sidebar - Sidebar React Component",
   description: "Rail Dock Sidebar is a production-ready sidebar React component featuring macOS dock · hover and focus magnification · rail-relative tooltips · active bar ·...",
-  keywords: ["Rail Dock Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Rail Dock Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/sidebars/rail-dock-sidebar" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Invite Team Dialog - Modals React Component",
   description: "Invite Team Dialog is a production-ready modals React component featuring Email invite + role select + pending list + copy invite link. Copy, customize, and...",
-  keywords: ["Invite Team Dialog","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Invite Team Dialog","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/modals/invite-team-dialog" },
   openGraph: {
     type: "website",

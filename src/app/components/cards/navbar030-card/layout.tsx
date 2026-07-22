@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Floating Dock Radial FAB - Navbar React Component",
   description: "Floating Dock Radial FAB is a production-ready navbar React component featuring Announcement + dock hybrid — dismissible promo + floating pill dock + FAB...",
-  keywords: ["Floating Dock Radial FAB","Navbar component","Navbar React component","Navbar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Floating Dock Radial FAB","Navbar component","Navbar React component","Navbar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/navbars/navbar030" },
   openGraph: {
     type: "website",

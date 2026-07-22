@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Parallax SVG Draw Floating Icons - Hero React Component",
   description: "Parallax SVG Draw Floating Icons is a production-ready hero React component featuring Parallax blobs + SVG draw + floating icons + slide-in (Olea). Copy,...",
-  keywords: ["Parallax SVG Draw Floating Icons","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Parallax SVG Draw Floating Icons","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/heroes/hero009" },
   openGraph: {
     type: "website",

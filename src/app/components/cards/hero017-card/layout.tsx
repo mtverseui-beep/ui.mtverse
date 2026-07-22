@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Aurora Wave SVG Ribbons Starfield - Hero React Component",
   description: "Aurora Wave SVG Ribbons Starfield is a production-ready hero React component featuring Aurora wave — 5 animated SVG sine-wave ribbons + starfield + scroll...",
-  keywords: ["Aurora Wave SVG Ribbons Starfield","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Aurora Wave SVG Ribbons Starfield","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/heroes/hero017" },
   openGraph: {
     type: "website",

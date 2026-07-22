@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Select Dropdown - Forms React Component",
   description: "Select Dropdown is a production-ready forms React component featuring Portal select + cascading fields + searchable combobox. Copy, customize, and use it in...",
-  keywords: ["Select Dropdown","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Select Dropdown","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/forms/select-dropdown" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Context Menu - Modals React Component",
   description: "Context Menu is a production-ready modals React component featuring Right-click menu with cut/copy/paste + dividers + sub-menus. Copy, customize, and use it...",
-  keywords: ["Context Menu","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Context Menu","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/modals/context-menu" },
   openGraph: {
     type: "website",

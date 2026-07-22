@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Holographic Iridescent Conic Border - Testimonials React Component",
   description: "Holographic Iridescent Conic Border is a production-ready testimonials React component featuring Holographic iridescent rotating conic-gradient borders +...",
-  keywords: ["Holographic Iridescent Conic Border","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Holographic Iridescent Conic Border","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/testimonials/testimonials019" },
   openGraph: {
     type: "website",

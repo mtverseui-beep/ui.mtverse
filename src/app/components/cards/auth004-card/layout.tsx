@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Editorial Magazine Auth - Auth React Component",
   description: "Editorial Magazine Auth is a production-ready auth React component featuring Editorial magazine serif centered + paper grain + masthead + Fraunces. Copy,...",
-  keywords: ["Editorial Magazine Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Editorial Magazine Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/auth/auth004" },
   openGraph: {
     type: "website",

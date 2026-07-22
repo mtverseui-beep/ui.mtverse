@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Morphing Sign In - Buttons React Component",
   description: "Morphing Sign In is a production-ready buttons React component featuring Button-to-modal spring morph. Copy, customize, and use it in Next.js projects.",
-  keywords: ["Morphing Sign In","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Morphing Sign In","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/buttons/morphing-sign-in" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Warm Editorial Grain Outlined - Footer React Component",
   description: "Warm Editorial Grain Outlined is a production-ready footer React component featuring Giant bg text + warm beige + 4 columns + social icons (Lumina). Copy,...",
-  keywords: ["Warm Editorial Grain Outlined","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Warm Editorial Grain Outlined","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer005" },
   openGraph: {
     type: "website",

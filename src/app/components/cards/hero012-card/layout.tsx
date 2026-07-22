@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "3D Mouse-Tilt Parallax Dot Grid - Hero React Component",
   description: "3D Mouse-Tilt Parallax Dot Grid is a production-ready hero React component featuring 3D mouse-tilt scene + parallax dot grid + layered depth cards...",
-  keywords: ["3D Mouse-Tilt Parallax Dot Grid","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["3D Mouse-Tilt Parallax Dot Grid","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/heroes/hero012" },
   openGraph: {
     type: "website",

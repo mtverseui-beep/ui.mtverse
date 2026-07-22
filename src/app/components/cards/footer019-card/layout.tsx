@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Portfolio Cursor Blink Project Tiles - Footer React Component",
   description: "Portfolio Cursor Blink Project Tiles is a production-ready footer React component featuring Portfolio — personal name brand + status badge + cursor blink...",
-  keywords: ["Portfolio Cursor Blink Project Tiles","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Portfolio Cursor Blink Project Tiles","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer019" },
   openGraph: {
     type: "website",

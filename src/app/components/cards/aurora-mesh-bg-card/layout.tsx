@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Aurora Commerce - Backgrounds React Component",
   description: "Aurora Commerce is a production-ready backgrounds React component featuring Premium aurora wash · hero-safe scrim · slow transform-only drift · light/dark....",
-  keywords: ["Aurora Commerce","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Aurora Commerce","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/backgrounds/aurora-mesh-bg" },
   openGraph: {
     type: "website",

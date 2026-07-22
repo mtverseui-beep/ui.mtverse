@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Responsive Records Table - Tables React Component",
   description: "Responsive Records Table is a production-ready tables React component featuring Preview-container aware · semantic desktop table · touch-friendly mobile...",
-  keywords: ["Responsive Records Table","Tables component","Tables React component","Tables Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Responsive Records Table","Tables component","Tables React component","Tables Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/tables/responsive-table" },
   openGraph: {
     type: "website",

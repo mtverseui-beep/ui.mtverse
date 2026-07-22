@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Logo Wall Compact Quote Grid - Testimonials React Component",
   description: "Logo Wall Compact Quote Grid is a production-ready testimonials React component featuring Logo wall (top) + compact quote grid (bottom) + gradient avatar...",
-  keywords: ["Logo Wall Compact Quote Grid","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Logo Wall Compact Quote Grid","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/testimonials/testimonials012" },
   openGraph: {
     type: "website",

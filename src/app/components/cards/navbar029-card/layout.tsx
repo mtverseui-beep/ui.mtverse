@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Marketplace Category Search - Navbar React Component",
   description: "Marketplace Category Search is a production-ready navbar React component featuring Marketplace — category-prefixed search + category bar + cart/wishlist...",
-  keywords: ["Marketplace Category Search","Navbar component","Navbar React component","Navbar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Marketplace Category Search","Navbar component","Navbar React component","Navbar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/navbars/navbar029" },
   openGraph: {
     type: "website",

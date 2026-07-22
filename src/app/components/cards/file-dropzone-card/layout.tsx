@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "File Dropzone - Forms React Component",
   description: "File Dropzone is a production-ready forms React component featuring Drag-drop + progress + type icons + remove. Copy, customize, and use it in Next.js...",
-  keywords: ["File Dropzone","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["File Dropzone","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/forms/file-dropzone" },
   openGraph: {
     type: "website",

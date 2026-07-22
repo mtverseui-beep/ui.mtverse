@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Editorial Magazine Serif Rule Lines - Pricing React Component",
   description: "Editorial Magazine Serif Rule Lines is a production-ready pricing React component featuring Editorial magazine serif + rule lines + numbered plans...",
-  keywords: ["Editorial Magazine Serif Rule Lines","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Editorial Magazine Serif Rule Lines","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/pricing/pricing008" },
   openGraph: {
     type: "website",

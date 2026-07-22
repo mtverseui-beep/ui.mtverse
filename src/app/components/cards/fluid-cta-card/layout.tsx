@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Fluid CTA - Agents React Component",
   description: "Fluid CTA is a production-ready agents React component featuring Fluid layout morph CTA → expanding form card + mesh gradient bg + spring. Copy, customize,...",
-  keywords: ["Fluid CTA","Agents component","Agents React component","Agents Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Fluid CTA","Agents component","Agents React component","Agents Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/premium/fluid-cta" },
   openGraph: {
     type: "website",

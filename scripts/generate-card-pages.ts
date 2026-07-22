@@ -105,7 +105,6 @@ function writeSeoLayout(card: CardEntry, pageDir: string) {
     "TypeScript component",
     "Tailwind CSS component",
     "Framer Motion component",
-    "dark mode component",
     "responsive UI component",
     "copy paste React component",
   ];

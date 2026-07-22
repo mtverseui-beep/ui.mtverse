@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Topographic Lines - Backgrounds React Component",
   description: "Topographic Lines is a production-ready backgrounds React component featuring Measured contour rhythm · static-first CSS lines · outdoor and finance heroes....",
-  keywords: ["Topographic Lines","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Topographic Lines","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/backgrounds/topographic-bg" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Cyber Grid Sidebar - Sidebar React Component",
   description: "Cyber Grid Sidebar is a production-ready sidebar React component featuring Neon green matrix · monospace · scanline overlay · CRT glow · hacker/terminal...",
-  keywords: ["Cyber Grid Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Cyber Grid Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/sidebars/cyber-grid-sidebar" },
   openGraph: {
     type: "website",

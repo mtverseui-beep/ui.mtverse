@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Creative Agency Numbered Links - Navbar React Component",
   description: "Creative Agency Numbered Links is a production-ready navbar React component featuring Creative agency — asymmetric wordmark + numbered links + fullscreen...",
-  keywords: ["Creative Agency Numbered Links","Navbar component","Navbar React component","Navbar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Creative Agency Numbered Links","Navbar component","Navbar React component","Navbar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/navbars/navbar016" },
   openGraph: {
     type: "website",

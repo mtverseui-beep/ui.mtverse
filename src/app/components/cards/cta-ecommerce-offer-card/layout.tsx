@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Ecommerce Offer CTA - CTA React Component",
   description: "Ecommerce Offer CTA is a production-ready cta React component featuring Discount + countdown timer + shop now + sale. Copy, customize, and use it in Next.js...",
-  keywords: ["Ecommerce Offer CTA","CTA component","CTA React component","CTA Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Ecommerce Offer CTA","CTA component","CTA React component","CTA Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/cta/cta-ecommerce-offer" },
   openGraph: {
     type: "website",

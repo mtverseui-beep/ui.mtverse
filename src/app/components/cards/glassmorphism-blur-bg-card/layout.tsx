@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Glass Atmosphere - Backgrounds React Component",
   description: "Glass Atmosphere is a production-ready backgrounds React component featuring Atmospheric color · refined glass facets · premium software hero. Copy,...",
-  keywords: ["Glass Atmosphere","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Glass Atmosphere","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/backgrounds/glassmorphism-blur-bg" },
   openGraph: {
     type: "website",

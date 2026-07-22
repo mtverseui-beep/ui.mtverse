@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Minimal SaaS Underline Hover - Navbar React Component",
   description: "Minimal SaaS Underline Hover is a production-ready navbar React component featuring Minimal SaaS — sparse layout + underline hover + slide-down mobile...",
-  keywords: ["Minimal SaaS Underline Hover","Navbar component","Navbar React component","Navbar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Minimal SaaS Underline Hover","Navbar component","Navbar React component","Navbar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/navbars/navbar012" },
   openGraph: {
     type: "website",

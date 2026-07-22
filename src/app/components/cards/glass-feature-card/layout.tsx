@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Glass Feature - Core React Component",
   description: "Glass Feature is a production-ready core React component featuring Light sweep + tilt. Copy, customize, and use it in Next.js projects.",
-  keywords: ["Glass Feature","Core component","Core React component","Core Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Glass Feature","Core component","Core React component","Core Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/cards/glass-feature" },
   openGraph: {
     type: "website",

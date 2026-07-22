@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact Form Modal - Modals React Component",
   description: "Contact Form Modal is a production-ready modals React component featuring Gradient header form with name/email/message + success state animation. Copy,...",
-  keywords: ["Contact Form Modal","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Contact Form Modal","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/modals/contact-form-modal" },
   openGraph: {
     type: "website",

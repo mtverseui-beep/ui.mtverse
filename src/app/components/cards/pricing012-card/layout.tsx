@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Neumorphic Soft Embossed Cards - Pricing React Component",
   description: "Neumorphic Soft Embossed Cards is a production-ready pricing React component featuring Neumorphic soft UI + embossed dual-shadow cards + sunken toggle...",
-  keywords: ["Neumorphic Soft Embossed Cards","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Neumorphic Soft Embossed Cards","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/pricing/pricing012" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Onboarding Dialog - Modals React Component",
   description: "Onboarding Dialog is a production-ready modals React component featuring Multi-step welcome flow with progress dots + skip + finish. Copy, customize, and...",
-  keywords: ["Onboarding Dialog","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Onboarding Dialog","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/modals/onboarding-dialog" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Brutalist Black Yellow Offset Shadow - Pricing React Component",
   description: "Brutalist Black Yellow Offset Shadow is a production-ready pricing React component featuring Brutalist black/yellow + offset hard shadows + rotated badge...",
-  keywords: ["Brutalist Black Yellow Offset Shadow","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Brutalist Black Yellow Offset Shadow","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/pricing/pricing007" },
   openGraph: {
     type: "website",

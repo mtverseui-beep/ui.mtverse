@@ -56,6 +56,11 @@ for (const { slug } of routes) {
   if (sourcePath && !existsSync(join(ROOT, sourcePath))) failures.push(`Registry source missing: ${slug} -> ${sourcePath}`);
 }
 
+for (const { slug } of routes) {
+  const metadata = readFileSync(join(PAGES_DIR, slug, "layout.tsx"), "utf-8");
+  if (metadata.includes('"dark mode component"')) failures.push(`Stale dark-mode keyword: ${slug}`);
+}
+
 for (const slug of registry.keys()) {
   if (!routeSlugs.has(slug)) failures.push(`Registry entry has no route metadata: ${slug}`);
 }
@@ -85,7 +90,9 @@ if (!globals.includes('component-theme.css')) failures.push("Shared component th
 const themeContract = readFileSync(join(ROOT, "src", "components", "library", "component-theme.css"), "utf-8");
 const cardShowcase = readFileSync(join(ROOT, "src", "components", "library", "CardShowcase.tsx"), "utf-8");
 if (!cardShowcase.includes("data-component-category={category}")) failures.push("Preview category theme marker is missing");
-if (!themeContract.includes('data-component-category="Buttons"')) failures.push("Button light-mode contrast contract is missing");
+if (themeContract.includes("html:not(.dark)") || themeContract.includes(".dark .component-theme-scope")) {
+  failures.push("Legacy global color rewriting is still active in the light-only library");
+}
 
 const previewShells = [
   join(ROOT, "src", "components", "library", "CardShowcase.tsx"),

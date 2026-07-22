@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dark Luxury Gold Auth - Auth React Component",
   description: "Dark Luxury Gold Auth is a production-ready auth React component featuring Dark luxury gold serif centered + Cormorant Garamond + gold sweep CTA + monogram....",
-  keywords: ["Dark Luxury Gold Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Dark Luxury Gold Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/auth/auth006" },
   openGraph: {
     type: "website",

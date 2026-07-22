@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Floating Shapes Illustration Auth - Auth React Component",
   description: "Floating Shapes Illustration Auth is a production-ready auth React component featuring Side-by-side + animated floating SVG shapes illustration + playful...",
-  keywords: ["Floating Shapes Illustration Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Floating Shapes Illustration Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/auth/auth018" },
   openGraph: {
     type: "website",

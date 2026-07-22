@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Hover Lift Gradient Avatar Stars - Testimonials React Component",
   description: "Hover Lift Gradient Avatar Stars is a production-ready testimonials React component featuring Hover lift cards + gradient avatars + star ratings (Glow)....",
-  keywords: ["Hover Lift Gradient Avatar Stars","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Hover Lift Gradient Avatar Stars","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/testimonials/testimonials004" },
   openGraph: {
     type: "website",

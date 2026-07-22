@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Carbon Fiber Sidebar - Sidebar React Component",
   description: "Carbon Fiber Sidebar is a production-ready sidebar React component featuring Carbon weave texture · industrial orange · telemetry gauge ·...",
-  keywords: ["Carbon Fiber Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Carbon Fiber Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/sidebars/carbon-fiber-sidebar" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Neumorphic Team Grid - Profile React Component",
   description: "Neumorphic Team Grid is a production-ready profile React component featuring Neumorphic shadows + filter. Copy, customize, and use it in Next.js projects.",
-  keywords: ["Neumorphic Team Grid","Profile component","Profile React component","Profile Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Neumorphic Team Grid","Profile component","Profile React component","Profile Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/cards/neumorphic-profile-grid" },
   openGraph: {
     type: "website",

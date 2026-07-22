@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Typewriter Gradient Trusted Logos - Hero React Component",
   description: "Typewriter Gradient Trusted Logos is a production-ready hero React component featuring Typewriter input + gradient headline + CTAs + trusted logos...",
-  keywords: ["Typewriter Gradient Trusted Logos","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Typewriter Gradient Trusted Logos","Hero component","Hero React component","Hero Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/heroes/hero005" },
   openGraph: {
     type: "website",

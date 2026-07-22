@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Glass Mesh Gradient Tilt Hover - Pricing React Component",
   description: "Glass Mesh Gradient Tilt Hover is a production-ready pricing React component featuring Glass cards on mesh gradient + 3D tilt-on-hover toward cursor (Tilt)....",
-  keywords: ["Glass Mesh Gradient Tilt Hover","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Glass Mesh Gradient Tilt Hover","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/pricing/pricing009" },
   openGraph: {
     type: "website",

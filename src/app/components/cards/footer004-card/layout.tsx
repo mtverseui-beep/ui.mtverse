@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Aurora Glow Tilt Cards - Footer React Component",
   description: "Aurora Glow Tilt Cards is a production-ready footer React component featuring Dark gradient + pink blur + 4 columns + social hover scale (Glow). Copy,...",
-  keywords: ["Aurora Glow Tilt Cards","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Aurora Glow Tilt Cards","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer004" },
   openGraph: {
     type: "website",

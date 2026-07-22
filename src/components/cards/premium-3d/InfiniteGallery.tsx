@@ -143,8 +143,8 @@ const createClothMaterial = () => {
           vec4 blurred = vec4(0.0);
           float total = 0.0;
           
-          for (float x = -2.0; x <= 2.0; x += 1.0) {
-            for (float y = -2.0; y <= 2.0; y += 1.0) {
+          for (float x = -1.0; x <= 1.0; x += 1.0) {
+            for (float y = -1.0; y <= 1.0; y += 1.0) {
               vec2 offset = vec2(x, y) * texelSize * blurAmount;
               float weight = 1.0 / (1.0 + length(vec2(x, y)));
               blurred += texture2D(map, vUv + offset) * weight;
@@ -165,22 +165,35 @@ const createClothMaterial = () => {
 };
 
 function ImagePlane({
-	texture,
-	position,
-	scale,
+	plane,
+	textures,
 	material,
 }: {
-	texture: THREE.Texture;
-	position: [number, number, number];
-	scale: [number, number, number];
+	plane: PlaneData;
+	textures: THREE.Texture[];
 	material: THREE.ShaderMaterial;
 }) {
 	const meshRef = useRef<THREE.Mesh>(null);
+	const currentImage = useRef(-1);
 	const materialRef = useRef(material);
 
-	useEffect(() => {
-		materialRef.current.uniforms.map.value = texture;
-	}, [texture]);
+	useFrame(() => {
+		const mesh = meshRef.current;
+		const texture = textures[plane.imageIndex];
+		if (!mesh || !texture) return;
+
+		mesh.position.set(plane.x, plane.y, plane.z - DEFAULT_DEPTH_RANGE / 2);
+		if (currentImage.current !== plane.imageIndex) {
+			currentImage.current = plane.imageIndex;
+			materialRef.current.uniforms.map.value = texture;
+			const image = texture.image as { width?: number; height?: number } | undefined;
+			const aspect = (image?.width ?? 1) / (image?.height ?? 1);
+			if (aspect > 1) mesh.scale.set(2 * aspect, 2, 1);
+			else mesh.scale.set(2, 2 / Math.max(aspect, 0.01), 1);
+		}
+	});
+
+	useEffect(() => () => materialRef.current.dispose(), []);
 
 	const setHovered = (isHovered: boolean) => {
 		materialRef.current.uniforms.isHovered.value = isHovered ? 1.0 : 0.0;
@@ -189,13 +202,11 @@ function ImagePlane({
 	return (
 		<mesh
 			ref={meshRef}
-			position={position}
-			scale={scale}
 			material={material}
 			onPointerEnter={() => setHovered(true)}
 			onPointerLeave={() => setHovered(false)}
 		>
-			<planeGeometry args={[1, 1, 32, 32]} />
+			<planeGeometry args={[1, 1, 16, 16]} />
 		</mesh>
 	);
 }
@@ -214,9 +225,9 @@ function GalleryScene({
 		maxBlur: 3.0,
 	},
 }: Omit<InfiniteGalleryProps, 'className' | 'style'>) {
-	const [scrollVelocity, setScrollVelocity] = useState(0);
-	const [autoPlay, setAutoPlay] = useState(true);
+	const scrollVelocity = useRef(0);
 	const lastInteraction = useRef(Date.now());
+	const { gl } = useThree();
 
 	// Normalize images to objects
 	const normalizedImages = useMemo(
@@ -292,8 +303,7 @@ function GalleryScene({
 	const handleWheel = useCallback(
 		(event: WheelEvent) => {
 			event.preventDefault();
-			setScrollVelocity((prev) => prev + event.deltaY * 0.01 * speed);
-			setAutoPlay(false);
+			scrollVelocity.current += event.deltaY * 0.01 * speed;
 			lastInteraction.current = Date.now();
 		},
 		[speed]
@@ -302,13 +312,13 @@ function GalleryScene({
 	// Handle keyboard input
 	const handleKeyDown = useCallback(
 		(event: KeyboardEvent) => {
+			const target = event.target as HTMLElement | null;
+			if (target?.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target?.tagName ?? '')) return;
 			if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-				setScrollVelocity((prev) => prev - 2 * speed);
-				setAutoPlay(false);
+				scrollVelocity.current -= 2 * speed;
 				lastInteraction.current = Date.now();
 			} else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-				setScrollVelocity((prev) => prev + 2 * speed);
-				setAutoPlay(false);
+				scrollVelocity.current += 2 * speed;
 				lastInteraction.current = Date.now();
 			}
 		},
@@ -316,43 +326,29 @@ function GalleryScene({
 	);
 
 	useEffect(() => {
-		const canvas = document.querySelector('canvas');
-		if (canvas) {
-			canvas.addEventListener('wheel', handleWheel, { passive: false });
-			document.addEventListener('keydown', handleKeyDown);
+		const canvas = gl.domElement;
+		canvas.addEventListener('wheel', handleWheel, { passive: false });
+		document.addEventListener('keydown', handleKeyDown);
 
-			return () => {
-				canvas.removeEventListener('wheel', handleWheel);
-				document.removeEventListener('keydown', handleKeyDown);
-			};
-		}
-	}, [handleWheel, handleKeyDown]);
-
-	// Auto-play logic
-	useEffect(() => {
-		const interval = setInterval(() => {
-			if (Date.now() - lastInteraction.current > 3000) {
-				setAutoPlay(true);
-			}
-		}, 1000);
-		return () => clearInterval(interval);
-	}, []);
+		return () => {
+			canvas.removeEventListener('wheel', handleWheel);
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [gl, handleWheel, handleKeyDown]);
 
 	useFrame((state, delta) => {
-		// Apply auto-play
-		if (autoPlay) {
-			setScrollVelocity((prev) => prev + 0.3 * delta);
+		if (Date.now() - lastInteraction.current > 3000) {
+			scrollVelocity.current += 0.3 * delta;
 		}
-
-		// Damping
-		setScrollVelocity((prev) => prev * 0.95);
+		scrollVelocity.current *= Math.pow(0.95, delta * 60);
+		const velocity = scrollVelocity.current;
 
 		// Update time uniform for all materials
 		const time = state.clock.getElapsedTime();
 		materials.forEach((material) => {
 			if (material && material.uniforms) {
 				material.uniforms.time.value = time;
-				material.uniforms.scrollForce.value = scrollVelocity;
+				material.uniforms.scrollForce.value = velocity;
 			}
 		});
 
@@ -360,10 +356,9 @@ function GalleryScene({
 		const imageAdvance =
 			totalImages > 0 ? visibleCount % totalImages || totalImages : 0;
 		const totalRange = depthRange;
-		const halfRange = totalRange / 2;
 
 		planesData.current.forEach((plane, i) => {
-			let newZ = plane.z + scrollVelocity * delta * 10;
+			let newZ = plane.z + velocity * delta * 10;
 			let wrapsForward = 0;
 			let wrapsBackward = 0;
 
@@ -388,8 +383,6 @@ function GalleryScene({
 			plane.z = ((newZ % totalRange) + totalRange) % totalRange;
 			plane.x = spatialPositions[i]?.x ?? 0;
 			plane.y = spatialPositions[i]?.y ?? 0;
-
-			const worldZ = plane.z - halfRange;
 
 			// Calculate opacity based on fade settings
 			const normalizedPosition = plane.z / totalRange; // 0 to 1
@@ -470,26 +463,14 @@ function GalleryScene({
 	return (
 		<>
 			{planesData.current.map((plane, i) => {
-				const texture = textures[plane.imageIndex];
 				const material = materials[i];
-
-				if (!texture || !material) return null;
-
-				const worldZ = plane.z - depthRange / 2;
-
-				// Calculate scale to maintain aspect ratio
-				const aspect = texture.image
-					? ((texture.image as any)?.width || 1) / ((texture.image as any)?.height || 1)
-					: 1;
-				const scale: [number, number, number] =
-					aspect > 1 ? [2 * aspect, 2, 1] : [2, 2 / aspect, 1];
+				if (!material) return null;
 
 				return (
 					<ImagePlane
 						key={plane.index}
-						texture={texture}
-						position={[plane.x, plane.y, worldZ]} // Position planes relative to camera center
-						scale={scale}
+						plane={plane}
+						textures={textures}
 						material={material}
 					/>
 				);
@@ -574,7 +555,8 @@ export default function InfiniteGallery({
 		<div className={className} style={style}>
 			<Canvas
 				camera={{ position: [0, 0, 0], fov: 55 }}
-				gl={{ antialias: true, alpha: true }}
+				dpr={[1, 1.5]}
+				gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
 			>
 				<GalleryScene
 					images={images}

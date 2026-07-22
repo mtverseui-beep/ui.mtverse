@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Midnight Spotlight - Backgrounds React Component",
   description: "Midnight Spotlight is a production-ready backgrounds React component featuring Cinematic depth · calm celestial dots · replaces warp-speed canvas trails....",
-  keywords: ["Midnight Spotlight","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Midnight Spotlight","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/backgrounds/starfield-bg" },
   openGraph: {
     type: "website",

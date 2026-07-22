@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Sticky Bottom CTA - CTA React Component",
   description: "Sticky Bottom CTA is a production-ready cta React component featuring Fixed bottom bar + dismiss + CTA + dark. Copy, customize, and use it in Next.js...",
-  keywords: ["Sticky Bottom CTA","CTA component","CTA React component","CTA Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Sticky Bottom CTA","CTA component","CTA React component","CTA Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/cta/cta-sticky-bottom" },
   openGraph: {
     type: "website",

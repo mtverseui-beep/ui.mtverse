@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Multi-Level Accordion Mega - Footer React Component",
   description: "Multi-Level Accordion Mega is a production-ready footer React component featuring Multi-level mega — expandable accordion categories + newsletter...",
-  keywords: ["Multi-Level Accordion Mega","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Multi-Level Accordion Mega","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer023" },
   openGraph: {
     type: "website",

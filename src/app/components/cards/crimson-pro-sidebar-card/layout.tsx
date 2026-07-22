@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Crimson Pro Sidebar - Sidebar React Component",
   description: "Crimson Pro Sidebar is a production-ready sidebar React component featuring Bold executive · crimson red accents · uppercase typography · solid active bar ·...",
-  keywords: ["Crimson Pro Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Crimson Pro Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/sidebars/crimson-pro-sidebar" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "AI Chatbot Orb - Agents React Component",
   description: "AI Chatbot Orb is a production-ready agents React component featuring Animated orb → morph to chat panel · hue-rotate · direct debit card · message bubbles....",
-  keywords: ["AI Chatbot Orb","Agents component","Agents React component","Agents Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["AI Chatbot Orb","Agents component","Agents React component","Agents Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/premium/ai-chatbot" },
   openGraph: {
     type: "website",

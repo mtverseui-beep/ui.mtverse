@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Security Status - Core React Component",
   description: "Security Status is a production-ready core React component featuring SVG turbulence border. Copy, customize, and use it in Next.js projects.",
-  keywords: ["Security Status","Core component","Core React component","Core Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Security Status","Core component","Core React component","Core Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/cards/electric-border" },
   openGraph: {
     type: "website",

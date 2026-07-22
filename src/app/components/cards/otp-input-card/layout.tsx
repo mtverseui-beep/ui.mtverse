@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "OTP Input - Forms React Component",
   description: "OTP Input is a production-ready forms React component featuring Auto-advance + paste + backspace + verify. Copy, customize, and use it in Next.js projects.",
-  keywords: ["OTP Input","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["OTP Input","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/forms/otp-input" },
   openGraph: {
     type: "website",

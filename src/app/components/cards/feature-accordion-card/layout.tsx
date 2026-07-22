@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Accordion Features - Features React Component",
   description: "Accordion Features is a production-ready features React component featuring Expandable accordion + smooth height animation + icon rotation. Copy, customize,...",
-  keywords: ["Accordion Features","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Accordion Features","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/features/feature-accordion" },
   openGraph: {
     type: "website",

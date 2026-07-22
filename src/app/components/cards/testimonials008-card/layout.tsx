@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Editorial Magazine Pull Quotes - Testimonials React Component",
   description: "Editorial Magazine Pull Quotes is a production-ready testimonials React component featuring Editorial magazine pull quotes + Fraunces serif + paper grain +...",
-  keywords: ["Editorial Magazine Pull Quotes","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Editorial Magazine Pull Quotes","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/testimonials/testimonials008" },
   openGraph: {
     type: "website",

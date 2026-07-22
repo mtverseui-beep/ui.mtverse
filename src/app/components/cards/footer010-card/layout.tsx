@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Agency Marquee Brutalist Blob - Footer React Component",
   description: "Agency Marquee Brutalist Blob is a production-ready footer React component featuring Creative agency — oversized heading + floating blobs + marquee...",
-  keywords: ["Agency Marquee Brutalist Blob","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Agency Marquee Brutalist Blob","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer010" },
   openGraph: {
     type: "website",

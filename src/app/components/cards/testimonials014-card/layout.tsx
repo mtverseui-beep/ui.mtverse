@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terminal CLI Green Phosphor - Testimonials React Component",
   description: "Terminal CLI Green Phosphor is a production-ready testimonials React component featuring Terminal/CLI green phosphor CRT + scanlines + JetBrains Mono +...",
-  keywords: ["Terminal CLI Green Phosphor","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Terminal CLI Green Phosphor","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/testimonials/testimonials014" },
   openGraph: {
     type: "website",

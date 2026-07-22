@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Pastel Soft Sidebar - Sidebar React Component",
   description: "Pastel Soft Sidebar is a production-ready sidebar React component featuring Soft pastel UI · rounded-3xl · gradient pills per section · colored icon circles...",
-  keywords: ["Pastel Soft Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Pastel Soft Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/sidebars/pastel-soft-sidebar" },
   openGraph: {
     type: "website",

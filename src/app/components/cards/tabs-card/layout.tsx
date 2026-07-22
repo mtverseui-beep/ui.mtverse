@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Tabs - Forms React Component",
   description: "Tabs is a production-ready forms React component featuring Underline + pill + vertical. Copy, customize, and use it in Next.js projects.",
-  keywords: ["Tabs","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Tabs","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/forms/tabs" },
   openGraph: {
     type: "website",

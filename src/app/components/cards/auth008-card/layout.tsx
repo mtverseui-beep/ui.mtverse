@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Holographic Iridescent Auth - Auth React Component",
   description: "Holographic Iridescent Auth is a production-ready auth React component featuring Holographic iridescent rotating conic-gradient border + dark glass...",
-  keywords: ["Holographic Iridescent Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Holographic Iridescent Auth","Auth component","Auth React component","Auth Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/auth/auth008" },
   openGraph: {
     type: "website",

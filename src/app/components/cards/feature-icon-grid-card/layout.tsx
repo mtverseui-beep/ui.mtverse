@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Icon Grid Features - Features React Component",
   description: "Icon Grid Features is a production-ready features React component featuring 4-column icon grid + hover lift + colored icon wells + fade-up. Copy, customize,...",
-  keywords: ["Icon Grid Features","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Icon Grid Features","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/features/feature-icon-grid" },
   openGraph: {
     type: "website",

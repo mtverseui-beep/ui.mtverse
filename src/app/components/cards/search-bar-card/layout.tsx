@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Search Bar - Forms React Component",
   description: "Search Bar is a production-ready forms React component featuring Live results + highlight + keyboard nav. Copy, customize, and use it in Next.js projects.",
-  keywords: ["Search Bar","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Search Bar","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/forms/search-bar" },
   openGraph: {
     type: "website",

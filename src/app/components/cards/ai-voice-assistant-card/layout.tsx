@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "AI Voice Assistant - AI React Component",
   description: "AI Voice Assistant is a production-ready ai React component featuring Live microphone waveform · browser speech-to-text · voice playback · pause/mute/end...",
-  keywords: ["AI Voice Assistant","AI component","AI React component","AI Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["AI Voice Assistant","AI component","AI React component","AI Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/ai/ai-voice-assistant" },
   openGraph: {
     type: "website",

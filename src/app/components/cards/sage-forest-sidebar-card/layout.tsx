@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Sage Forest Sidebar - Sidebar React Component",
   description: "Sage Forest Sidebar is a production-ready sidebar React component featuring Earthy sage green · organic rounded shapes · section-colored gradients ·...",
-  keywords: ["Sage Forest Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Sage Forest Sidebar","Sidebar component","Sidebar React component","Sidebar Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/sidebars/sage-forest-sidebar" },
   openGraph: {
     type: "website",

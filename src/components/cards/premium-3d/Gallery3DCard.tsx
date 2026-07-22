@@ -3,14 +3,14 @@
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 
-// ── Client-only 3D gallery (three.js needs window/WebGL) ──
+// â”€â”€ Client-only 3D gallery (three.js needs window/WebGL) â”€â”€
 const InfiniteGallery = dynamic(() => import("./InfiniteGallery").then(m => m.default), {
   ssr: false,
   loading: () => (
     <div className="flex h-screen w-full items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-900">
       <div className="flex flex-col items-center gap-3">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-zinc-300 border-t-zinc-900 dark:border-zinc-700 dark:border-t-white" />
-        <p className="text-[11px] font-medium text-zinc-500">Loading 3D gallery…</p>
+        <p className="text-[11px] font-medium text-zinc-500">Loading 3D galleryâ€¦</p>
       </div>
     </div>
   ),
@@ -42,7 +42,7 @@ export function Gallery3DCard() {
         images={sampleImages}
         speed={1.2}
         zSpacing={3}
-        visibleCount={12}
+        visibleCount={8}
         falloff={{ near: 0.8, far: 14 }}
         className="h-full w-full rounded-lg overflow-hidden"
       />

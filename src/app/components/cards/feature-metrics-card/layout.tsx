@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Metrics Features - Features React Component",
   description: "Metrics Features is a production-ready features React component featuring Big animated counters + feature cards + gradient stat blocks. Copy, customize, and...",
-  keywords: ["Metrics Features","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Metrics Features","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/features/feature-metrics" },
   openGraph: {
     type: "website",

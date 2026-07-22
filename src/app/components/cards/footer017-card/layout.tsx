@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "App Download QR Phone Mockup - Footer React Component",
   description: "App Download QR Phone Mockup is a production-ready footer React component featuring App download — QR code + store badges + phone mockup (Mobily). Copy,...",
-  keywords: ["App Download QR Phone Mockup","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["App Download QR Phone Mockup","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer017" },
   openGraph: {
     type: "website",

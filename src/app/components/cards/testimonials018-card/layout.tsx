@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Bento Grid Mixed Size Tiles - Testimonials React Component",
   description: "Bento Grid Mixed Size Tiles is a production-ready testimonials React component featuring Bento grid mixed-size tiles + featured large + hover glow + Quote...",
-  keywords: ["Bento Grid Mixed Size Tiles","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Bento Grid Mixed Size Tiles","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/testimonials/testimonials018" },
   openGraph: {
     type: "website",

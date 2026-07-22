@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Inventory Control Table - Tables React Component",
   description: "Inventory Control Table is a production-ready tables React component featuring Warehouse inventory · stock health · reservations · reorder thresholds ·...",
-  keywords: ["Inventory Control Table","Tables component","Tables React component","Tables Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Inventory Control Table","Tables component","Tables React component","Tables Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/tables/inventory-table" },
   openGraph: {
     type: "website",

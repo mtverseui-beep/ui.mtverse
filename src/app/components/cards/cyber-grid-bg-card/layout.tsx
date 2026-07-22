@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Horizon Grid - Backgrounds React Component",
   description: "Horizon Grid is a production-ready backgrounds React component featuring Clean future-facing grid · true light/dark themes · restrained motion. Copy,...",
-  keywords: ["Horizon Grid","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Horizon Grid","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/backgrounds/cyber-grid-bg" },
   openGraph: {
     type: "website",

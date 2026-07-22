@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Tabbed Features - Features React Component",
   description: "Tabbed Features is a production-ready features React component featuring Tab switcher + animated content panels + layoutId indicator. Copy, customize, and...",
-  keywords: ["Tabbed Features","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Tabbed Features","Features component","Features React component","Features Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/features/feature-tabbed" },
   openGraph: {
     type: "website",

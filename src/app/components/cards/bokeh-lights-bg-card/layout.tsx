@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Luxe Bokeh - Backgrounds React Component",
   description: "Luxe Bokeh is a production-ready backgrounds React component featuring Editorial optical color · generous negative space · luxury campaign ready. Copy,...",
-  keywords: ["Luxe Bokeh","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Luxe Bokeh","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/backgrounds/bokeh-lights-bg" },
   openGraph: {
     type: "website",

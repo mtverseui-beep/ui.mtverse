@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dark Luxury Gold Cormorant Serif - Pricing React Component",
   description: "Dark Luxury Gold Cormorant Serif is a production-ready pricing React component featuring Dark luxury gold sweep + Cormorant serif + corner flourishes...",
-  keywords: ["Dark Luxury Gold Cormorant Serif","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Dark Luxury Gold Cormorant Serif","Pricing component","Pricing React component","Pricing Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/pricing/pricing010" },
   openGraph: {
     type: "website",

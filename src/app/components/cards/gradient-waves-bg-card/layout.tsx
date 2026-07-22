@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Layered Waves - Backgrounds React Component",
   description: "Layered Waves is a production-ready backgrounds React component featuring Layered SVG curves · fintech and services CTA · slow transform-only motion. Copy,...",
-  keywords: ["Layered Waves","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Layered Waves","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/backgrounds/gradient-waves-bg" },
   openGraph: {
     type: "website",

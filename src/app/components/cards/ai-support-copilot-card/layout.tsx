@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "AI Support Copilot - AI React Component",
   description: "AI Support Copilot is a production-ready ai React component featuring Support inbox · customer timeline · AI case brief · tone-aware drafts · internal notes...",
-  keywords: ["AI Support Copilot","AI component","AI React component","AI Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["AI Support Copilot","AI component","AI React component","AI Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/ai/ai-support-copilot" },
   openGraph: {
     type: "website",

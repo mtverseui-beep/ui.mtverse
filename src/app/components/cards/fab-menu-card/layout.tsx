@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "FAB Action Menu - Buttons React Component",
   description: "FAB Action Menu is a production-ready buttons React component featuring Radial expand + spring stagger + backdrop. Copy, customize, and use it in Next.js...",
-  keywords: ["FAB Action Menu","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["FAB Action Menu","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/buttons/fab-menu" },
   openGraph: {
     type: "website",

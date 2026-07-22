@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Filter Drawer - Modals React Component",
   description: "Filter Drawer is a production-ready modals React component featuring Left slide filter with price range + categories + rating stars. Copy, customize, and...",
-  keywords: ["Filter Drawer","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Filter Drawer","Modals component","Modals React component","Modals Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/modals/filter-drawer" },
   openGraph: {
     type: "website",

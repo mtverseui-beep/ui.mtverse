@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Product Dot Field - Backgrounds React Component",
   description: "Product Dot Field is a production-ready backgrounds React component featuring Disciplined CSS dot field · screenshot-ready focal lighting · non-interactive....",
-  keywords: ["Product Dot Field","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Product Dot Field","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/backgrounds/dot-matrix-bg" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dark Luxury Gold Sweep Serif - Footer React Component",
   description: "Dark Luxury Gold Sweep Serif is a production-ready footer React component featuring Dark luxury — black + gold serif + minimal links + gold sweep (MAISON)....",
-  keywords: ["Dark Luxury Gold Sweep Serif","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Dark Luxury Gold Sweep Serif","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer021" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Warm Earthy Fraunces Grain Leaf - Testimonials React Component",
   description: "Warm Earthy Fraunces Grain Leaf is a production-ready testimonials React component featuring Warm earthy beige + Fraunces serif + paper grain + leaf badge +...",
-  keywords: ["Warm Earthy Fraunces Grain Leaf","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Warm Earthy Fraunces Grain Leaf","Testimonials component","Testimonials React component","Testimonials Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/testimonials/testimonials016" },
   openGraph: {
     type: "website",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Documentation Sidebar Edit GitHub - Footer React Component",
   description: "Documentation Sidebar Edit GitHub is a production-ready footer React component featuring Documentation — edit-on-GitHub link + 3 link cols + version...",
-  keywords: ["Documentation Sidebar Edit GitHub","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Documentation Sidebar Edit GitHub","Footer component","Footer React component","Footer Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/footers/footer012" },
   openGraph: {
     type: "website",

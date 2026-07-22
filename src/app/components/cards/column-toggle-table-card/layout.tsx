@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Column Management Table - Tables React Component",
   description: "Column Management Table is a production-ready tables React component featuring Accessible column visibility · minimum-column guard · search and status...",
-  keywords: ["Column Management Table","Tables component","Tables React component","Tables Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Column Management Table","Tables component","Tables React component","Tables Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/tables/column-toggle-table" },
   openGraph: {
     type: "website",

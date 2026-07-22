@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Liquid Chrome - Backgrounds React Component",
   description: "Liquid Chrome is a production-ready backgrounds React component featuring Controlled metallic halo · luxury product lighting · reduced-motion safe. Copy,...",
-  keywords: ["Liquid Chrome","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Liquid Chrome","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/backgrounds/liquid-metal-bg" },
   openGraph: {
     type: "website",

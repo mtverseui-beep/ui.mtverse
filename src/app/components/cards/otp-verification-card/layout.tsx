@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "OTP Verification - Buttons React Component",
   description: "OTP Verification is a production-ready buttons React component featuring Send code + countdown ring + resend. Copy, customize, and use it in Next.js projects.",
-  keywords: ["OTP Verification","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["OTP Verification","Buttons component","Buttons React component","Buttons Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/buttons/otp-verification" },
   openGraph: {
     type: "website",

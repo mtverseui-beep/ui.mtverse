@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Calendar & Date Picker - Core React Component",
   description: "Calendar & Date Picker is a production-ready core React component featuring Single + range mode · month navigation · time picker · quick actions ·...",
-  keywords: ["Calendar & Date Picker","Core component","Core React component","Core Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Calendar & Date Picker","Core component","Core React component","Core Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/cards/calendar-date-picker" },
   openGraph: {
     type: "website",

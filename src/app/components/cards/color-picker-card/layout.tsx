@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Color Picker - Forms React Component",
   description: "Color Picker is a production-ready forms React component featuring Swatch grid + hue slider + hex input. Copy, customize, and use it in Next.js projects.",
-  keywords: ["Color Picker","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Color Picker","Forms component","Forms React component","Forms Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/forms/color-picker" },
   openGraph: {
     type: "website",

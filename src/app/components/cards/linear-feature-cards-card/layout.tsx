@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Linear Feature Cards - Agents React Component",
   description: "Linear Feature Cards is a production-ready agents React component featuring 3 expandable feature cards with layoutId modal morph. Copy, customize, and use...",
-  keywords: ["Linear Feature Cards","Agents component","Agents React component","Agents Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Linear Feature Cards","Agents component","Agents React component","Agents Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/premium/linear-feature-cards" },
   openGraph: {
     type: "website",

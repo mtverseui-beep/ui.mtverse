@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Developer Blueprint - Backgrounds React Component",
   description: "Developer Blueprint is a production-ready backgrounds React component featuring Technical blueprint lines · API and SDK hero system · decorative-only layer....",
-  keywords: ["Developer Blueprint","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","dark mode component","responsive UI component","copy paste React component"],
+  keywords: ["Developer Blueprint","Backgrounds component","Backgrounds React component","Backgrounds Tailwind component","React UI component","Next.js component","TypeScript component","Tailwind CSS component","Framer Motion component","responsive UI component","copy paste React component"],
   alternates: { canonical: "/components/backgrounds/floating-code-bg" },
   openGraph: {
     type: "website",
